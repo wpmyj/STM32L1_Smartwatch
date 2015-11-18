@@ -5,7 +5,7 @@ static void sendByte(uint8_t data);
 static uint8_t USART1_flagStatus(uint16_t flag);
 static void USART1_ClearFlag(uint16_t flag);
 
-void bluetooth_UART_Init(uint16_t baudrate){
+static void bluetooth_UART_Init(uint16_t baudrate){
 
     double usart_div = 0;
     uint32_t mantissa = 0;
