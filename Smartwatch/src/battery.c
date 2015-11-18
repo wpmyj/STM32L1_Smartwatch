@@ -8,7 +8,7 @@ static void ADC1_ClearFlag(uint16_t flag);
 
 volatile uint8_t batteryCapacity;
 
-void battery_ADC1_Init(void){
+static void battery_ADC1_Init(void){
     
     // Enable GPIOA peripheral clock
     RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
@@ -40,9 +40,6 @@ void battery_ADC1_Init(void){
     ADC1->CR2 |= (EOCS_VALUE << EOCS_OFFSET) | (ADON_VALUE << ADON_OFFSET);
     // Wait until ADC is ready to convert
     while(!ADC1_FlagStatus(ADC_SR_ADONS));
-
-    for(;;)
-        startBattery_ADC_Conversion();
 
 }
 
