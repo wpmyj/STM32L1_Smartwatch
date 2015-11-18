@@ -1,6 +1,0 @@
-#ifndef BLUETOOTH_H
-#define BLUETOOTH_H
-
-#include "stm32l1xx.h"
-
-#endif
