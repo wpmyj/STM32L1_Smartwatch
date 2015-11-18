@@ -1,6 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
-#include "uart.h"
+#include "math.h"
+#include "battery.h"
 
 void main();
 
