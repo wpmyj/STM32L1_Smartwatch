@@ -5,6 +5,7 @@ SRCS = src/main.c \
        src/startup_stm32l1xx_xl.s \
 	   src/battery.c \
 	   src/bluetooth.c \
+	   src/display.c \
 
 
 CC=arm-none-eabi-gcc

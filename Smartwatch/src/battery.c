@@ -1,6 +1,6 @@
 #include "battery.h"
 
-//static void battery_ADC1_Init(void);
+static void battery_Init(void);
 static void startBattery_ADC_Conversion(void);
 static uint8_t getBatteryCapacity(short dr);
 static uint8_t ADC1_FlagStatus(uint16_t flag);
@@ -8,7 +8,7 @@ static void ADC1_ClearFlag(uint16_t flag);
 
 volatile uint8_t batteryCapacity;
 
-void battery_ADC1_Init(void){
+static void battery_Init(void){
     
     // Enable GPIOA peripheral clock
     RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
@@ -55,6 +55,7 @@ static void startBattery_ADC_Conversion(void){
 }
 
 static uint8_t ADC1_FlagStatus(uint16_t flag){
+
     if(!(ADC1->SR & flag))
         return 0;
     return 1;

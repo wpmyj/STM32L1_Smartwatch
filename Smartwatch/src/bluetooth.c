@@ -1,11 +1,11 @@
 #include "bluetooth.h"
 
-static void bluetooth_UART_Init(uint16_t baudrate);
+static void bluetooth_Init(uint16_t baudrate);
 static void sendByte(uint8_t data);
 static uint8_t USART1_flagStatus(uint16_t flag);
 static void USART1_ClearFlag(uint16_t flag);
 
-void bluetooth_UART_Init(uint16_t baudrate){
+void bluetooth_Init(uint16_t baudrate){
 
     double usart_div = 0;
     uint32_t mantissa = 0;
@@ -19,7 +19,7 @@ void bluetooth_UART_Init(uint16_t baudrate){
     /* GPIO configuration */
 
     // Set MODER register
-    GPIOA->MODER |= (MODER9_VALUE << MODER9_OFFSET) | (MODER10_VALUE << MODER9_OFFSET);
+    GPIOA->MODER |= (MODER9_VALUE << MODER9_OFFSET) | (MODER10_VALUE << MODER10_OFFSET);
     // Set OSPEEDR register
     GPIOA->OSPEEDR |= (OSPEEDR9_VALUE << OSPEEDR9_OFFSET) | (OSPEEDR10_VALUE << OSPEEDR10_OFFSET);
     // Set PUPDR register
