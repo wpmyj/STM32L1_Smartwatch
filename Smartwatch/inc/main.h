@@ -2,7 +2,7 @@
 #define MAIN_H
 
 #include "math.h"
-#include "battery.h"
+#include "bluetooth.h"
 
 void main();
 

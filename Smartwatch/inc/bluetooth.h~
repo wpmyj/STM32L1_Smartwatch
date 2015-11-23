@@ -27,7 +27,7 @@
 #define AFRH10_OFFSET 0x8
 #define AFRH10_VALUE 0x7
 // NVIC ISER1 register offsets and values
-#define RS5_OFFSET (USART1_IRQn % 32)
+#define RS5_OFFSET (USART1_IRQn % 31)
 #define RS5_VALUE 0x1
 // NVIC IP register offsets and values
 #define IP5_OFFSET USART1_IRQn // Priority
