@@ -58,6 +58,19 @@
 #define CC1E_VALUE 0x1
 // TIM3 CCR1 value
 #define CCR1_VALUE 2499
+// SPI1 CR1 register offsets and values
+#define BIDIMODE_OFFSET 0xF
+#define BIDIMODE_VALUE 0x1
+#define BIDIOE_OFFSET 0xE
+#define BIDIOE_VALUE 0x1
+#define SSM_OFFSET 0x9
+#define SSM_VALUE 0x1
+#define SPE_OFFSET 0x6
+#define SPE_VALUE 0x1
+#define BR_OFFSET 0x3
+#define BR_VALUE 0x6
+#define MSTR_OFFSET 0x2
+#define MSTR_VALUE 0x1
 
 void display_t(void);
 

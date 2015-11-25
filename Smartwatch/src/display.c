@@ -55,6 +55,9 @@ static void display_peripheralInit(void){
 
     /* SPI configuration */
 
+    SPI1->CR1 |= (BIDIMODE_VALUE << BIDIMODE_OFFSET) | (BIDIOE_VALUE << BIDIOE_OFFSET) | (SSM_VALUE << SSM_OFFSET) | (BR_VALUE << BR_OFFSET) | (MSTR_VALUE << MSTR_OFFSET);
+    SPI1->CR1 |= SPE_VALUE << SPE_OFFSET;
+
 }
 
 static void display_enable(void){
@@ -77,14 +80,14 @@ static void display_disable(void){
 
 static void SPI1_CSEnable(void){
 
-    // Set CS to high
-    GPIOA->ODR |= 1 << SPI_CS;
+    // Set CS to low
+    GPIOA->ODR = ~(1 << SPI_CS);
 
 }
 
 static void SPI1_CSDisable(void){
 
-    // Set CS to low
-    GPIOA->ODR = ~(1 << SPI_CS);
+    // Set CS to high
+    GPIOA->ODR |= 1 << SPI_CS;
 
 }
