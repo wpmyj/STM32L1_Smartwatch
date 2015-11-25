@@ -3,6 +3,10 @@
 
 #include "stm32l1xx.h"
 
+// GPIO pins
+#define DISPLAY_ENABLE 0x4
+#define SPI_CS 0x4
+
 // GPIO(C) MODER register offsets and values
 #define MODER4C_OFFSET 0x8
 #define MODER4C_VALUE 0x1
@@ -36,5 +40,25 @@
 #define AFRL6_VALUE 0x2
 #define AFRL7_OFFSET 0x1C
 #define AFRL7_VALUE 0x5
+// TIM3 CR1 register offsets and values
+#define CEN_OFFSET 0x0
+#define CEN_VALUE 0x1
+// TIM3 PSC register value
+#define PSC_VALUE 128
+// TIM3 ARR register value
+#define ARR_VALUE 2499
+// TIM3 EGR register offsets and values
+#define UG_OFFSET 0x0
+#define UG_VALUE 0x1
+// TIM3 CCMR1 register offsets and values
+#define OC1M_OFFSET 0x4
+#define OC1M_VALUE 0x3
+// TIM3 CCER register offsets and values
+#define CC1E_OFFSET 0x0
+#define CC1E_VALUE 0x1
+// TIM3 CCR1 value
+#define CCR1_VALUE 2499
+
+void display_t(void);
 
 #endif

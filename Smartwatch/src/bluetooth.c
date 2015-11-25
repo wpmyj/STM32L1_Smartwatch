@@ -1,11 +1,30 @@
 #include "bluetooth.h"
 
-static void bluetooth_Init(uint16_t baudrate);
-static void sendByte(uint8_t data);
+static void bluetooth_peripheralInit(uint32_t baudrate);
+static void USART1_sendString(char* str);
+static void USART1_sendByte(uint8_t data);
 static uint8_t USART1_flagStatus(uint16_t flag);
-static void USART1_ClearFlag(uint16_t flag);
+static void USART1_clearFlag(uint16_t flag);
+static void USART1_irqEnable(void);
 
-void bluetooth_Init(uint16_t baudrate){
+void bluetooth_t(void){
+
+    // Init bluetooth peripherals
+    bluetooth_peripheralInit(9600);
+    // Set baudrate to 115200
+    USART1_sendString("AT+BAUD8");
+    // // Init bluetooth peripherals with higher baudrate
+    bluetooth_peripheralInit(115200);
+    // Set MODE2
+    USART1_sendString("AT+MODE2");
+    // Set name to SmartWatch
+    USART1_sendString("AT+NAMESmartwatch");
+    // Enable interrupts
+    USART1_irqEnable();
+
+}
+
+static void bluetooth_peripheralInit(uint32_t baudrate){
 
     double usart_div = 0;
     uint32_t mantissa = 0;
@@ -36,7 +55,7 @@ void bluetooth_Init(uint16_t baudrate){
     /* USART configuration */
 
     // Set CR1 register
-    USART1->CR1 |= (OVER8_VALUE << OVER8_OFFSET) | (TE_VALUE << TE_OFFSET) | (RE_VALUE << RE_OFFSET) | (UE_VALUE << UE_OFFSET) | (RXNEIE_VALUE << RXNEIE_OFFSET);
+    USART1->CR1 |= (OVER8_VALUE << OVER8_OFFSET) | (TE_VALUE << TE_OFFSET) | (RE_VALUE << RE_OFFSET) | (UE_VALUE << UE_OFFSET);
     
     usart_div = APB2_FREQ / (8 * baudrate);
     // Set baudrate
@@ -46,9 +65,18 @@ void bluetooth_Init(uint16_t baudrate){
 
 }
 
-static void sendByte(uint8_t data){ 
+static void USART1_sendByte(uint8_t data){ 
  
     USART1->DR = data;
+}
+
+static void USART1_sendString(char* str){
+
+    while(*str){
+        while(!USART1_flagStatus(USART_SR_TXE));
+        USART1_sendByte(*str++);
+    }
+
 }
 
 static uint8_t USART1_flagStatus(uint16_t flag){
@@ -59,14 +87,20 @@ static uint8_t USART1_flagStatus(uint16_t flag){
 
 }
 
-static void USART1_ClearFlag(uint16_t flag){
+static void USART1_clearFlag(uint16_t flag){
 
     USART1->SR = ~(uint32_t)flag;
 
 }
 
+static void USART1_irqEnable(void){
+
+    USART1->CR1 |= (RXNEIE_VALUE << RXNEIE_OFFSET);
+
+}
+
 void USART1_IRQHandler(void){   
 
-    USART1_ClearFlag(USART_SR_RXNE);
+    USART1_clearFlag(USART_SR_RXNE);
 
 }

@@ -1,11 +1,28 @@
 #include "display.h"
 
-void display_init(void);
+static void display_peripheralInit(void);
+static void display_enable(void);
+static void display_disable(void);
+static void SPI1_CSEnable(void);
+static void SPI1_CSDisable(void);
 
-void display_init(void){
+void display_t(void){
+
+    // Init display peripheral
+    display_peripheralInit();
+    // Enable display
+    display_enable();
+
+}
+
+static void display_peripheralInit(void){
 
     // Enable GPIOA and GPIOC peripheral clock
     RCC->AHBENR |= RCC_AHBENR_GPIOAEN | RCC_AHBENR_GPIOCEN;
+    // Enable TIM3 peripheral clock
+    RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
+    // Enable SPI1 peripheral clock
+    RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
 
     /* GPIO configuration*/
 
@@ -23,6 +40,51 @@ void display_init(void){
 
     /* TIM configuration */
 
+    // Set PSC register
+    TIM3->PSC = PSC_VALUE;
+    // Set ARR register
+    TIM3->ARR = ARR_VALUE;
+    // Set EGR register
+    TIM3->EGR |= UG_VALUE << UG_OFFSET;
+    // Set CCMR1 register
+    TIM3->CCMR1 |= OC1M_VALUE << OC1M_OFFSET;
+    // Set CCER register
+    TIM3->CCER |= CC1E_VALUE << CC1E_OFFSET;
+    // Set CCR1 register
+    TIM3->CCR1 = CCR1_VALUE;
+
     /* SPI configuration */
+
+}
+
+static void display_enable(void){
+
+    // Set ENABLE pin high
+    GPIOC->ODR |= 1 << DISPLAY_ENABLE;
+    // Enable TIM3
+    TIM3->CR1 |= CEN_VALUE << CEN_OFFSET;
+
+}
+
+static void display_disable(void){
+
+    // Set ENABLE pin to low
+    GPIOC->ODR = ~(1 << DISPLAY_ENABLE);
+    // Disable TIM3
+    TIM3->CR1 = ~(CEN_VALUE << CEN_OFFSET);
+
+}
+
+static void SPI1_CSEnable(void){
+
+    // Set CS to high
+    GPIOA->ODR |= 1 << SPI_CS;
+
+}
+
+static void SPI1_CSDisable(void){
+
+    // Set CS to low
+    GPIOA->ODR = ~(1 << SPI_CS);
 
 }

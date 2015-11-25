@@ -44,6 +44,7 @@
 #define RXNEIE_OFFSET 0x5
 #define RXNEIE_VALUE 0x1
 
+void bluetooth_t(void);
 void USART1_IRQHandler(void);
 
 #endif
