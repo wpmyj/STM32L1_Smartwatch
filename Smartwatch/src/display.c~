@@ -5,7 +5,6 @@ static void display_enable(void);
 static void display_disable(void);
 static void SPI1_CSEnable(void);
 static void SPI1_CSDisable(void);
-static uint8_t SPI1_flagStatus(uint16_t flag);
 
 void display_t(void){
 
@@ -37,7 +36,7 @@ static void display_peripheralInit(void){
     // Set OSPEEDR(A) register
     GPIOA->OSPEEDR |= (OSPEEDR4A_VALUE << OSPEEDR4A_OFFSET) | (OSPEEDR5A_VALUE << OSPEEDR5A_OFFSET) | (OSPEEDR6A_VALUE << OSPEEDR6A_OFFSET) | (OSPEEDR7A_VALUE << OSPEEDR7A_OFFSET);
     // Set AFR(A) register
-    GPIOA->AFR[0] |= (AFRL5_VALUE << AFRL5_OFFSET) | (AFRL6_VALUE << AFRL6_OFFSET) | (AFRL7_VALUE << AFRL7_OFFSET);
+    GPIOA->AFR[0] |= (AFRL4_VALUE << AFRL4_OFFSET) | (AFRL5_VALUE << AFRL5_OFFSET) | (AFRL6_VALUE << AFRL6_OFFSET) | (AFRL7_VALUE << AFRL7_OFFSET);
 
     /* TIM configuration */
 
@@ -90,13 +89,5 @@ static void SPI1_CSDisable(void){
 
     // Set CS to high
     GPIOA->ODR |= 1 << SPI_CS;
-
-}
-
-static uint8_t SPI1_flagStatus(uint16_t flag){
-
-    if(!(SPI1->SR & flag))
-        return 0;
-    return 1;
 
 }

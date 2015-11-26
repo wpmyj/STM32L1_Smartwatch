@@ -15,7 +15,7 @@
 #define OSPEEDR4C_VALUE 0x2
 // GPIO(A) MODER register offsets and values
 #define MODER4A_OFFSET 0x8
-#define MODER4A_VALUE 0x1
+#define MODER4A_VALUE 0x2
 #define MODER5A_OFFSET 0xA
 #define MODER5A_VALUE 0x2
 #define MODER6A_OFFSET 0xC
@@ -32,6 +32,8 @@
 #define OSPEEDR7A_OFFSET 0xE
 #define OSPEEDR7A_VALUE 0x2
 // GPIO(A) AFR register offsets and values
+#define AFRL4_OFFSET 0x10
+#define AFRL4_VALUE 0x5
 #define AFRL5_OFFSET 0x14
 #define AFRL5_VALUE 0x5
 #define AFRL6_OFFSET 0x18
