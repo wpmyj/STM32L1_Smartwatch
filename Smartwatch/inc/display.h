@@ -2,6 +2,7 @@
 #define DISPLAY_H
 
 #include "stm32l1xx.h"
+#include "picture.h"
 
 // GPIO pins
 #define DISPLAY_ENABLE 0x4
@@ -44,7 +45,7 @@
 // TIM3 PSC register value
 #define PSC_VALUE 128
 // TIM3 ARR register value
-#define ARR_VALUE 2499
+#define ARR_VALUE 2070
 // TIM3 EGR register offsets and values
 #define UG_OFFSET 0x0
 #define UG_VALUE 0x1
@@ -55,12 +56,14 @@
 #define CC1E_OFFSET 0x0
 #define CC1E_VALUE 0x1
 // TIM3 CCR1 value
-#define CCR1_VALUE 2499
+#define CCR1_VALUE 2070
 // SPI1 CR1 register offsets and values
 #define BIDIMODE_OFFSET 0xF
 #define BIDIMODE_VALUE 0x1
 #define BIDIOE_OFFSET 0xE
 #define BIDIOE_VALUE 0x1
+#define SSI_OFFSET 0x8
+#define SSI_VALUE 0x1
 #define SSM_OFFSET 0x9
 #define SSM_VALUE 0x1
 #define SPE_OFFSET 0x6

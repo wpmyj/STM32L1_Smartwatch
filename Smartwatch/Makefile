@@ -6,6 +6,11 @@ SRCS = src/main.c \
 	   src/battery.c \
 	   src/bluetooth.c \
 	   src/display.c \
+       src/picture.c \
+       src/icons.c \
+       ../../Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_spi.c \
+	   ../../Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_gpio.c \
+	   ../../Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_rcc.c \
 
 
 CC=arm-none-eabi-gcc
@@ -20,7 +25,7 @@ CFLAGS += -specs=nosys.specs
 # TODO: hard float was causing an exception; see what's up.
 LDFLAGS = -Wl,-Map,$(OBJDIR)/$(PROJ_NAME).map -g -T./src/STM32L152RE_FLASH.ld
 
-CFLAGS += -I./inc -I../../Libraries/CMSIS/Device/ST/STM32L1xx/Include -I../../Libraries/CMSIS/Include -DSTM32L1XX_XL
+CFLAGS += -I./inc -I../../Libraries/CMSIS/Device/ST/STM32L1xx/Include -I../../Libraries/CMSIS/Include -I../../Libraries/STM32L1xx_StdPeriph_Driver/inc/ -DSTM32L1XX_XL -DUSE_STDPERIPH_DRIVER
 
 OBJS := $(SRCS:.c=.o)
 OBJS := $(OBJS:.s=.o)

@@ -1,8 +1,8 @@
 #include "bluetooth.h"
 
 static void bluetooth_peripheralInit(uint32_t baudrate);
-static void USART1_sendString(char* str);
-static void USART1_sendByte(uint8_t data);
+static void USART1_sendData(char* str);
+static void USART1_sendByte(uint8_t byte);
 static uint8_t USART1_flagStatus(uint16_t flag);
 static void USART1_clearFlag(uint16_t flag);
 static void USART1_irqEnable(void);
@@ -12,13 +12,13 @@ void bluetooth_t(void){
     // Init bluetooth peripherals
     bluetooth_peripheralInit(9600);
     // Set baudrate to 115200
-    USART1_sendString("AT+BAUD8");
+    USART1_sendData("AT+BAUD8");
     // // Init bluetooth peripherals with higher baudrate
     bluetooth_peripheralInit(115200);
     // Set MODE2
-    USART1_sendString("AT+MODE2");
+    USART1_sendData("AT+MODE2");
     // Set name to SmartWatch
-    USART1_sendString("AT+NAMESmartwatch");
+    USART1_sendData("AT+NAMESmartwatch");
     // Enable interrupts
     USART1_irqEnable();
 
@@ -65,12 +65,12 @@ static void bluetooth_peripheralInit(uint32_t baudrate){
 
 }
 
-static void USART1_sendByte(uint8_t data){ 
+static void USART1_sendByte(uint8_t byte){ 
  
-    USART1->DR = data;
+    USART1->DR = byte;
 }
 
-static void USART1_sendString(char* str){
+static void USART1_sendData(char* str){
 
     while(*str){
         while(!USART1_flagStatus(USART_SR_TXE));

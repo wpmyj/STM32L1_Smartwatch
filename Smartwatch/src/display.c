@@ -3,8 +3,10 @@
 static void display_peripheralInit(void);
 static void display_enable(void);
 static void display_disable(void);
+static void display_setPicture(void);
 static void SPI1_CSEnable(void);
 static void SPI1_CSDisable(void);
+static void SPI1_sendByte(uint8_t byte);
 static uint8_t SPI1_flagStatus(uint16_t flag);
 
 void display_t(void){
@@ -13,6 +15,9 @@ void display_t(void){
     display_peripheralInit();
     // Enable display
     display_enable();
+    // Pull CS line high
+    SPI1_CSDisable();
+    
 
 }
 
@@ -56,7 +61,7 @@ static void display_peripheralInit(void){
 
     /* SPI configuration */
 
-    SPI1->CR1 |= (BIDIMODE_VALUE << BIDIMODE_OFFSET) | (BIDIOE_VALUE << BIDIOE_OFFSET) | (SSM_VALUE << SSM_OFFSET) | (BR_VALUE << BR_OFFSET) | (MSTR_VALUE << MSTR_OFFSET);
+    SPI1->CR1 |= (BIDIMODE_VALUE << BIDIMODE_OFFSET) | (BIDIOE_VALUE << BIDIOE_OFFSET) | (SSM_VALUE << SSM_OFFSET) | (SSI_VALUE << SSI_OFFSET) | (BR_VALUE << BR_OFFSET) | (MSTR_VALUE << MSTR_OFFSET);
     SPI1->CR1 |= SPE_VALUE << SPE_OFFSET;
 
 }
@@ -79,6 +84,28 @@ static void display_disable(void){
 
 }
 
+static void display_setPicture(void){
+
+    // Enable CS
+    SPI1_CSEnable();
+
+
+    // Disable CS
+    SPI1_CSDisable();
+
+}
+
+static void display_clearPicture(void){
+
+    // Enable CS
+    SPI1_CSEnable();
+
+
+    // Disable CS
+    SPI1_CSDisable();
+
+}
+
 static void SPI1_CSEnable(void){
 
     // Set CS to low
@@ -93,7 +120,14 @@ static void SPI1_CSDisable(void){
 
 }
 
-static uint8_t SPI1_flagStatus(uint16_t flag){
+static void SPI1_sendByte(uint8_t byte){
+
+    SPI1->DR = byte;
+    while(!SPI1_flagStatus(SPI_SR_TXE));
+
+}
+
+uint8_t SPI1_flagStatus(uint16_t flag){
 
     if(!(SPI1->SR & flag))
         return 0;

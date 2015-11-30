@@ -2,7 +2,7 @@
 #define MAIN_H
 
 #include "math.h"
-#include "display.h"
+#include "stm32l1xx.h"
 
 void main();
 
