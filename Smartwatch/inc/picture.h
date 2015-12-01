@@ -9,11 +9,14 @@
 #define WIDTH 128
 #define HEIGHT 128
 
+// Picture array size divider
+#define WIDTH_DIV 8
+
 typedef struct Frame{
 
     short x; // Location of a frame
     short y;
-    Icon icon; // Pointer to an Icon
+    Icon *icon; // Pointer to an Icon
 
  } Frame;
 

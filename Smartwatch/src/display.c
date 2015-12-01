@@ -10,8 +10,6 @@ static void SPI1_CSDisable(void);
 static void SPI1_sendByte(uint8_t byte);
 static uint8_t SPI1_flagStatus(uint16_t flag);
 
-uint8_t test[10*10];
-
 void display_t(void){
 
     // Init display peripheral
@@ -88,7 +86,7 @@ static void display_disable(void){
 
 static void display_setPicture(Picture picture){
 
-    uint8_t lineNum;
+    /*uint8_t lineNum;
     uint8_t byteNum;
 
     // Enable CS
@@ -105,7 +103,7 @@ static void display_setPicture(Picture picture){
     SPI1_sendByte(0);
     while(SPI1_flagStatus(SPI_SR_BSY));
     // Disable CS
-    SPI1_CSDisable();
+    SPI1_CSDisable();*/
 
 }
 
