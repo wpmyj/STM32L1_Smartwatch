@@ -1,6 +1,9 @@
 #include "picture.h"
 
-void createPictureFromFrames(PictureFrames pictureFrames, Picture picture){
+static uint8_t picture[WIDTH * HEIGHT];
+static Picture pic = {WIDTH, HEIGHT, picture};
+
+Picture createPictureFromFrames(PictureFrames pictureFrames){
 
     uint8_t frameIndex;
     short framePixelIndex;
@@ -11,9 +14,11 @@ void createPictureFromFrames(PictureFrames pictureFrames, Picture picture){
         // Iterate through all pixels of a single frame
         for(framePixelIndex = 0; framePixelIndex < currentFrame.icon->width * currentFrame.icon->height; framePixelIndex++){
             // Set new pixel
-            picture.pixels[(currentFrame.y + framePixelIndex / currentFrame.icon->width) * currentFrame.icon->width + (framePixelIndex % currentFrame.icon->width)] = currentFrame.icon->pixels[framePixelIndex];
+            picture[(currentFrame.y + framePixelIndex / currentFrame.icon->width) * currentFrame.icon->width + (framePixelIndex % currentFrame.icon->width)] = currentFrame.icon->pixels[framePixelIndex];
         }
     }
+
+    return pic;
 
 }
 

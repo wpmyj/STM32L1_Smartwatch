@@ -3,11 +3,14 @@
 static void display_peripheralInit(void);
 static void display_enable(void);
 static void display_disable(void);
-static void display_setPicture(void);
+static void display_setPicture(Picture picture);
+static void display_clearPicture(void);
 static void SPI1_CSEnable(void);
 static void SPI1_CSDisable(void);
 static void SPI1_sendByte(uint8_t byte);
 static uint8_t SPI1_flagStatus(uint16_t flag);
+
+uint8_t test[10*10];
 
 void display_t(void){
 
@@ -15,9 +18,8 @@ void display_t(void){
     display_peripheralInit();
     // Enable display
     display_enable();
-    // Pull CS line high
-    SPI1_CSDisable();
-    
+    // Clear display
+    display_clearPicture();
 
 }
 
@@ -84,12 +86,24 @@ static void display_disable(void){
 
 }
 
-static void display_setPicture(void){
+static void display_setPicture(Picture picture){
+
+    uint8_t lineNum;
+    uint8_t byteNum;
 
     // Enable CS
     SPI1_CSEnable();
-
-
+    // Send data
+    for(lineNum = 0; lineNum < picture.height; lineNum++){
+        SPI1_sendByte(lineNum);
+        for(byteNum = 0; byteNum < picture.width; byteNum++){
+            SPI1_sendByte(0);
+        }
+    }
+    // Send dummy bytes
+    SPI1_sendByte(0);
+    SPI1_sendByte(0);
+    while(SPI1_flagStatus(SPI_SR_BSY));
     // Disable CS
     SPI1_CSDisable();
 
@@ -99,24 +113,28 @@ static void display_clearPicture(void){
 
     // Enable CS
     SPI1_CSEnable();
-
-
+    // Send data
+    SPI1_sendByte(CLEAR_DISPLAY);
+    // Send dummy bytes
+    SPI1_sendByte(0);
+    SPI1_sendByte(0);
+    while(SPI1_flagStatus(SPI_SR_BSY));
     // Disable CS
     SPI1_CSDisable();
 
 }
 
 static void SPI1_CSEnable(void){
-
-    // Set CS to low
-    GPIOA->ODR = ~(1 << SPI_CS);
+    
+    // Set CS to high
+    GPIOA->ODR |= 1 << SPI_CS;
 
 }
 
 static void SPI1_CSDisable(void){
 
-    // Set CS to high
-    GPIOA->ODR |= 1 << SPI_CS;
+    // Set CS to low
+    GPIOA->ODR = ~(1 << SPI_CS);
 
 }
 

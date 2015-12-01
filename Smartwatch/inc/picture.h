@@ -4,11 +4,16 @@
 #include "stm32l1xx.h"
 #include "icons.h"
 
+// picture width and height
+
+#define WIDTH 128
+#define HEIGHT 128
+
 typedef struct Frame{
 
     short x; // Location of a frame
     short y;
-    Icon *icon; // Pointer to an Icon
+    Icon icon; // Pointer to an Icon
 
  } Frame;
 
@@ -23,11 +28,11 @@ typedef struct Picture{
 
     short width;
     short height;
-    uint8_t* pixels;
+    const uint8_t* pixels;
 
-} Picture;
+}Picture;
 
 
-void createPictureFromFrames(PictureFrames pictureFrames, Picture picture);
+Picture createPictureFromFrames(PictureFrames pictureFrames);
 
 #endif

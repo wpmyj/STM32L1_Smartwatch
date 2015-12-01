@@ -4,6 +4,10 @@
 #include "stm32l1xx.h"
 #include "picture.h"
 
+// Commands
+#define CLEAR_DISPLAY 0b00100000
+#define SET_PICTURE 0b10000000
+
 // GPIO pins
 #define DISPLAY_ENABLE 0x4
 #define SPI_CS 0x4
