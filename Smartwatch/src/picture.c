@@ -7,7 +7,7 @@ static void changeBitAt(uint8_t* byte, uint8_t pos, uint8_t val);
 static uint8_t picture[(WIDTH / WIDTH_DIV) * HEIGHT];
 
 
-void appendFramesToPicture(PictureFrames pictureFrames){
+static void appendFramesToPicture(PictureFrames pictureFrames){
 
     uint8_t frameIndex;
     short iconIndex, pictureX, pictureY;
