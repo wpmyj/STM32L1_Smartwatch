@@ -1,8 +1,8 @@
 #include "battery.h"
 
-static void battery_Init(void);
-static void startBattery_ADC_Conversion(void);
-static uint8_t getBatteryCapacity(short dr);
+static void battery_peripheralInit(void);
+static void battery_StartADCConversion(void);
+static uint8_t battery_getCapacity(short dr);
 static uint8_t ADC1_flagStatus(uint16_t flag);
 static void ADC1_clearFlag(uint16_t flag);
 
@@ -43,20 +43,7 @@ static void battery_peripheralInit(void){
 
 }
 
-static uint8_t ADC1_flagStatus(uint16_t flag){
-
-    if(!(ADC1->SR & flag))
-        return 0;
-    return 1;
-}
-
-static void ADC1_clearFlag(uint16_t flag){
-
-    ADC1->SR = ~(uint32_t)flag;
-
-}
-
-static uint8_t getBatteryCapacity(short dr){
+static uint8_t battery_getCapacity(short dr){
 
     float voltage = (float)dr / pow(2, 12) * VDDA;
 
@@ -70,7 +57,7 @@ static uint8_t getBatteryCapacity(short dr){
 
 }
 
-static void startBattery_ADC_Conversion(void){
+static void battery_StartADCConversion(void){
 
     while(!ADC1_flagStatus(ADC_SR_EOC))
     // Start conversion
@@ -78,9 +65,22 @@ static void startBattery_ADC_Conversion(void){
 
 }
 
+static uint8_t ADC1_flagStatus(uint16_t flag){
+
+    if(!(ADC1->SR & flag))
+        return 0;
+    return 1;
+}
+
+static void ADC1_clearFlag(uint16_t flag){
+
+    ADC1->SR = ~(uint32_t)flag;
+
+}
+
 void ADC1_IRQHandler(void){   
 
-    batteryCapacity = getBatteryCapacity(ADC1->DR);
+    batteryCapacity = battery_getCapacity(ADC1->DR);
     ADC1_clearFlag(ADC_SR_EOC);
 
 }

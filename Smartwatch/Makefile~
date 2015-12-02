@@ -8,6 +8,9 @@ SRCS = src/main.c \
 	   src/display.c \
        src/picture.c \
        src/icons.c \
+       ../../Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_spi.c \
+	   ../../Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_gpio.c \
+	   ../../Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_rcc.c \
 
 
 CC=arm-none-eabi-gcc

@@ -11,8 +11,6 @@ static void SPI1_CSDisable(void);
 static void SPI1_sendByte(uint8_t byte);
 static uint8_t SPI1_flagStatus(uint16_t flag);
 
-const uint8_t ico[8] = {0b11111111, 0b11100000, 0b00011111, 0b11111100};
-
 Picture pic;
 
 void display_t(void){
@@ -23,13 +21,10 @@ void display_t(void){
     display_enable();
     // Clear display
     display_clearPicture();
-    // TEST -> Try to put two squares on the screen
-    Icon icon = {10, 3, ico};
-    Frame frm[2] = {{50, 50, &icon}, {70, 70, &icon}};
-    PictureFrames frames = {2, frm};
-    pic = appendFramesToPicture(frames);
+    // test
+    addBatteryFrame(74);
+    pic = getPicture();
     display_setPicture(pic);
-    
 
 }
 

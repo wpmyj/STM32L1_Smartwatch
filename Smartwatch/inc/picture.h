@@ -15,7 +15,7 @@ typedef struct Frame{
 
     short locationX; // Location of a frame
     short locationY;
-    Icon *icon; // Pointer to an Icon
+    Icon icon; // Pointer to an Icon
 
  } Frame;
 
@@ -34,7 +34,13 @@ typedef struct Picture{
 
 }Picture;
 
-
-Picture appendFramesToPicture(PictureFrames pictureFrames);
+Picture getPicture(void);
+void addBatteryFrame(uint8_t batPercentage);
+void addCallFrame(void);
+void removeCallFrame(void);
+void addSmsFrame(void);
+void removeSmsFrame(void);
+void addMailFrame(void);
+void removeMailFrame(void);
 
 #endif
