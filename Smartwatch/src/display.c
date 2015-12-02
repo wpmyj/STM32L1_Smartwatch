@@ -5,10 +5,15 @@ static void display_enable(void);
 static void display_disable(void);
 static void display_setPicture(Picture picture);
 static void display_clearPicture(void);
+static uint8_t display_reverseByte(uint8_t byte);
 static void SPI1_CSEnable(void);
 static void SPI1_CSDisable(void);
 static void SPI1_sendByte(uint8_t byte);
 static uint8_t SPI1_flagStatus(uint16_t flag);
+
+const uint8_t ico[8] = {0b11111111, 0b11100000, 0b00011111, 0b11111100};
+
+Picture pic;
 
 void display_t(void){
 
@@ -18,6 +23,13 @@ void display_t(void){
     display_enable();
     // Clear display
     display_clearPicture();
+    // TEST -> Try to put two squares on the screen
+    Icon icon = {10, 3, ico};
+    Frame frm[2] = {{50, 50, &icon}, {70, 70, &icon}};
+    PictureFrames frames = {2, frm};
+    pic = appendFramesToPicture(frames);
+    display_setPicture(pic);
+    
 
 }
 
@@ -86,24 +98,25 @@ static void display_disable(void){
 
 static void display_setPicture(Picture picture){
 
-    /*uint8_t lineNum;
+    short lineNum;
     uint8_t byteNum;
 
     // Enable CS
     SPI1_CSEnable();
-    // Send data
-    for(lineNum = 0; lineNum < picture.height; lineNum++){
-        SPI1_sendByte(lineNum);
-        for(byteNum = 0; byteNum < picture.width; byteNum++){
-            SPI1_sendByte(0);
+    SPI1_sendByte(SET_PICTURE);
+    for(lineNum = 1; lineNum <= picture.rows; lineNum++){
+        SPI1_sendByte(display_reverseByte(lineNum));
+        for(byteNum = 0; byteNum < picture.cols; byteNum++){
+            SPI1_sendByte(~picture.pixels[(lineNum - 1) * picture.cols + byteNum]);
         }
+        // Send dummy byte
+        SPI1_sendByte(0);
     }
-    // Send dummy bytes
-    SPI1_sendByte(0);
+    // Send dummy byte
     SPI1_sendByte(0);
     while(SPI1_flagStatus(SPI_SR_BSY));
     // Disable CS
-    SPI1_CSDisable();*/
+    SPI1_CSDisable();
 
 }
 
@@ -122,6 +135,11 @@ static void display_clearPicture(void){
 
 }
 
+static uint8_t display_reverseByte(uint8_t byte){
+
+    return ((byte * 0x0802LU & 0x22110LU) | (byte * 0x8020LU & 0x88440LU)) * 0x10101LU >> 16;;
+}
+
 static void SPI1_CSEnable(void){
     
     // Set CS to high
@@ -138,15 +156,16 @@ static void SPI1_CSDisable(void){
 
 static void SPI1_sendByte(uint8_t byte){
 
-    SPI1->DR = byte;
     while(!SPI1_flagStatus(SPI_SR_TXE));
+    SPI1->DR = byte;
 
 }
 
-uint8_t SPI1_flagStatus(uint16_t flag){
+static uint8_t SPI1_flagStatus(uint16_t flag){
 
     if(!(SPI1->SR & flag))
         return 0;
     return 1;
 
 }
+

@@ -3,16 +3,16 @@
 static uint8_t getBitAt(uint8_t byte, uint8_t pos);
 static void changeBitAt(uint8_t* byte, uint8_t pos, uint8_t val);
 
-uint8_t picture[(WIDTH / WIDTH_DIV) * HEIGHT];
-static Picture pic = {WIDTH, HEIGHT, picture};
+static uint8_t picture[(WIDTH / WIDTH_DIV) * HEIGHT];
 
 
-Picture createPictureFromFrames(PictureFrames pictureFrames){
+Picture appendFramesToPicture(PictureFrames pictureFrames){
 
     uint8_t frameIndex;
     short iconIndex, pictureX, pictureY;
     Frame currentFrame;
     Icon *icon;
+    Picture pic;
 
     // Iterate through frames
     for(frameIndex = 0; frameIndex < pictureFrames.numOfFrames; frameIndex++){
@@ -22,8 +22,8 @@ Picture createPictureFromFrames(PictureFrames pictureFrames){
         icon = currentFrame.icon;
         
         // X and Y initialization
-        pictureY = currentFrame.y;
-        pictureX = currentFrame.x;
+        pictureY = currentFrame.locationY;
+        pictureX = currentFrame.locationX;
 
         // Iterate through the picture and apply changes
         for(iconIndex = 0; iconIndex < icon->width * icon->height; iconIndex++){
@@ -31,9 +31,9 @@ Picture createPictureFromFrames(PictureFrames pictureFrames){
             // Change bit at position X,Y
             changeBitAt(&picture[(pictureY * WIDTH + pictureX) / WIDTH_DIV], 7 - (pictureX % WIDTH_DIV), getBitAt(icon->pixels[iconIndex / WIDTH_DIV], 7 - (iconIndex % WIDTH_DIV)));
 
-            if(pictureX == currentFrame.x + icon->width - 1){
+            if(pictureX == currentFrame.locationX + icon->width - 1){
                 pictureY++;
-                pictureX = currentFrame.x;
+                pictureX = currentFrame.locationX;
             }
             else
                 pictureX++;
@@ -41,6 +41,11 @@ Picture createPictureFromFrames(PictureFrames pictureFrames){
         }
         
     }
+
+    // Fill the structure and return it
+    pic.cols = WIDTH / WIDTH_DIV;
+    pic.rows = HEIGHT;
+    pic.pixels = picture;
 
     return pic;
 

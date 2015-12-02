@@ -73,7 +73,7 @@
 #define SPE_OFFSET 0x6
 #define SPE_VALUE 0x1
 #define BR_OFFSET 0x3
-#define BR_VALUE 0x6
+#define BR_VALUE 0x4
 #define MSTR_OFFSET 0x2
 #define MSTR_VALUE 0x1
 

@@ -5,7 +5,6 @@
 #include "icons.h"
 
 // picture width and height
-
 #define WIDTH 128
 #define HEIGHT 128
 
@@ -14,8 +13,8 @@
 
 typedef struct Frame{
 
-    short x; // Location of a frame
-    short y;
+    short locationX; // Location of a frame
+    short locationY;
     Icon *icon; // Pointer to an Icon
 
  } Frame;
@@ -29,13 +28,13 @@ typedef struct PictureFrames{
 
 typedef struct Picture{
 
-    short width;
-    short height;
+    short cols; // Number of bytes per row
+    short rows;  // Number of rows
     const uint8_t* pixels;
 
 }Picture;
 
 
-Picture createPictureFromFrames(PictureFrames pictureFrames);
+Picture appendFramesToPicture(PictureFrames pictureFrames);
 
 #endif
