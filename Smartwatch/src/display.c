@@ -21,8 +21,13 @@ void display_t(void){
     display_enable();
     // Clear display
     display_clearPicture();
+
     // test
-    addBatteryFrame(74);
+    addBatteryFrame(22);
+    addMailFrame();
+    addSmsFrame();
+    addCallFrame();
+    addDateFrame(23,11,15);
     pic = getPicture();
     display_setPicture(pic);
 

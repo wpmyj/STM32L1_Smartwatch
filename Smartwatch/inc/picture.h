@@ -42,5 +42,6 @@ void addSmsFrame(void);
 void removeSmsFrame(void);
 void addMailFrame(void);
 void removeMailFrame(void);
+void addDateFrame(uint8_t day, uint8_t month, uint8_t year);
 
 #endif

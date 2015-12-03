@@ -7,43 +7,6 @@ static void changeBitAt(uint8_t* byte, uint8_t pos, uint8_t val);
 static uint8_t picture[(WIDTH / WIDTH_DIV) * HEIGHT];
 
 
-static void appendFramesToPicture(PictureFrames pictureFrames){
-
-    uint8_t frameIndex;
-    short iconIndex, pictureX, pictureY;
-    Frame currentFrame;
-    Icon icon;
-
-    // Iterate through frames
-    for(frameIndex = 0; frameIndex < pictureFrames.numOfFrames; frameIndex++){
-        
-        // Extract current frame and icon in the frame
-        currentFrame = pictureFrames.frames[frameIndex];
-        icon = currentFrame.icon;
-        
-        // X and Y initialization
-        pictureY = currentFrame.locationY;
-        pictureX = currentFrame.locationX;
-
-        // Iterate through the picture and apply changes
-        for(iconIndex = 0; iconIndex < icon.width * icon.height; iconIndex++){
-
-            // Change bit at position X,Y
-            changeBitAt(&picture[(pictureY * WIDTH + pictureX) / WIDTH_DIV], 7 - (pictureX % WIDTH_DIV), getBitAt(icon.pixels[iconIndex / WIDTH_DIV], 7 - (iconIndex % WIDTH_DIV)));
-
-            if(pictureX == currentFrame.locationX + icon.width - 1){
-                pictureY++;
-                pictureX = currentFrame.locationX;
-            }
-            else
-                pictureX++;
-            
-        }
-        
-    }
-
-}
-
 Picture getPicture(void){
 
     Picture pic = {WIDTH / WIDTH_DIV, HEIGHT, picture};
@@ -178,6 +141,90 @@ void removeMailFrame(void){
     frames.frames = &removeMailFrame;
 
     appendFramesToPicture(frames);
+
+}
+
+void addDateFrame(uint8_t day, uint8_t month, uint8_t year){
+
+    Frame framesArray[8];
+    PictureFrames frames;
+    uint8_t i;
+    uint8_t digit;
+    uint8_t coordX = 1;
+
+    // Set positions for digit frames. Set icons also
+    for(i = 0; i < 8; i++, coordX+=16){
+        framesArray[i].locationX = coordX;
+        framesArray[i].locationY = 30;
+
+        if(i == 0 || i == 1)
+            digit = (i == 0) ? day / 10 : day % 10;
+        else if(i == 3 || i == 4)
+            digit = (i == 3) ? month / 10 : month % 10;
+        else if(i == 6 || i == 7)
+            digit = (i == 6) ? year / 10 : year % 10;
+        else{
+            framesArray[i].icon = getMediumDotIcon();
+            continue;
+        }
+
+        // Set icons for day, month and year
+        switch(digit){
+            case 0: framesArray[i].icon = getMediumZeroNumberIcon();break;
+            case 1: framesArray[i].icon = getMediumOneNumberIcon();break;
+            case 2: framesArray[i].icon = getMediumTwoNumberIcon();break;
+            case 3: framesArray[i].icon = getMediumThreeNumberIcon();break;
+            case 4: framesArray[i].icon = getMediumFourNumberIcon();break;
+            case 5: framesArray[i].icon = getMediumFiveNumberIcon();break;
+            case 6: framesArray[i].icon = getMediumSixNumberIcon();break;
+            case 7: framesArray[i].icon = getMediumSevenNumberIcon();break;
+            case 8: framesArray[i].icon = getMediumEightNumberIcon();break;
+            case 9: framesArray[i].icon = getMediumNineNumberIcon();break;
+        }
+    
+    }
+
+    frames.numOfFrames = 8;
+    frames.frames = framesArray;
+
+    appendFramesToPicture(frames);
+        
+}
+
+static void appendFramesToPicture(PictureFrames pictureFrames){
+
+    uint8_t frameIndex;
+    short iconIndex, pictureX, pictureY;
+    Frame currentFrame;
+    Icon icon;
+
+    // Iterate through frames
+    for(frameIndex = 0; frameIndex < pictureFrames.numOfFrames; frameIndex++){
+        
+        // Extract current frame and icon in the frame
+        currentFrame = pictureFrames.frames[frameIndex];
+        icon = currentFrame.icon;
+        
+        // X and Y initialization
+        pictureY = currentFrame.locationY;
+        pictureX = currentFrame.locationX;
+
+        // Iterate through the picture and apply changes
+        for(iconIndex = 0; iconIndex < icon.width * icon.height; iconIndex++){
+
+            // Change bit at position X,Y
+            changeBitAt(&picture[(pictureY * WIDTH + pictureX) / WIDTH_DIV], 7 - (pictureX % WIDTH_DIV), getBitAt(icon.pixels[iconIndex / WIDTH_DIV], 7 - (iconIndex % WIDTH_DIV)));
+
+            if(pictureX == currentFrame.locationX + icon.width - 1){
+                pictureY++;
+                pictureX = currentFrame.locationX;
+            }
+            else
+                pictureX++;
+            
+        }
+        
+    }
 
 }
 
