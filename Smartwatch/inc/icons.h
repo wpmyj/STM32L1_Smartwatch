@@ -13,6 +13,8 @@ typedef struct Icon{
 
 #define HEADER_BAR_ICON_WIDTH 16
 #define HEADER_BAR_ICON_HEIGHT 8
+#define SMALL_FONT_ICON_WIDTH 8
+#define SMALL_FONT_ICON_HEIGHT 8
 #define MEDIUM_FONT_ICON_WIDTH 16
 #define MEDIUM_FONT_ICON_HEIGHT 18
 
@@ -25,6 +27,18 @@ Icon getMissedCallIcon(void);
 Icon getNewSmsIcon(void);
 Icon getNewMailIcon(void);
 Icon removeNotificationIcon(void);
+Icon getSmallZeroNumberIcon(void);
+Icon getSmallOneNumberIcon(void);
+Icon getSmallTwoNumberIcon(void);
+Icon getSmallThreeNumberIcon(void);
+Icon getSmallFourNumberIcon(void);
+Icon getSmallFiveNumberIcon(void);
+Icon getSmallSixNumberIcon(void);
+Icon getSmallSevenNumberIcon(void);
+Icon getSmallEightNumberIcon(void);
+Icon getSmallNineNumberIcon(void);
+Icon getSmallPercentIcon(void);
+Icon getSmallCelsiusIcon(void);
 Icon getMediumZeroNumberIcon(void);
 Icon getMediumOneNumberIcon(void);
 Icon getMediumTwoNumberIcon(void);

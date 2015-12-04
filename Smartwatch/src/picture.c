@@ -20,7 +20,7 @@ void addBatteryFrame(uint8_t batPercentage){
     Frame batteryFrame;
     PictureFrames frames;
 
-    batteryFrame.locationX = 108;
+    batteryFrame.locationX = 110;
     batteryFrame.locationY = 3;
 
     if(batPercentage >= 0 && batPercentage < 10)
@@ -46,7 +46,7 @@ void addCallFrame(void){
     Frame missedCallFrame;
     PictureFrames frames;
 
-    missedCallFrame.locationX = 4;
+    missedCallFrame.locationX = 3;
     missedCallFrame.locationY = 3;
 
     missedCallFrame.icon = getMissedCallIcon();
@@ -63,7 +63,7 @@ void removeCallFrame(void){
     Frame removeCallFrame;
     PictureFrames frames;
 
-    removeCallFrame.locationX = 24;
+    removeCallFrame.locationX = 3;
     removeCallFrame.locationY = 3;
 
     removeCallFrame.icon = removeNotificationIcon();
@@ -80,7 +80,7 @@ void addSmsFrame(void){
     Frame newSmsFrame;
     PictureFrames frames;
 
-    newSmsFrame.locationX = 24;
+    newSmsFrame.locationX = 22;
     newSmsFrame.locationY = 3;
 
     newSmsFrame.icon = getNewSmsIcon();
@@ -97,7 +97,7 @@ void removeSmsFrame(void){
     Frame removeSmsFrame;
     PictureFrames frames;
 
-    removeSmsFrame.locationX = 24;
+    removeSmsFrame.locationX = 22;
     removeSmsFrame.locationY = 3;
 
     removeSmsFrame.icon = removeNotificationIcon();
@@ -114,7 +114,7 @@ void addMailFrame(void){
     Frame newMailFrame;
     PictureFrames frames;
 
-    newMailFrame.locationX = 44;
+    newMailFrame.locationX = 42;
     newMailFrame.locationY = 3;
 
     newMailFrame.icon = getNewMailIcon();
@@ -132,7 +132,7 @@ void removeMailFrame(void){
     Frame removeMailFrame;
     PictureFrames frames;
 
-    removeMailFrame.locationX = 44;
+    removeMailFrame.locationX = 42;
     removeMailFrame.locationY = 3;
 
     removeMailFrame.icon = removeNotificationIcon();
@@ -141,6 +141,102 @@ void removeMailFrame(void){
     frames.frames = &removeMailFrame;
 
     appendFramesToPicture(frames);
+
+}
+
+void addHumidityFrame(uint8_t humidity){
+
+    Frame framesArray[3];
+    PictureFrames frames;
+    uint8_t i;
+    uint8_t digit;
+    uint8_t coordX = 61;
+
+    // Correct humidity
+    if(humidity > 99)
+        humidity = 99;
+
+    // Set positions for digit frames. Set icons also
+    for(i = 0; i < 3; i++, coordX+=8){
+        framesArray[i].locationX = coordX;
+        framesArray[i].locationY = 3;
+
+        if(i == 0 || i == 1)
+            digit = (i == 0) ? humidity / 10 : humidity % 10;
+        else{
+            framesArray[i].icon = getSmallPercentIcon();
+            continue;
+        }
+
+        // Set icons for humidity
+        switch(digit){
+            case 0: framesArray[i].icon = getSmallZeroNumberIcon();break;
+            case 1: framesArray[i].icon = getSmallOneNumberIcon();break;
+            case 2: framesArray[i].icon = getSmallTwoNumberIcon();break;
+            case 3: framesArray[i].icon = getSmallThreeNumberIcon();break;
+            case 4: framesArray[i].icon = getSmallFourNumberIcon();break;
+            case 5: framesArray[i].icon = getSmallFiveNumberIcon();break;
+            case 6: framesArray[i].icon = getSmallSixNumberIcon();break;
+            case 7: framesArray[i].icon = getSmallSevenNumberIcon();break;
+            case 8: framesArray[i].icon = getSmallEightNumberIcon();break;
+            case 9: framesArray[i].icon = getSmallNineNumberIcon();break;
+        }
+    
+    }
+
+    frames.numOfFrames = 3;
+    frames.frames = framesArray;
+
+    appendFramesToPicture(frames);
+    
+
+}
+
+void addTemperatureFrame(uint8_t temp){
+
+    Frame framesArray[3];
+    PictureFrames frames;
+    uint8_t i;
+    uint8_t digit;
+    uint8_t coordX = 85;
+
+    // Correct temperature
+    if(temp > 60)    
+        temp = 60;
+
+    // Set positions for digit frames. Set icons also
+    for(i = 0; i < 3; i++, coordX+=8){
+        framesArray[i].locationX = coordX;
+        framesArray[i].locationY = 3;
+
+        if(i == 0 || i == 1)
+            digit = (i == 0) ? temp / 10 : temp % 10;
+        else{
+            framesArray[i].icon = getSmallCelsiusIcon();
+            continue;
+        }
+
+        // Set icons for temperature
+        switch(digit){
+            case 0: framesArray[i].icon = getSmallZeroNumberIcon();break;
+            case 1: framesArray[i].icon = getSmallOneNumberIcon();break;
+            case 2: framesArray[i].icon = getSmallTwoNumberIcon();break;
+            case 3: framesArray[i].icon = getSmallThreeNumberIcon();break;
+            case 4: framesArray[i].icon = getSmallFourNumberIcon();break;
+            case 5: framesArray[i].icon = getSmallFiveNumberIcon();break;
+            case 6: framesArray[i].icon = getSmallSixNumberIcon();break;
+            case 7: framesArray[i].icon = getSmallSevenNumberIcon();break;
+            case 8: framesArray[i].icon = getSmallEightNumberIcon();break;
+            case 9: framesArray[i].icon = getSmallNineNumberIcon();break;
+        }
+    
+    }
+
+    frames.numOfFrames = 3;
+    frames.frames = framesArray;
+
+    appendFramesToPicture(frames);
+    
 
 }
 

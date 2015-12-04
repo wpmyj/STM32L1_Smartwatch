@@ -42,6 +42,8 @@ void addSmsFrame(void);
 void removeSmsFrame(void);
 void addMailFrame(void);
 void removeMailFrame(void);
+void addHumidityFrame(uint8_t humidity);
+void addTemperatureFrame(uint8_t temp);
 void addDateFrame(uint8_t day, uint8_t month, uint8_t year);
 
 #endif

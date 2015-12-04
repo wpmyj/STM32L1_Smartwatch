@@ -96,8 +96,142 @@ static const uint8_t newMailIcon[16] = {0b11111111, 0b11111111,
 // Notification icon remove mask
 static const uint8_t noNotificationIcon[16] = {0};
 
-/* Medium sized icons */
+/* Small sized icons */
 
+// Small zero number icon
+static const uint8_t smallZeroNumberIcon[16] = {0b00111000,
+                                                0b01000100,
+                                                0b01000100,
+                                                0b01000100,
+                                                0b01000100,
+                                                0b01000100,
+                                                0b01000100,
+                                                0b00111000
+                                               };
+
+// Small one number icon
+static const uint8_t smallOneNumberIcon[16] = {0b01110000,
+                                               0b00010000,
+                                               0b00010000,
+                                               0b00010000,
+                                               0b00010000,
+                                               0b00010000,
+                                               0b00010000,
+                                               0b01111100
+                                              };
+
+// Small two number icon
+static const uint8_t smallTwoNumberIcon[16] = {0b01111000,
+                                               0b00000100,
+                                               0b00000100,
+                                               0b00000100,
+                                               0b00111000,
+                                               0b01000000,
+                                               0b01000000,
+                                               0b01111100
+                                              };
+
+// Small three number icon
+static const uint8_t smallThreeNumberIcon[16] = {0b01111000,
+                                                 0b00000100,
+                                                 0b00000100,
+                                                 0b00000100,
+                                                 0b00111000,
+                                                 0b00000100,
+                                                 0b00000100,
+                                                 0b01111000
+                                                };
+
+// Small four number icon
+static const uint8_t smallFourNumberIcon[16] = {0b01000000,
+                                                0b01001000,
+                                                0b01001000,
+                                                0b01001000,
+                                                0b01111000,
+                                                0b00001000,
+                                                0b00001000,
+                                                0b00001000
+                                               };
+
+// Small five number icon
+static const uint8_t smallFiveNumberIcon[16] = {0b00111100,
+                                                0b00100000,
+                                                0b00100000,
+                                                0b00100000,
+                                                0b00111000,
+                                                0b00000100,
+                                                0b00000100,
+                                                0b01111000
+                                                };
+
+// Small six number icon
+static const uint8_t smallSixNumberIcon[16] = {0b01111000,
+                                               0b01000000,
+                                               0b01000000,
+                                               0b01000000,
+                                               0b01111100,
+                                               0b01000100,
+                                               0b01000100,
+                                               0b01111100
+                                              };
+
+// Small seven number icon
+static const uint8_t smallSevenNumberIcon[16] = {0b01111100,
+                                                 0b00000100,
+                                                 0b00000100,
+                                                 0b00001000,
+                                                 0b00010000,
+                                                 0b00010000,
+                                                 0b00010000,
+                                                 0b00010000
+                                                };
+
+// Small eight number icon
+static const uint8_t smallEightNumberIcon[16] = {0b00111000,
+                                                0b00101000,
+                                                0b00101000,
+                                                0b00101000,
+                                                0b00111000,
+                                                0b01000100,
+                                                0b01000100,
+                                                0b00111000
+                                               };
+
+// Small nine number icon
+static const uint8_t smallNineNumberIcon[16] = {0b01111100,
+                                                 0b01000100,
+                                                 0b01000100,
+                                                 0b01111100,
+                                                 0b00000100,
+                                                 0b00000100,
+                                                 0b00000100,
+                                                 0b00000100
+                                                };
+
+// Small percent icon
+static const uint8_t smallPercentIcon[16] = {0b01100000,
+                                             0b01100100,
+                                             0b00001000,
+                                             0b00010000,
+                                             0b00010000,
+                                             0b00100000,
+                                             0b01001100,
+                                             0b00001100
+                                            };
+
+// Small celsius icon
+static const uint8_t smallCelsiusIcon[16] = {0b01110000,
+                                             0b01010000,
+                                             0b01110000,
+                                             0b00000000,
+                                             0b00000000,
+                                             0b00000000,
+                                             0b00000000,
+                                             0b00000000
+                                            };
+
+
+/* Medium sized icons */
 
 // Medium zero number icon
 static const uint8_t mediumZeroNumberIcon[40] = {0b00011111, 0b11110000,
@@ -305,8 +439,8 @@ static const uint8_t mediumNineNumberIcon[40] = {0b00111111, 0b11111000,
                                                  0b00000000, 0b00011000,
                                                  0b00000000, 0b00011000,
                                                  0b00000000, 0b00011000,
-                                                 0b00000000, 0b00111000,
-                                                 0b00000000, 0b00111000
+                                                 0b00000000, 0b00011000,
+                                                 0b00000000, 0b00011000
                                                 };
 
 // Medium Dot icon
@@ -398,6 +532,78 @@ Icon removeNotificationIcon(void){
 
 }
 
+/* Functions for small sized numbers */
+
+Icon getSmallZeroNumberIcon(void){
+
+    Icon icon = {SMALL_FONT_ICON_WIDTH, SMALL_FONT_ICON_HEIGHT, smallZeroNumberIcon};
+    return icon;
+
+}
+
+Icon getSmallOneNumberIcon(void){
+
+    Icon icon = {SMALL_FONT_ICON_WIDTH, SMALL_FONT_ICON_HEIGHT, smallOneNumberIcon};
+    return icon;
+
+}
+
+Icon getSmallTwoNumberIcon(void){
+
+    Icon icon = {SMALL_FONT_ICON_WIDTH, SMALL_FONT_ICON_HEIGHT, smallTwoNumberIcon};
+    return icon;
+
+}
+
+Icon getSmallThreeNumberIcon(void){
+
+    Icon icon = {SMALL_FONT_ICON_WIDTH, SMALL_FONT_ICON_HEIGHT, smallThreeNumberIcon};
+    return icon;
+
+}
+
+Icon getSmallFourNumberIcon(void){
+
+    Icon icon = {SMALL_FONT_ICON_WIDTH, SMALL_FONT_ICON_HEIGHT, smallFourNumberIcon};
+    return icon;
+
+}
+
+Icon getSmallFiveNumberIcon(void){
+
+    Icon icon = {SMALL_FONT_ICON_WIDTH, SMALL_FONT_ICON_HEIGHT, smallFiveNumberIcon};
+    return icon;
+
+}
+
+Icon getSmallSixNumberIcon(void){
+
+    Icon icon = {SMALL_FONT_ICON_WIDTH, SMALL_FONT_ICON_HEIGHT, smallSixNumberIcon};
+    return icon;
+
+}
+
+Icon getSmallSevenNumberIcon(void){
+
+    Icon icon = {SMALL_FONT_ICON_WIDTH, SMALL_FONT_ICON_HEIGHT, smallSevenNumberIcon};
+    return icon;
+
+}
+
+Icon getSmallEightNumberIcon(void){
+
+    Icon icon = {SMALL_FONT_ICON_WIDTH, SMALL_FONT_ICON_HEIGHT, smallEightNumberIcon};
+    return icon;
+
+}
+
+Icon getSmallNineNumberIcon(void){
+
+    Icon icon = {SMALL_FONT_ICON_WIDTH, SMALL_FONT_ICON_HEIGHT, smallNineNumberIcon};
+    return icon;
+
+}
+
 /* Funtions for medium sized numbers */
 
 Icon getMediumZeroNumberIcon(void){
@@ -407,9 +613,23 @@ Icon getMediumZeroNumberIcon(void){
 
 }
 
+Icon getSmallPercentIcon(void){
+
+    Icon icon = {SMALL_FONT_ICON_WIDTH, SMALL_FONT_ICON_HEIGHT, smallPercentIcon};
+    return icon;
+
+}
+
 Icon getMediumOneNumberIcon(void){
 
     Icon icon = {MEDIUM_FONT_ICON_WIDTH, MEDIUM_FONT_ICON_HEIGHT, mediumOneNumberIcon};
+    return icon;
+
+}
+
+Icon getSmallCelsiusIcon(void){
+
+    Icon icon = {SMALL_FONT_ICON_WIDTH, SMALL_FONT_ICON_HEIGHT, smallCelsiusIcon};
     return icon;
 
 }

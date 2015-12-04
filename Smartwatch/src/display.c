@@ -27,7 +27,9 @@ void display_t(void){
     addMailFrame();
     addSmsFrame();
     addCallFrame();
-    addDateFrame(23,11,15);
+    addHumidityFrame(44);
+    addTemperatureFrame(33);
+    addDateFrame(29,11,15);
     pic = getPicture();
     display_setPicture(pic);
 
