@@ -6,12 +6,26 @@ static void changeBitAt(uint8_t* byte, uint8_t pos, uint8_t val);
 
 static uint8_t picture[(WIDTH / WIDTH_DIV) * HEIGHT];
 
-
 Picture getPicture(void){
 
     Picture pic = {WIDTH / WIDTH_DIV, HEIGHT, picture};
 
     return pic;
+
+}
+
+void addLogoFrame(void){
+
+    Frame logoFrame;
+    PictureFrames frames;
+    
+    logoFrame.locationX = logoFrame.locationY = 0;
+    logoFrame.icon = getLogoIcon();
+
+    frames.numOfFrames = 1;
+    frames.frames = &logoFrame;
+
+    appendFramesToPicture(frames);
 
 }
 
@@ -285,6 +299,51 @@ void addDateFrame(uint8_t day, uint8_t month, uint8_t year){
 
     appendFramesToPicture(frames);
         
+}
+
+void addTimeFrame(uint8_t hours, uint8_t minutes){
+
+    Frame framesArray[5];
+    PictureFrames frames;
+    uint8_t i;
+    uint8_t digit;
+    uint8_t coordX = 2;
+
+    // Set positions for digit frames. Set icons also
+    for(i = 0; i < 5; i++, coordX+=25){
+        framesArray[i].locationX = coordX;
+        framesArray[i].locationY = 80;
+
+        if(i == 0 || i == 1)
+            digit = (i == 0) ? hours / 10 : hours % 10;
+        else if(i == 3 || i == 4)
+            digit = (i == 3) ? minutes / 10 : minutes % 10;
+        else{
+            framesArray[i].icon = getBigColonIcon();
+            continue;
+        }
+
+        // Set icons for day, month and year
+        switch(digit){
+            case 0: framesArray[i].icon = getBigZeroNumberIcon();break;
+            case 1: framesArray[i].icon = getBigOneNumberIcon();break;
+            case 2: framesArray[i].icon = getBigTwoNumberIcon();break;
+            case 3: framesArray[i].icon = getBigThreeNumberIcon();break;
+            case 4: framesArray[i].icon = getBigFourNumberIcon();break;
+            case 5: framesArray[i].icon = getBigFiveNumberIcon();break;
+            case 6: framesArray[i].icon = getBigSixNumberIcon();break;
+            case 7: framesArray[i].icon = getBigSevenNumberIcon();break;
+            case 8: framesArray[i].icon = getBigEightNumberIcon();break;
+            case 9: framesArray[i].icon = getBigNineNumberIcon();break;
+        }
+    
+    }
+
+    frames.numOfFrames = 5;
+    frames.frames = framesArray;
+
+    appendFramesToPicture(frames);
+
 }
 
 static void appendFramesToPicture(PictureFrames pictureFrames){

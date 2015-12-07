@@ -30,6 +30,8 @@ void display_t(void){
     addHumidityFrame(44);
     addTemperatureFrame(33);
     addDateFrame(29,11,15);
+    addTimeFrame(12,1);
+    //addLogoFrame();
     pic = getPicture();
     display_setPicture(pic);
 
