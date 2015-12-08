@@ -1,11 +1,11 @@
 #include "bluetooth.h"
 
 static void bluetooth_peripheralInit(uint32_t baudrate);
+static void USART1_irqEnable(void);
 static void USART1_sendData(char* str);
 static void USART1_sendByte(uint8_t byte);
 static uint8_t USART1_flagStatus(uint16_t flag);
 static void USART1_clearFlag(uint16_t flag);
-static void USART1_irqEnable(void);
 
 void bluetooth_t(void){
 
@@ -38,24 +38,24 @@ static void bluetooth_peripheralInit(uint32_t baudrate){
     /* GPIO configuration */
 
     // Set MODER register
-    GPIOA->MODER |= (MODER9_VALUE << MODER9_OFFSET) | (MODER10_VALUE << MODER10_OFFSET);
+    GPIOA->MODER |= (BT_MODER9_VALUE << BT_MODER9_OFFSET) | (BT_MODER10_VALUE << BT_MODER10_OFFSET);
     // Set OSPEEDR register
-    GPIOA->OSPEEDR |= (OSPEEDR9_VALUE << OSPEEDR9_OFFSET) | (OSPEEDR10_VALUE << OSPEEDR10_OFFSET);
+    GPIOA->OSPEEDR |= (BT_OSPEEDR9_VALUE << BT_OSPEEDR9_OFFSET) | (BT_OSPEEDR10_VALUE << BT_OSPEEDR10_OFFSET);
     // Set PUPDR register
-    GPIOA->PUPDR |= (PUPDR9_VALUE << PUPDR9_OFFSET) | (PUPDR10_VALUE << PUPDR10_OFFSET);
+    GPIOA->PUPDR |= (BT_PUPDR9_VALUE << BT_PUPDR9_OFFSET) | (BT_PUPDR10_VALUE << BT_PUPDR10_OFFSET);
     // Set AF function
-    GPIOA->AFR[1] |= (AFRH9_VALUE << AFRH9_OFFSET) | (AFRH10_VALUE << AFRH10_OFFSET);
+    GPIOA->AFR[1] |= (BT_AFRH9_VALUE << BT_AFRH9_OFFSET) | (BT_AFRH10_VALUE << BT_AFRH10_OFFSET);
 
     /* NVIC configuration */
 
     // ISER1 register configuration
-    NVIC->ISER[1] |= RS5_VALUE << RS5_OFFSET;
-    NVIC->IP[IP5_OFFSET] |= IP5_VALUE;
+    NVIC->ISER[1] |= BT_RS5_VALUE << BT_RS5_OFFSET;
+    NVIC->IP[BT_IP5_OFFSET] |= BT_IP5_VALUE;
 
     /* USART configuration */
 
     // Set CR1 register
-    USART1->CR1 |= (OVER8_VALUE << OVER8_OFFSET) | (TE_VALUE << TE_OFFSET) | (RE_VALUE << RE_OFFSET) | (UE_VALUE << UE_OFFSET);
+    USART1->CR1 |= (BT_OVER8_VALUE << BT_OVER8_OFFSET) | (BT_TE_VALUE << BT_TE_OFFSET) | (BT_RE_VALUE << BT_RE_OFFSET) | (BT_UE_VALUE << BT_UE_OFFSET);
     
     usart_div = APB2_FREQ / (8 * baudrate);
     // Set baudrate
@@ -65,8 +65,15 @@ static void bluetooth_peripheralInit(uint32_t baudrate){
 
 }
 
+static void USART1_irqEnable(void){
+
+    USART1->CR1 |= (BT_RXNEIE_VALUE << BT_RXNEIE_OFFSET);
+
+}
+
 static void USART1_sendByte(uint8_t byte){ 
  
+    // Send byte
     USART1->DR = byte;
 }
 
@@ -90,12 +97,6 @@ static uint8_t USART1_flagStatus(uint16_t flag){
 static void USART1_clearFlag(uint16_t flag){
 
     USART1->SR = ~(uint32_t)flag;
-
-}
-
-static void USART1_irqEnable(void){
-
-    USART1->CR1 |= (RXNEIE_VALUE << RXNEIE_OFFSET);
 
 }
 

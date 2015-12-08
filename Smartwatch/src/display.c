@@ -11,7 +11,6 @@ static void SPI1_CSDisable(void);
 static void SPI1_sendByte(uint8_t byte);
 static uint8_t SPI1_flagStatus(uint16_t flag);
 
-Picture pic;
 
 void display_t(void){
 
@@ -22,18 +21,6 @@ void display_t(void){
     // Clear display
     display_clearPicture();
 
-    // test
-    addBatteryFrame(22);
-    addMailFrame();
-    addSmsFrame();
-    addCallFrame();
-    addHumidityFrame(44);
-    addTemperatureFrame(33);
-    addDateFrame(29,11,15);
-    addTimeFrame(12,1);
-    //addLogoFrame();
-    pic = getPicture();
-    display_setPicture(pic);
 
 }
 
@@ -49,36 +36,37 @@ static void display_peripheralInit(void){
     /* GPIO configuration*/
 
     // Set MODER(C) register
-    GPIOC->MODER |= MODER4C_VALUE << MODER4C_OFFSET;
+    GPIOC->MODER |= DISP_MODER4C_VALUE << DISP_MODER4C_OFFSET;
     // Set OSPEEDR(C) register
-    GPIOC->OSPEEDR |= OSPEEDR4C_VALUE << OSPEEDR4C_OFFSET;
+    GPIOC->OSPEEDR |= DISP_OSPEEDR4C_VALUE << DISP_OSPEEDR4C_OFFSET;
 
     // Set MODER(A) register
-    GPIOA->MODER |= (MODER4A_VALUE << MODER4A_OFFSET) | (MODER5A_VALUE << MODER5A_OFFSET) | (MODER6A_VALUE << MODER6A_OFFSET) | (MODER7A_VALUE << MODER7A_OFFSET);
+    GPIOA->MODER |= (DISP_MODER4A_VALUE << DISP_MODER4A_OFFSET) | (DISP_MODER5A_VALUE << DISP_MODER5A_OFFSET) | (DISP_MODER6A_VALUE << DISP_MODER6A_OFFSET) | (DISP_MODER7A_VALUE << DISP_MODER7A_OFFSET);
     // Set OSPEEDR(A) register
-    GPIOA->OSPEEDR |= (OSPEEDR4A_VALUE << OSPEEDR4A_OFFSET) | (OSPEEDR5A_VALUE << OSPEEDR5A_OFFSET) | (OSPEEDR6A_VALUE << OSPEEDR6A_OFFSET) | (OSPEEDR7A_VALUE << OSPEEDR7A_OFFSET);
+    GPIOA->OSPEEDR |= (DISP_OSPEEDR4A_VALUE << DISP_OSPEEDR4A_OFFSET) | (DISP_OSPEEDR5A_VALUE << DISP_OSPEEDR5A_OFFSET) | (DISP_OSPEEDR6A_VALUE << DISP_OSPEEDR6A_OFFSET) | (DISP_OSPEEDR7A_VALUE << DISP_OSPEEDR7A_OFFSET);
     // Set AFR(A) register
-    GPIOA->AFR[0] |= (AFRL5_VALUE << AFRL5_OFFSET) | (AFRL6_VALUE << AFRL6_OFFSET) | (AFRL7_VALUE << AFRL7_OFFSET);
+    GPIOA->AFR[0] |= (DISP_AFRL5_VALUE << DISP_AFRL5_OFFSET) | (DISP_AFRL6_VALUE << DISP_AFRL6_OFFSET) | (DISP_AFRL7_VALUE << DISP_AFRL7_OFFSET);
 
     /* TIM configuration */
 
     // Set PSC register
-    TIM3->PSC = PSC_VALUE;
+    TIM3->PSC = DISP_PSC_VALUE;
     // Set ARR register
-    TIM3->ARR = ARR_VALUE;
+    TIM3->ARR = DISP_ARR_VALUE;
     // Set EGR register
-    TIM3->EGR |= UG_VALUE << UG_OFFSET;
+    TIM3->EGR |= DISP_UG_VALUE << DISP_UG_OFFSET;
     // Set CCMR1 register
-    TIM3->CCMR1 |= OC1M_VALUE << OC1M_OFFSET;
+    TIM3->CCMR1 |= DISP_OC1M_VALUE << DISP_OC1M_OFFSET;
     // Set CCER register
-    TIM3->CCER |= CC1E_VALUE << CC1E_OFFSET;
+    TIM3->CCER |= DISP_CC1E_VALUE << DISP_CC1E_OFFSET;
     // Set CCR1 register
-    TIM3->CCR1 = CCR1_VALUE;
+    TIM3->CCR1 = DISP_CCR1_VALUE;
 
     /* SPI configuration */
 
-    SPI1->CR1 |= (BIDIMODE_VALUE << BIDIMODE_OFFSET) | (BIDIOE_VALUE << BIDIOE_OFFSET) | (SSM_VALUE << SSM_OFFSET) | (SSI_VALUE << SSI_OFFSET) | (BR_VALUE << BR_OFFSET) | (MSTR_VALUE << MSTR_OFFSET);
-    SPI1->CR1 |= SPE_VALUE << SPE_OFFSET;
+    // Set CR1 register
+    SPI1->CR1 |= (DISP_BIDIMODE_VALUE << DISP_BIDIMODE_OFFSET) | (DISP_BIDIOE_VALUE << DISP_BIDIOE_OFFSET) | (DISP_SSM_VALUE << DISP_SSM_OFFSET) | (DISP_SSI_VALUE << DISP_SSI_OFFSET) | (DISP_BR_VALUE << DISP_BR_OFFSET) | (DISP_MSTR_VALUE << DISP_MSTR_OFFSET);
+    SPI1->CR1 |= DISP_SPE_VALUE << DISP_SPE_OFFSET;
 
 }
 
@@ -87,7 +75,7 @@ static void display_enable(void){
     // Set ENABLE pin high
     GPIOC->ODR |= 1 << DISPLAY_ENABLE;
     // Enable TIM3
-    TIM3->CR1 |= CEN_VALUE << CEN_OFFSET;
+    TIM3->CR1 |= DISP_CEN_VALUE << DISP_CEN_OFFSET;
 
 }
 
@@ -96,7 +84,7 @@ static void display_disable(void){
     // Set ENABLE pin to low
     GPIOC->ODR = ~(1 << DISPLAY_ENABLE);
     // Disable TIM3
-    TIM3->CR1 = ~(CEN_VALUE << CEN_OFFSET);
+    TIM3->CR1 = ~(DISP_CEN_VALUE << DISP_CEN_OFFSET);
 
 }
 
@@ -109,14 +97,18 @@ static void display_setPicture(Picture picture){
     SPI1_CSEnable();
     SPI1_sendByte(SET_PICTURE);
     for(lineNum = 1; lineNum <= picture.rows; lineNum++){
+        while(!SPI1_flagStatus(SPI_SR_TXE));
         SPI1_sendByte(display_reverseByte(lineNum));
         for(byteNum = 0; byteNum < picture.cols; byteNum++){
+            while(!SPI1_flagStatus(SPI_SR_TXE));
             SPI1_sendByte(~picture.pixels[(lineNum - 1) * picture.cols + byteNum]);
         }
         // Send dummy byte
+        while(!SPI1_flagStatus(SPI_SR_TXE));
         SPI1_sendByte(0);
     }
     // Send dummy byte
+    while(!SPI1_flagStatus(SPI_SR_TXE));
     SPI1_sendByte(0);
     while(SPI1_flagStatus(SPI_SR_BSY));
     // Disable CS
@@ -129,9 +121,12 @@ static void display_clearPicture(void){
     // Enable CS
     SPI1_CSEnable();
     // Send data
+    while(!SPI1_flagStatus(SPI_SR_TXE));
     SPI1_sendByte(CLEAR_DISPLAY);
     // Send dummy bytes
+    while(!SPI1_flagStatus(SPI_SR_TXE));
     SPI1_sendByte(0);
+    while(!SPI1_flagStatus(SPI_SR_TXE));
     SPI1_sendByte(0);
     while(SPI1_flagStatus(SPI_SR_BSY));
     // Disable CS
@@ -160,7 +155,7 @@ static void SPI1_CSDisable(void){
 
 static void SPI1_sendByte(uint8_t byte){
 
-    while(!SPI1_flagStatus(SPI_SR_TXE));
+    // Send byte
     SPI1->DR = byte;
 
 }

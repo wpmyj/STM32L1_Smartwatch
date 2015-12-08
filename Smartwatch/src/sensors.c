@@ -1,6 +1,27 @@
 #include "sensors.h"
 
 static void sensors_peripheralInit(void);
+static void sensors_startTempReading(void);
+static uint8_t sensors_getTemp(void);
+static void sensors_startHumReading(void);
+static uint8_t sensors_getHumidity(void);
+static void I2C1_startBit(void);
+static void I2C1_stopBit(void);
+static void I2C1_address(uint8_t address, uint8_t direction);
+static void I2C1_sendByte(uint8_t byte);
+static uint8_t I2C1_SR1flagStatus(uint16_t flag);
+static uint8_t I2C1_SR2flagStatus(uint16_t flag);
+
+int a;
+
+void sensors_t(void){
+
+    sensors_peripheralInit();
+    sensors_startTempReading();
+    a = 12;
+    for(;;);
+
+}
 
 static void sensors_peripheralInit(void){
 
@@ -12,15 +33,140 @@ static void sensors_peripheralInit(void){
     /* GPIO configuration */
 
     // Set MODER register
-    GPIOB->MODER |= (MODER6_VALUE << MODER6_OFFSET) | (MODER7_VALUE << MODER7_OFFSET);
+    GPIOB->MODER |= (SENS_MODER6_VALUE << SENS_MODER6_OFFSET) | (SENS_MODER7_VALUE << SENS_MODER7_OFFSET);
+    // Set OTYPER register
+    GPIOB->OTYPER |= (SENS_OTYPER6_VALUE << SENS_OTYPER6_OFFSET) | (SENS_OTYPER7_VALUE << SENS_OTYPER7_OFFSET);
     // Set OSPEEDR register
-    GPIOB->OSPEEDR |= (OSPEEDR6_VALUE << OSPEEDR6_OFFSET) | (OSPEEDR7_VALUE << OSPEEDR7_OFFSET);
+    GPIOB->OSPEEDR |= (SENS_OSPEEDR6_VALUE << SENS_OSPEEDR6_OFFSET) | (SENS_OSPEEDR7_VALUE << SENS_OSPEEDR7_OFFSET);
+    // Set PUPDR register... Remove this code when tests are finished
+    GPIOB->PUPDR |= (SENS_PUPDR6_VALUE << SENS_PUPDR6_OFFSET) | (SENS_PUPDR7_VALUE << SENS_PUPDR6_OFFSET);
     // Set AF function
-    GPIOA->AFR[0] |= (AFRL6_VALUE << AFRL6_OFFSET) | (AFRL7_VALUE << AFRL7_OFFSET);
+    GPIOB->AFR[0] |= (SENS_AFRL6_VALUE << SENS_AFRL6_OFFSET) | (SENS_AFRL7_VALUE << SENS_AFRL7_OFFSET);
 
-    /* I2C1 */
+    /* I2C1 configuration */
 
-
-    //I2C1->CR1 |= 
+    // Set CCR register
+    I2C1->CCR |= SENS_CCR_VALUE << SENS_CCR_OFFSET; 
+    // Set TRISE register
+    I2C1->TRISE |= SENS_TRISE_VALUE << SENS_TRISE_OFFSET;
+    // Set CR2 register
+    I2C1->CR2 |= SENS_FREQ_VALUE << SENS_FREQ_OFFSET;
+    // Set CR1 register
+    I2C1->CR1 |= SENS_PE_VALUE << SENS_PE_OFFSET;
 
 }
+
+static void sensors_startTempReading(void){
+
+    // Set start bit
+    I2C1_startBit();
+    while(!I2C1_SR1flagStatus(I2C_SR1_SB));
+    // Send address
+    I2C1_address(SHT21_ADDR, I2C1_WRITE);
+    while(!I2C1_SR1flagStatus(I2C_SR1_ADDR));
+    while(!I2C1_SR2flagStatus(I2C_SR2_TRA));
+    // Send command
+    while(!I2C1_SR1flagStatus(I2C_SR1_TXE));
+    I2C1_sendByte(TRIGGER_T);
+    // Set stop bit
+    while(!I2C1_SR1flagStatus(I2C_SR1_BTF));
+    I2C1_stopBit();
+
+}   
+
+static uint8_t sensors_getTemp(void){
+
+    uint8_t msb, lsb;
+    // Set start bit
+    I2C1_startBit();
+    while(!I2C1_SR1flagStatus(I2C_SR1_SB));
+    // Send address
+    I2C1_address(SHT21_ADDR, I2C1_READ);
+    while(!I2C1_SR1flagStatus(I2C_SR1_ADDR));
+    while(I2C1_SR2flagStatus(I2C_SR2_TRA));
+    // Read two bytes
+    while(!I2C1_SR1flagStatus(I2C_SR1_RXNE));
+    msb = I2C1->DR;
+    while(!I2C1_SR1flagStatus(I2C_SR1_RXNE));
+    lsb = I2C1->DR;
+
+    return 1;
+
+}
+
+static void sensors_startHumReading(void){
+
+    // Set start bit
+    I2C1_startBit();
+    while(!I2C1_SR1flagStatus(I2C_SR1_SB));
+    // Send address
+    I2C1_address(SHT21_ADDR, I2C1_WRITE);
+    while(!I2C1_SR1flagStatus(I2C_SR1_ADDR));
+    while(!I2C1_SR2flagStatus(I2C_SR2_TRA));
+    // Send command
+    while(!I2C1_SR1flagStatus(I2C_SR1_TXE));
+    I2C1_sendByte(TRIGGER_RH);
+    // Set stop bit
+    while(!I2C1_SR1flagStatus(I2C_SR1_BTF));
+    I2C1_stopBit();
+
+}
+
+static uint8_t sensors_getHumidity(void){
+
+    return 1;
+
+}
+
+
+static void I2C1_startBit(void){
+
+    // Send start bit
+    I2C1->CR1 |= SENS_START_VALUE << SENS_START_OFFSET;
+
+}
+
+static void I2C1_stopBit(void){
+
+    // Send stop bit
+    I2C1->CR1 |= SENS_STOP_VALUE << SENS_STOP_OFFSET;
+
+}
+
+static void I2C1_address(uint8_t address, uint8_t direction){
+
+    // Shift address to the left
+    address = address << 1;
+
+    if(direction == I2C1_READ)
+        address |= I2C1_READ;
+
+    // Send address
+    I2C1->DR = address;
+
+}
+
+static void I2C1_sendByte(uint8_t byte){
+
+    // Send byte
+    I2C1->DR = byte;    
+
+}
+
+static uint8_t I2C1_SR1flagStatus(uint16_t flag){
+
+    if(!(I2C1->SR1 & flag))
+        return 0;
+    return 1;
+
+}
+
+static uint8_t I2C1_SR2flagStatus(uint16_t flag){
+
+    if(!(I2C1->SR2 & flag))
+        return 0;
+    return 1;
+
+}
+
+

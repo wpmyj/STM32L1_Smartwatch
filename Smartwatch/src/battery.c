@@ -18,26 +18,26 @@ static void battery_peripheralInit(void){
     /* GPIO configuration */
     
     // MODER register configuration
-    GPIOA->MODER |= MODER2_VALUE << MODER2_OFFSET;
+    GPIOA->MODER |= BAT_MODER2_VALUE << BAT_MODER2_OFFSET;
     // OSPEEDR register configuration
-    GPIOA->OSPEEDR |= OSPEEDR2_VALUE << OSPEEDR2_OFFSET;
+    GPIOA->OSPEEDR |= BAT_OSPEEDR2_VALUE << BAT_OSPEEDR2_OFFSET;
 
     /* NVIC configuration */
 
     // ISER0 register configuration
-    NVIC->ISER[0] |= RS17_VALUE << RS17_OFFSET;
-    NVIC->IP[IP17_OFFSET] |= IP17_VALUE;
+    NVIC->ISER[0] |= BAT_RS17_VALUE << BAT_RS17_OFFSET;
+    NVIC->IP[BAT_IP17_OFFSET] |= BAT_IP17_VALUE;
 
     /* ADC1 configuration */
 
     // CR1 register configuration
-    ADC1->CR1 |= (PDI_VALUE << PDI_OFFSET) | (EOCIE_VALUE << EOCIE_OFFSET);
+    ADC1->CR1 |= (BAT_PDI_VALUE << BAT_PDI_OFFSET) | (BAT_EOCIE_VALUE << BAT_EOCIE_OFFSET);
     // SMPR3 register configuration
-    ADC1->SMPR3 |= SMP2_VALUE << SMP2_OFFSET;
+    ADC1->SMPR3 |= BAT_SMP2_VALUE << BAT_SMP2_OFFSET;
     // SQR5 register configuration
-    ADC1->SQR5 |= SQ1_VALUE << SQ1_OFFSET;
+    ADC1->SQR5 |= BAT_SQ1_VALUE << BAT_SQ1_OFFSET;
     // CR2 register configuration
-    ADC1->CR2 |= (EOCS_VALUE << EOCS_OFFSET) | (ADON_VALUE << ADON_OFFSET);
+    ADC1->CR2 |= (BAT_EOCS_VALUE << BAT_EOCS_OFFSET) | (BAT_ADON_VALUE << BAT_ADON_OFFSET);
     // Wait until ADC is ready to convert
     while(!ADC1_flagStatus(ADC_SR_ADONS));
 

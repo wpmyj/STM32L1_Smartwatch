@@ -2,6 +2,6 @@
 
 void main(){
 
-    display_t();
+    sensors_t();
 
 }

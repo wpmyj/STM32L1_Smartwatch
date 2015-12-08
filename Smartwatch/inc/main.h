@@ -3,6 +3,8 @@
 
 #include "math.h"
 #include "stm32l1xx.h"
+#include "sensors.h"
+#include "display.h"
 
 void main();
 
