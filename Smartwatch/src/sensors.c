@@ -1,10 +1,8 @@
 #include "sensors.h"
 
 static void sensors_peripheralInit(void);
-static void sensors_startTempReading(void);
-static uint8_t sensors_getTemp(void);
-static void sensors_startHumReading(void);
-static uint8_t sensors_getHumidity(void);
+static void sensors_startSHT21(uint8_t cmd);
+static uint16_t sensors_getSHT21Value(void);
 static void I2C1_startBit(void);
 static void I2C1_stopBit(void);
 static void I2C1_address(uint8_t address, uint8_t direction);
@@ -12,14 +10,16 @@ static void I2C1_sendByte(uint8_t byte);
 static uint8_t I2C1_SR1flagStatus(uint16_t flag);
 static uint8_t I2C1_SR2flagStatus(uint16_t flag);
 
-int a;
+static void delay(uint32_t dly){
+
+    while(dly-- > 0)
+        __asm("nop");
+
+}
 
 void sensors_t(void){
 
     sensors_peripheralInit();
-    sensors_startTempReading();
-    a = 12;
-    for(;;);
 
 }
 
@@ -56,8 +56,9 @@ static void sensors_peripheralInit(void){
 
 }
 
-static void sensors_startTempReading(void){
+static void sensors_startSHT21(uint8_t cmd){
 
+    while(I2C1_SR2flagStatus(I2C_SR2_BUSY));
     // Set start bit
     I2C1_startBit();
     while(!I2C1_SR1flagStatus(I2C_SR1_SB));
@@ -67,16 +68,21 @@ static void sensors_startTempReading(void){
     while(!I2C1_SR2flagStatus(I2C_SR2_TRA));
     // Send command
     while(!I2C1_SR1flagStatus(I2C_SR1_TXE));
-    I2C1_sendByte(TRIGGER_T);
+    I2C1_sendByte(cmd);
     // Set stop bit
     while(!I2C1_SR1flagStatus(I2C_SR1_BTF));
     I2C1_stopBit();
+    while(I2C1_SR1flagStatus(I2C_SR1_STOPF));
 
-}   
+}
 
-static uint8_t sensors_getTemp(void){
+static uint16_t sensors_getSHT21Value(void){
 
     uint8_t msb, lsb;
+
+    // Set ACK bit
+    I2C1->CR1 |= SENS_ACK_VALUE << SENS_ACK_OFFSET;
+    while(I2C1_SR2flagStatus(I2C_SR2_BUSY));
     // Set start bit
     I2C1_startBit();
     while(!I2C1_SR1flagStatus(I2C_SR1_SB));
@@ -89,32 +95,13 @@ static uint8_t sensors_getTemp(void){
     msb = I2C1->DR;
     while(!I2C1_SR1flagStatus(I2C_SR1_RXNE));
     lsb = I2C1->DR;
-
-    return 1;
-
-}
-
-static void sensors_startHumReading(void){
-
-    // Set start bit
-    I2C1_startBit();
-    while(!I2C1_SR1flagStatus(I2C_SR1_SB));
-    // Send address
-    I2C1_address(SHT21_ADDR, I2C1_WRITE);
-    while(!I2C1_SR1flagStatus(I2C_SR1_ADDR));
-    while(!I2C1_SR2flagStatus(I2C_SR2_TRA));
-    // Send command
-    while(!I2C1_SR1flagStatus(I2C_SR1_TXE));
-    I2C1_sendByte(TRIGGER_RH);
+    // Reset ACK bit
+    I2C1->CR1 &= ~(SENS_ACK_VALUE << SENS_ACK_OFFSET);
     // Set stop bit
-    while(!I2C1_SR1flagStatus(I2C_SR1_BTF));
     I2C1_stopBit();
+    while(I2C1_SR1flagStatus(I2C_SR1_STOPF));
 
-}
-
-static uint8_t sensors_getHumidity(void){
-
-    return 1;
+    return ((msb << 8) | lsb) & ~0x0003;
 
 }
 

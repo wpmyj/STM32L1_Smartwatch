@@ -14,8 +14,8 @@
 // SHT21 address
 #define SHT21_ADDR 0x40
 // SHT21 commands
-#define TRIGGER_RH 0b11110101
-#define TRIGGER_T 0b11110011
+#define CMD_HUMIDITY 0b11110101
+#define CMD_TEMPERATURE 0b11110011
 
 // GPIOB MODER register offsets and values
 #define SENS_MODER6_OFFSET 0xC
@@ -54,6 +54,8 @@
 #define SENS_START_VALUE 0x1
 #define SENS_STOP_OFFSET 0x9
 #define SENS_STOP_VALUE 0x1
+#define SENS_ACK_OFFSET 0xA
+#define SENS_ACK_VALUE 0x1
 
 //I2C1 CR2 register offsets and values
 #define SENS_FREQ_OFFSET 0x0
