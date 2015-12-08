@@ -10,13 +10,6 @@ static void I2C1_sendByte(uint8_t byte);
 static uint8_t I2C1_SR1flagStatus(uint16_t flag);
 static uint8_t I2C1_SR2flagStatus(uint16_t flag);
 
-static void delay(uint32_t dly){
-
-    while(dly-- > 0)
-        __asm("nop");
-
-}
-
 void sensors_t(void){
 
     sensors_peripheralInit();
