@@ -15,7 +15,7 @@ typedef struct Frame{
 
     short locationX; // Location of a frame
     short locationY;
-    Icon icon; // Pointer to an Icon
+    Icon icon; // Icon structure
 
  } Frame;
 

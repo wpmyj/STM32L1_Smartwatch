@@ -5,6 +5,7 @@
 #include "stm32l1xx.h"
 #include "sensors.h"
 #include "display.h"
+#include "clock.h"
 
 void main();
 

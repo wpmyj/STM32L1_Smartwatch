@@ -2,6 +2,7 @@
 
 void main(){
 
-    sensors_t();
+    clock_t();
+    for(;;);
 
 }
