@@ -7,8 +7,6 @@ static void I2C1_startBit(void);
 static void I2C1_stopBit(void);
 static void I2C1_address(uint8_t address, uint8_t direction);
 static void I2C1_sendByte(uint8_t byte);
-static uint8_t I2C1_SR1flagStatus(uint16_t flag);
-static uint8_t I2C1_SR2flagStatus(uint16_t flag);
 
 void sensors_t(void){
 
@@ -51,21 +49,21 @@ static void sensors_peripheralInit(void){
 
 static void sensors_startSHT21(uint8_t cmd){
 
-    while(I2C1_SR2flagStatus(I2C_SR2_BUSY));
+    while(I2C1->SR2 & I2C_SR2_BUSY);
     // Set start bit
     I2C1_startBit();
-    while(!I2C1_SR1flagStatus(I2C_SR1_SB));
+    while(!(I2C1->SR1 & I2C_SR1_SB));
     // Send address
     I2C1_address(SHT21_ADDR, I2C1_WRITE);
-    while(!I2C1_SR1flagStatus(I2C_SR1_ADDR));
-    while(!I2C1_SR2flagStatus(I2C_SR2_TRA));
+    while(!(I2C1->SR1 & I2C_SR1_ADDR));
+    while(!(I2C1->SR2 & I2C_SR2_TRA));
     // Send command
-    while(!I2C1_SR1flagStatus(I2C_SR1_TXE));
+    while(!(I2C1->SR1 & I2C_SR1_TXE));
     I2C1_sendByte(cmd);
     // Set stop bit
-    while(!I2C1_SR1flagStatus(I2C_SR1_BTF));
+    while(!(I2C1->SR1 & I2C_SR1_BTF));
     I2C1_stopBit();
-    while(I2C1_SR1flagStatus(I2C_SR1_STOPF));
+    while(I2C1->SR1 & I2C_SR1_STOPF);
 
 }
 
@@ -75,24 +73,25 @@ static uint16_t sensors_getSHT21Value(void){
 
     // Set ACK bit
     I2C1->CR1 |= SENS_ACK_VALUE << SENS_ACK_OFFSET;
-    while(I2C1_SR2flagStatus(I2C_SR2_BUSY));
+    while(I2C1->SR2 & I2C_SR2_BUSY);
     // Set start bit
     I2C1_startBit();
-    while(!I2C1_SR1flagStatus(I2C_SR1_SB));
+    while(!(I2C1->SR1 & I2C_SR1_SB));
     // Send address
     I2C1_address(SHT21_ADDR, I2C1_READ);
-    while(!I2C1_SR1flagStatus(I2C_SR1_ADDR));
-    while(I2C1_SR2flagStatus(I2C_SR2_TRA));
+    while(!(I2C1->SR1 & I2C_SR1_ADDR));
+    while(I2C1->SR2 & I2C_SR2_TRA);
     // Read two bytes
-    while(!I2C1_SR1flagStatus(I2C_SR1_RXNE));
+    while(!(I2C1->SR1 & I2C_SR1_RXNE));
     msb = I2C1->DR;
-    while(!I2C1_SR1flagStatus(I2C_SR1_RXNE));
+    while(!(I2C1->SR1 & I2C_SR1_RXNE));
     lsb = I2C1->DR;
     // Reset ACK bit
     I2C1->CR1 &= ~(SENS_ACK_VALUE << SENS_ACK_OFFSET);
     // Set stop bit
     I2C1_stopBit();
-    while(I2C1_SR1flagStatus(I2C_SR1_STOPF));
+    //while(I2C1_SR1flagStatus(I2C_SR1_STOPF));
+    while(I2C1->SR1 & I2C_SR1_STOPF);
 
     return ((msb << 8) | lsb) & ~0x0003;
 
@@ -130,22 +129,6 @@ static void I2C1_sendByte(uint8_t byte){
 
     // Send byte
     I2C1->DR = byte;    
-
-}
-
-static uint8_t I2C1_SR1flagStatus(uint16_t flag){
-
-    if(!(I2C1->SR1 & flag))
-        return 0;
-    return 1;
-
-}
-
-static uint8_t I2C1_SR2flagStatus(uint16_t flag){
-
-    if(!(I2C1->SR2 & flag))
-        return 0;
-    return 1;
 
 }
 

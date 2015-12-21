@@ -9,8 +9,6 @@ static uint8_t display_reverseByte(uint8_t byte);
 static void SPI1_CSEnable(void);
 static void SPI1_CSDisable(void);
 static void SPI1_sendByte(uint8_t byte);
-static uint8_t SPI1_flagStatus(uint16_t flag);
-
 
 void display_t(void){
 
@@ -20,7 +18,6 @@ void display_t(void){
     display_enable();
     // Clear display
     display_clearPicture();
-
 
 }
 
@@ -97,20 +94,20 @@ static void display_setPicture(Picture picture){
     SPI1_CSEnable();
     SPI1_sendByte(SET_PICTURE);
     for(lineNum = 1; lineNum <= picture.rows; lineNum++){
-        while(!SPI1_flagStatus(SPI_SR_TXE));
+        while(!(SPI1->SR & SPI_SR_TXE));
         SPI1_sendByte(display_reverseByte(lineNum));
         for(byteNum = 0; byteNum < picture.cols; byteNum++){
-            while(!SPI1_flagStatus(SPI_SR_TXE));
+            while(!(SPI1->SR & SPI_SR_TXE));
             SPI1_sendByte(~picture.pixels[(lineNum - 1) * picture.cols + byteNum]);
         }
         // Send dummy byte
-        while(!SPI1_flagStatus(SPI_SR_TXE));
+        while(!(SPI1->SR & SPI_SR_TXE));
         SPI1_sendByte(0);
     }
     // Send dummy byte
-    while(!SPI1_flagStatus(SPI_SR_TXE));
+    while(!(SPI1->SR & SPI_SR_TXE));
     SPI1_sendByte(0);
-    while(SPI1_flagStatus(SPI_SR_BSY));
+    while(SPI1->SR & SPI_SR_BSY);
     // Disable CS
     SPI1_CSDisable();
 
@@ -121,14 +118,14 @@ static void display_clearPicture(void){
     // Enable CS
     SPI1_CSEnable();
     // Send data
-    while(!SPI1_flagStatus(SPI_SR_TXE));
+    while(!(SPI1->SR & SPI_SR_TXE));
     SPI1_sendByte(CLEAR_DISPLAY);
     // Send dummy bytes
-    while(!SPI1_flagStatus(SPI_SR_TXE));
+    while(!(SPI1->SR & SPI_SR_TXE));
     SPI1_sendByte(0);
-    while(!SPI1_flagStatus(SPI_SR_TXE));
+    while(!(SPI1->SR & SPI_SR_TXE));
     SPI1_sendByte(0);
-    while(SPI1_flagStatus(SPI_SR_BSY));
+    while(SPI1->SR & SPI_SR_BSY);
     // Disable CS
     SPI1_CSDisable();
 
@@ -157,14 +154,6 @@ static void SPI1_sendByte(uint8_t byte){
 
     // Send byte
     SPI1->DR = byte;
-
-}
-
-static uint8_t SPI1_flagStatus(uint16_t flag){
-
-    if(!(SPI1->SR & flag))
-        return 0;
-    return 1;
 
 }
 

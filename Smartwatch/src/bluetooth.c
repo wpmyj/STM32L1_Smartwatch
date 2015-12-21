@@ -4,8 +4,6 @@ static void bluetooth_peripheralInit(uint32_t baudrate);
 static void USART1_irqEnable(void);
 static void USART1_sendData(char* str);
 static void USART1_sendByte(uint8_t byte);
-static uint8_t USART1_flagStatus(uint16_t flag);
-static void USART1_clearFlag(uint16_t flag);
 
 void bluetooth_t(void){
 
@@ -80,28 +78,14 @@ static void USART1_sendByte(uint8_t byte){
 static void USART1_sendData(char* str){
 
     while(*str){
-        while(!USART1_flagStatus(USART_SR_TXE));
+        while(!(USART1->SR & USART_SR_TXE));
         USART1_sendByte(*str++);
     }
 
 }
 
-static uint8_t USART1_flagStatus(uint16_t flag){
-
-    if(!(USART1->SR & flag))
-        return 0;
-    return 1;
-
-}
-
-static void USART1_clearFlag(uint16_t flag){
-
-    USART1->SR = ~(uint32_t)flag;
-
-}
-
 void USART1_IRQHandler(void){   
 
-    USART1_clearFlag(USART_SR_RXNE);
+    USART1->SR &= ~USART_SR_RXNE;
 
 }

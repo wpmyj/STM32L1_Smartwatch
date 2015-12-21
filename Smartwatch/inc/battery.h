@@ -40,6 +40,7 @@
 #define BAT_SQ1_VALUE 0x2
 
 
+void battery_t(void);
 void ADC1_IRQHandler(void);
 
 #endif

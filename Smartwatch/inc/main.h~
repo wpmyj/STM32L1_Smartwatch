@@ -6,7 +6,6 @@
 #include "sensors.h"
 #include "display.h"
 #include "clock.h"
-#include "battery.h"
 
 void main();
 

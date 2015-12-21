@@ -3,8 +3,10 @@
 static void clock_peripheralInit(void);
 static void RTC_setTime(Time time);
 static Time RTC_getTime(void);
+static uint8_t RTC_flagStatus(uint16_t flag);
+static void RTC_clearFlag(uint16_t flag);
 
-Time time2;
+Time time;
 Time tim;
 
 void clock_t(void){
@@ -19,7 +21,7 @@ void clock_t(void){
     clock_peripheralInit();
     RTC_setTime(tim);
     for(;;)
-        time2 = RTC_getTime();
+        time = RTC_getTime();
 
 }
 
@@ -44,7 +46,7 @@ static void clock_peripheralInit(void){
     // Set ISR register(enter initialization)
     RTC->ISR |= CLK_INIT_VALUE << CLK_INIT_OFFSET;
     // Wait for the INITF flag
-    while(!(RTC->ISR & RTC_ISR_INITF));
+    while(!RTC_flagStatus(RTC_ISR_INITF));
     // Set PRER register
     RTC->PRER |= CLK_PREDIV_S_VALUE << CLK_PREDIV_S_OFFSET;
     RTC->PRER |= CLK_PREDIV_A_VALUE << CLK_PREDIV_A_OFFSET;
@@ -64,13 +66,12 @@ static void RTC_setTime(Time time){
     // Set ISR register(enter initialization)
     RTC->ISR |= CLK_INIT_VALUE << CLK_INIT_OFFSET;
     // Wait for the INITF flag
-    //while(!RTC_flagStatus(RTC_ISR_INITF));
-    while(!(RTC->ISR & RTC_ISR_INITF));
+    while(!RTC_flagStatus(RTC_ISR_INITF));
     // Set time
     RTC->TR |= ((time.hours / 10) << RTC_HT_OFFSET) | ((time.hours % 10) << RTC_HU_OFFSET) | ((time.minutes / 10) << RTC_MNT_OFFSET) | ((time.minutes % 10) << RTC_MNU_OFFSET) | 
                ((time.seconds / 10) << RTC_ST_OFFSET) | ((time.seconds % 10) << RTC_SU_OFFSET); 
     // Set date
-    RTC->DR |= ((time.year / 10) << RTC_YT_OFFSET) | ((time.year % 10) << RTC_YU_OFFSET) | ((time.month / 10) << RTC_MT_OFFSET) | ((time.month % 10) << (RTC_MU_OFFSET - 1)) | 
+    RTC->DR |= ((time.year / 10) << RTC_YT_OFFSET) | ((time.year % 10) << RTC_YU_OFFSET) | ((time.month / 10) << RTC_MT_OFFSET) | ((time.month % 10) << RTC_MU_OFFSET) | 
                ((time.day / 10) << RTC_DT_OFFSET) | ((time.day % 10) << RTC_DU_OFFSET);      
     // Set ISR register(exit initialization)
     RTC->ISR &= ~(CLK_INIT_VALUE << CLK_INIT_OFFSET);
@@ -85,10 +86,9 @@ static Time RTC_getTime(void){
     uint32_t reg;
 
     // Clear WSR flag
-    //RTC_clearFlag(RTC_ISR_RSF);
-    RTC->ISR &= ~RTC_ISR_RSF;
+    RTC_clearFlag(RTC_ISR_RSF);
     // Wait for the WSR flag
-    while(!(RTC->ISR & RTC_ISR_RSF));
+    while(!RTC_flagStatus(RTC_ISR_RSF));
 
     // get time
     reg = RTC->TR;
@@ -103,5 +103,19 @@ static Time RTC_getTime(void){
     time.day = (((reg & (0b11 << RTC_DT_OFFSET)) >> RTC_DT_OFFSET) * 10) + ((reg & (0b1111 << RTC_DU_OFFSET)) >> RTC_DU_OFFSET);
 
     return time;
+
+}
+
+static uint8_t RTC_flagStatus(uint16_t flag){
+
+    if(!(RTC->ISR & flag))
+        return 0;
+    return 1;
+
+}
+
+static void RTC_clearFlag(uint16_t flag){
+
+    RTC->ISR &= ~(uint32_t)flag;
 
 }

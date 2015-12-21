@@ -3,10 +3,15 @@
 static void battery_peripheralInit(void);
 static void battery_StartADCConversion(void);
 static uint8_t battery_getCapacity(short dr);
-static uint8_t ADC1_flagStatus(uint16_t flag);
-static void ADC1_clearFlag(uint16_t flag);
 
 volatile uint8_t batteryCapacity;
+
+void battery_t(void){
+
+    // Init battery peripherals
+    battery_peripheralInit();
+
+}
 
 static void battery_peripheralInit(void){
     
@@ -39,7 +44,7 @@ static void battery_peripheralInit(void){
     // CR2 register configuration
     ADC1->CR2 |= (BAT_EOCS_VALUE << BAT_EOCS_OFFSET) | (BAT_ADON_VALUE << BAT_ADON_OFFSET);
     // Wait until ADC is ready to convert
-    while(!ADC1_flagStatus(ADC_SR_ADONS));
+    while(!(ADC1->SR & ADC_SR_ADONS));
 
 }
 
@@ -59,28 +64,15 @@ static uint8_t battery_getCapacity(short dr){
 
 static void battery_StartADCConversion(void){
 
-    while(!ADC1_flagStatus(ADC_SR_EOC))
+    while(ADC1->SR & ADC_SR_EOC);
     // Start conversion
     ADC1->CR2 |= ADC_CR2_SWSTART;
-
-}
-
-static uint8_t ADC1_flagStatus(uint16_t flag){
-
-    if(!(ADC1->SR & flag))
-        return 0;
-    return 1;
-}
-
-static void ADC1_clearFlag(uint16_t flag){
-
-    ADC1->SR = ~(uint32_t)flag;
 
 }
 
 void ADC1_IRQHandler(void){   
 
     batteryCapacity = battery_getCapacity(ADC1->DR);
-    ADC1_clearFlag(ADC_SR_EOC);
+    ADC1->SR &= ~ADC_SR_EOC;
 
 }
