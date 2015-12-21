@@ -7,6 +7,7 @@
 #include "display.h"
 #include "clock.h"
 #include "battery.h"
+#include "button.h"
 
 void main();
 

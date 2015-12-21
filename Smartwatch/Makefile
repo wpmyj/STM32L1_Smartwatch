@@ -10,6 +10,7 @@ SRCS = src/main.c \
        src/icons.c \
        src/sensors.c \
 	   src/clock.c \
+       src/button.c \
 
 
 CC=arm-none-eabi-gcc
