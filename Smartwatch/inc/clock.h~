@@ -54,7 +54,8 @@
 // EXTI IMR register offsets and values
 #define CLK_IMR17_OFFSET 0x11
 #define CLK_IMR17_VALUE 0x1
-// EXTI RTSR register offsets and values
+#define CLK_EMR17_OFFSET 0x11
+#define CLK_EMR17_VALUE 0x1
 #define CLK_RTSR17_OFFSET 0x11
 #define CLK_RTSR17_VALUE 0x1
 

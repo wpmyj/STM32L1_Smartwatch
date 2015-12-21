@@ -4,9 +4,23 @@ static void clock_peripheralInit(void);
 static void clock_setTime(Time time);
 static Time clock_getTime(void);
 
+Time time2;
+Time tim;
+uint32_t lol;
+
 void clock_t(void){
 
+    tim.year = 14;
+    tim.month = 12;
+    tim.day = 29;
+    tim.hours = 14;
+    tim.minutes = 37;
+    tim.seconds = 29;
+
     clock_peripheralInit();
+    clock_setTime(tim);
+    for(;;)
+        time2 = clock_getTime();
 
 }
 
@@ -54,6 +68,8 @@ static void clock_peripheralInit(void){
 
     // IMR register configuration
     EXTI->IMR |= CLK_IMR17_VALUE << CLK_IMR17_OFFSET;
+    // EMR register configuration
+    EXTI->EMR |= CLK_EMR17_VALUE << CLK_EMR17_OFFSET;
     // RTSR register configuration
     EXTI->RTSR |= CLK_RTSR17_VALUE << CLK_RTSR17_OFFSET;
 
@@ -115,6 +131,7 @@ static Time clock_getTime(void){
 
 void RTC_Alarm_IRQHandler(void){
 
+    lol++;
     RTC->ISR &= ~RTC_ISR_ALRAF;
     EXTI->PR |= EXTI_PR_PR17;
 
