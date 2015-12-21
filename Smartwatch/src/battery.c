@@ -1,8 +1,8 @@
 #include "battery.h"
 
 static void battery_peripheralInit(void);
-static void battery_StartADCConversion(void);
 static uint8_t battery_getCapacity(short dr);
+static void ADC1_StartConversion(void);
 
 volatile uint8_t batteryCapacity;
 
@@ -30,8 +30,9 @@ static void battery_peripheralInit(void){
     /* NVIC configuration */
 
     // ISER0 register configuration
-    NVIC->ISER[0] |= BAT_RS17_VALUE << BAT_RS17_OFFSET;
-    NVIC->IP[BAT_IP17_OFFSET] |= BAT_IP17_VALUE;
+    NVIC->ISER[0] |= BAT_RS18_VALUE << BAT_RS18_OFFSET;
+    // IPR register configuration
+    NVIC->IP[BAT_IP18_OFFSET] |= BAT_IP18_VALUE;
 
     /* ADC1 configuration */
 
@@ -62,7 +63,7 @@ static uint8_t battery_getCapacity(short dr){
 
 }
 
-static void battery_StartADCConversion(void){
+static void ADC1_StartConversion(void){
 
     while(ADC1->SR & ADC_SR_EOC);
     // Start conversion

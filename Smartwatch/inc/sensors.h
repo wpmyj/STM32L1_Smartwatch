@@ -22,25 +22,21 @@
 #define SENS_MODER6_VALUE 0x2
 #define SENS_MODER7_OFFSET 0xE
 #define SENS_MODER7_VALUE 0x2
-
 // GPIOB OTYPER register offsets and values
 #define SENS_OTYPER6_OFFSET 0x6
 #define SENS_OTYPER6_VALUE 0x1
 #define SENS_OTYPER7_OFFSET 0x7
 #define SENS_OTYPER7_VALUE 0x1
-
 // GPIOB OSPEEDR register offsets and values
 #define SENS_OSPEEDR6_OFFSET 0xC
 #define SENS_OSPEEDR6_VALUE 0x2
 #define SENS_OSPEEDR7_OFFSET 0xE
 #define SENS_OSPEEDR7_VALUE 0x2
-
 // GPIOB PUPDR register offsets and values ... Delete when tests are finished!!!!!!
 #define SENS_PUPDR6_OFFSET 0xC
 #define SENS_PUPDR6_VALUE 0x1
 #define SENS_PUPDR7_OFFSET 0xE
 #define SENS_PUPDR7_VALUE 0x1
-
 //GPIOB AFRL register offsets and values
 #define SENS_AFRL6_OFFSET 0x18
 #define SENS_AFRL6_VALUE 0x4
@@ -56,15 +52,12 @@
 #define SENS_STOP_VALUE 0x1
 #define SENS_ACK_OFFSET 0xA
 #define SENS_ACK_VALUE 0x1
-
 //I2C1 CR2 register offsets and values
 #define SENS_FREQ_OFFSET 0x0
 #define SENS_FREQ_VALUE 0x20
-
 //I2C1 CCR register offsets and values
 #define SENS_CCR_OFFSET 0x0
 #define SENS_CCR_VALUE 0xA0
-
 //I2C1 TRISE register offsets and values
 #define SENS_TRISE_OFFSET 0x0
 #define SENS_TRISE_VALUE 0x21

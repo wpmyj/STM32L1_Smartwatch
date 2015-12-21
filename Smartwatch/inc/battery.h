@@ -16,11 +16,11 @@
 #define BAT_OSPEEDR2_VALUE 0x3
 
 // NVIC ISER0 register offsets and values
-#define BAT_RS17_OFFSET ADC1_IRQn
-#define BAT_RS17_VALUE 0x1
+#define BAT_RS18_OFFSET ADC1_IRQn
+#define BAT_RS18_VALUE 0x1
 // NVIC IP register offsets and values
-#define BAT_IP17_OFFSET ADC1_IRQn // Priority
-#define BAT_IP17_VALUE 0x0 // Priority
+#define BAT_IP18_OFFSET ADC1_IRQn // Priority
+#define BAT_IP18_VALUE 0x0 // Priority
 
 // ADC1 CR1 register offsets and values
 #define BAT_PDI_OFFSET 11

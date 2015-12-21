@@ -43,6 +43,7 @@
 #define DISP_AFRL6_VALUE 0x2
 #define DISP_AFRL7_OFFSET 0x1C
 #define DISP_AFRL7_VALUE 0x5
+
 // TIM3 CR1 register offsets and values
 #define DISP_CEN_OFFSET 0x0
 #define DISP_CEN_VALUE 0x1
@@ -61,6 +62,7 @@
 #define DISP_CC1E_VALUE 0x1
 // TIM3 CCR1 value
 #define DISP_CCR1_VALUE 2070
+
 // SPI1 CR1 register offsets and values
 #define DISP_BIDIMODE_OFFSET 0xF
 #define DISP_BIDIMODE_VALUE 0x1

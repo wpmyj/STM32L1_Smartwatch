@@ -26,12 +26,14 @@
 #define BT_AFRH9_VALUE 0x7
 #define BT_AFRH10_OFFSET 0x8
 #define BT_AFRH10_VALUE 0x7
+
 // NVIC ISER1 register offsets and values
-#define BT_RS5_OFFSET (USART1_IRQn % 32)
-#define BT_RS5_VALUE 0x1
+#define BT_RS4_OFFSET (USART1_IRQn % 32)
+#define BT_RS4_VALUE 0x1
 // NVIC IP register offsets and values
-#define BT_IP5_OFFSET USART1_IRQn // Priority
-#define BT_IP5_VALUE 0x0 // Priority
+#define BT_IP4_OFFSET USART1_IRQn // Priority
+#define BT_IP4_VALUE 0x0 // Priority
+
 // USART CR1 register offsets and values
 #define BT_OVER8_OFFSET 0xF
 #define BT_OVER8_VALUE 0x1

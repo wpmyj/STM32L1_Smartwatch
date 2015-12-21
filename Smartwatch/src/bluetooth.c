@@ -47,8 +47,9 @@ static void bluetooth_peripheralInit(uint32_t baudrate){
     /* NVIC configuration */
 
     // ISER1 register configuration
-    NVIC->ISER[1] |= BT_RS5_VALUE << BT_RS5_OFFSET;
-    NVIC->IP[BT_IP5_OFFSET] |= BT_IP5_VALUE;
+    NVIC->ISER[1] |= BT_RS4_VALUE << BT_RS4_OFFSET;
+    // IPR register configuration
+    NVIC->IP[BT_IP4_OFFSET] |= BT_IP4_VALUE;
 
     /* USART configuration */
 

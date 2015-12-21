@@ -1,11 +1,12 @@
 #include "clock.h"
 
 static void clock_peripheralInit(void);
-static void RTC_setTime(Time time);
-static Time RTC_getTime(void);
+static void clock_setTime(Time time);
+static Time clock_getTime(void);
 
 Time time2;
 Time tim;
+uint32_t lol;
 
 void clock_t(void){
 
@@ -17,9 +18,9 @@ void clock_t(void){
     tim.seconds = 29;
 
     clock_peripheralInit();
-    RTC_setTime(tim);
+    clock_setTime(tim);
     for(;;)
-        time2 = RTC_getTime();
+        time2 = clock_getTime();
 
 }
 
@@ -27,6 +28,9 @@ static void clock_peripheralInit(void){
 
     // Enable power interface
     RCC->APB1ENR |= RCC_APB1ENR_PWREN;
+
+    /* RTC configuration */
+
     // Access to RTC, RTC Backup and RCC CSR registers enabled
     PWR->CR |= CLK_DBP_VALUE << CLK_DBP_OFFSET;
     // Reset rtc interface
@@ -48,15 +52,36 @@ static void clock_peripheralInit(void){
     // Set PRER register
     RTC->PRER |= CLK_PREDIV_S_VALUE << CLK_PREDIV_S_OFFSET;
     RTC->PRER |= CLK_PREDIV_A_VALUE << CLK_PREDIV_A_OFFSET;
-    // Set ALARMA to one minute
+    // Wait for ALRAWF flag
+    while(!(RTC->ISR & RTC_ISR_ALRAWF));
+    // Set ALRMAR register
+    RTC->ALRMAR |= (CLK_MSK2_VALUE << CLK_MSK2_OFFSET) | (CLK_MSK3_VALUE << CLK_MSK3_OFFSET) | (CLK_MSK4_VALUE << CLK_MSK4_OFFSET);
+    // Enable ALARM A and interrupts
+    RTC->CR |= (CLK_ALRAE_VALUE << CLK_ALRAE_OFFSET) | (CLK_ALRAIE_VALUE << CLK_ALRAIE_OFFSET);
+    // Set ALARMA mask
     // Set ISR register(exit initialization)
     RTC->ISR &= ~(CLK_INIT_VALUE << CLK_INIT_OFFSET);
     // Enable RTC write protection
     RTC->WPR = 0xFF;
 
+    /* EXTI configuration */
+
+    // IMR register configuration
+    EXTI->IMR |= CLK_IMR17_VALUE << CLK_IMR17_OFFSET;
+    // EMR register configuration
+    EXTI->EMR |= CLK_EMR17_VALUE << CLK_EMR17_OFFSET;
+    // RTSR register configuration
+    EXTI->RTSR |= CLK_RTSR17_VALUE << CLK_RTSR17_OFFSET;
+
+    /* NVIC configuration */
+
+    // ISER1 register configuration
+    NVIC->ISER[1] |= CLK_RS8_VALUE << CLK_RS8_OFFSET;
+    NVIC->IP[CLK_IP8_OFFSET] |= CLK_IP8_VALUE;
+
 }
 
-static void RTC_setTime(Time time){
+static void clock_setTime(Time time){
 
     // Disable the RTC write protection
     RTC->WPR |= CLK_WPR1;
@@ -64,14 +89,13 @@ static void RTC_setTime(Time time){
     // Set ISR register(enter initialization)
     RTC->ISR |= CLK_INIT_VALUE << CLK_INIT_OFFSET;
     // Wait for the INITF flag
-    //while(!RTC_flagStatus(RTC_ISR_INITF));
     while(!(RTC->ISR & RTC_ISR_INITF));
     // Set time
-    RTC->TR |= ((time.hours / 10) << RTC_HT_OFFSET) | ((time.hours % 10) << RTC_HU_OFFSET) | ((time.minutes / 10) << RTC_MNT_OFFSET) | ((time.minutes % 10) << RTC_MNU_OFFSET) | 
-               ((time.seconds / 10) << RTC_ST_OFFSET) | ((time.seconds % 10) << RTC_SU_OFFSET); 
+    RTC->TR = ((time.hours / 10) << CLK_HT_OFFSET) | ((time.hours % 10) << CLK_HU_OFFSET) | ((time.minutes / 10) << CLK_MNT_OFFSET) | ((time.minutes % 10) << CLK_MNU_OFFSET) | 
+               ((time.seconds / 10) << CLK_ST_OFFSET) | ((time.seconds % 10) << CLK_SU_OFFSET); 
     // Set date
-    RTC->DR |= ((time.year / 10) << RTC_YT_OFFSET) | ((time.year % 10) << RTC_YU_OFFSET) | ((time.month / 10) << RTC_MT_OFFSET) | ((time.month % 10) << (RTC_MU_OFFSET - 1)) | 
-               ((time.day / 10) << RTC_DT_OFFSET) | ((time.day % 10) << RTC_DU_OFFSET);      
+    RTC->DR = ((time.year / 10) << CLK_YT_OFFSET) | ((time.year % 10) << CLK_YU_OFFSET) | ((time.month / 10) << CLK_MT_OFFSET) | ((time.month % 10) << CLK_MU_OFFSET) | 
+               ((time.day / 10) << CLK_DT_OFFSET) | ((time.day % 10) << CLK_DU_OFFSET);      
     // Set ISR register(exit initialization)
     RTC->ISR &= ~(CLK_INIT_VALUE << CLK_INIT_OFFSET);
     // Enable RTC write protection
@@ -79,29 +103,36 @@ static void RTC_setTime(Time time){
 
 }
 
-static Time RTC_getTime(void){
+static Time clock_getTime(void){
 
     Time time;
     uint32_t reg;
 
     // Clear WSR flag
-    //RTC_clearFlag(RTC_ISR_RSF);
     RTC->ISR &= ~RTC_ISR_RSF;
     // Wait for the WSR flag
     while(!(RTC->ISR & RTC_ISR_RSF));
 
-    // get time
     reg = RTC->TR;
-    time.hours = (((reg & (0b11 << RTC_HT_OFFSET)) >> RTC_HT_OFFSET) * 10) + ((reg & (0b1111 << RTC_HU_OFFSET)) >> RTC_HU_OFFSET);
-    time.minutes = (((reg & (0b111 << RTC_MNT_OFFSET)) >> RTC_MNT_OFFSET) * 10) + ((reg & (0b1111 << RTC_MNU_OFFSET)) >> RTC_MNU_OFFSET);
-    time.seconds = (((reg & (0b111 << RTC_ST_OFFSET)) >> RTC_ST_OFFSET) * 10) + ((reg & (0b1111 << RTC_SU_OFFSET)) >> RTC_SU_OFFSET);
+    // Get time
+    time.hours = (((reg & (0b11 << CLK_HT_OFFSET)) >> CLK_HT_OFFSET) * 10) + ((reg & (0b1111 << CLK_HU_OFFSET)) >> CLK_HU_OFFSET);
+    time.minutes = (((reg & (0b111 << CLK_MNT_OFFSET)) >> CLK_MNT_OFFSET) * 10) + ((reg & (0b1111 << CLK_MNU_OFFSET)) >> CLK_MNU_OFFSET);
+    time.seconds = (((reg & (0b111 << CLK_ST_OFFSET)) >> CLK_ST_OFFSET) * 10) + ((reg & (0b1111 << CLK_SU_OFFSET)) >> CLK_SU_OFFSET);
 
     // Get date
     reg = RTC->DR;
-    time.year = (((reg & (0b1111 << RTC_YT_OFFSET)) >> RTC_YT_OFFSET) * 10) + ((reg & (0b1111 << RTC_YU_OFFSET)) >> RTC_YU_OFFSET);
-    time.month = (((reg & (0b1 << RTC_MT_OFFSET)) >> RTC_MT_OFFSET) * 10) + ((reg & (0b1111 << RTC_MU_OFFSET)) >> RTC_MU_OFFSET);
-    time.day = (((reg & (0b11 << RTC_DT_OFFSET)) >> RTC_DT_OFFSET) * 10) + ((reg & (0b1111 << RTC_DU_OFFSET)) >> RTC_DU_OFFSET);
+    time.year = (((reg & (0b1111 << CLK_YT_OFFSET)) >> CLK_YT_OFFSET) * 10) + ((reg & (0b1111 << CLK_YU_OFFSET)) >> CLK_YU_OFFSET);
+    time.month = (((reg & (0b1 << CLK_MT_OFFSET)) >> CLK_MT_OFFSET) * 10) + ((reg & (0b1111 << CLK_MU_OFFSET)) >> CLK_MU_OFFSET);
+    time.day = (((reg & (0b11 << CLK_DT_OFFSET)) >> CLK_DT_OFFSET) * 10) + ((reg & (0b1111 << CLK_DU_OFFSET)) >> CLK_DU_OFFSET);
 
     return time;
+
+}
+
+void RTC_Alarm_IRQHandler(void){
+
+    lol++;
+    RTC->ISR &= ~RTC_ISR_ALRAF;
+    EXTI->PR |= EXTI_PR_PR17;
 
 }
