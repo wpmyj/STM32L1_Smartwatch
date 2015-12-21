@@ -9,7 +9,9 @@
 
 // RCC CSR register offsets and values
 #define CLK_RTCSEL_OFFSET 0x10
-#define CLK_RTCSEL_VALUE 0x2
+#define CLK_RTCSEL_VALUE 0x1
+#define CLK_RTCRST_OFFSET 0x17
+#define CLK_RTCRST_VALUE 0x1
 
 // RTC WPR register values
 #define CLK_WPR1 0xCA
@@ -21,9 +23,9 @@
 
 // RTC PRER register offsets and values
 #define CLK_PREDIV_S_OFFSET 0x0
-#define CLK_PREDIV_S_VALUE 0x128
+#define CLK_PREDIV_S_VALUE 0xFA
 #define CLK_PREDIV_A_OFFSET 0x10
-#define CLK_PREDIV_A_VALUE 0x7D
+#define CLK_PREDIV_A_VALUE 0x80
 
 // RTC DR register offsets
 #define RTC_YT_OFFSET 0x14
