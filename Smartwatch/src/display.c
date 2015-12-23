@@ -1,10 +1,10 @@
 #include "display.h"
 
 static void display_peripheralInit(void);
-static void display_enable(void);
-static void display_disable(void);
+static void display_enableDisplay(void);
+static void display_disableDisplay(void);
 static void display_setPicture(Picture* picture);
-static void display_clearPicture(void);
+static void display_clearDisplay(void);
 static uint8_t display_reverseByte(uint8_t byte);
 static void SPI1_CSEnable(void);
 static void SPI1_CSDisable(void);
@@ -15,9 +15,9 @@ void display_t(void){
     // Init display peripheral
     display_peripheralInit();
     // Enable display
-    display_enable();
+    display_enableDisplay();
     // Clear display
-    display_clearPicture();
+    display_clearDisplay();
 
 }
 
@@ -67,7 +67,7 @@ static void display_peripheralInit(void){
 
 }
 
-static void display_enable(void){
+static void display_enableDisplay(void){
 
     // Set ENABLE pin high
     GPIOC->ODR |= 1 << DISPLAY_ENABLE;
@@ -76,7 +76,7 @@ static void display_enable(void){
 
 }
 
-static void display_disable(void){
+static void display_disableDisplay(void){
 
     // Set ENABLE pin to low
     GPIOC->ODR = ~(1 << DISPLAY_ENABLE);
@@ -113,7 +113,7 @@ static void display_setPicture(Picture* picture){
 
 }
 
-static void display_clearPicture(void){
+static void display_clearDisplay(void){
 
     // Enable CS
     SPI1_CSEnable();
