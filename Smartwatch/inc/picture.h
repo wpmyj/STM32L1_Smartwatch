@@ -35,6 +35,7 @@ typedef struct Picture{
 }Picture;
 
 void getPicture(Picture* picture);
+void addLogoFrame(void);
 void addBatteryFrame(uint8_t batPercentage);
 void addCallFrame(void);
 void removeCallFrame(void);

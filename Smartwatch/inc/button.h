@@ -32,9 +32,6 @@
 #define BTN_PSC_VALUE 0x80
 // TIM2 ARR register value
 #define BTN_ARR_VALUE 0xFA
-// Set ERG register offsets and values
-#define BTN_UG_OFFSET 0x0
-#define BTN_UG_VALUE 0x1
 // TIM2 DIER register offsets and values
 #define BTN_UIE_OFFSET 0x0
 #define BTN_UIE_VALUE 0x1

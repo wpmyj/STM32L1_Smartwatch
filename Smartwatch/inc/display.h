@@ -51,9 +51,6 @@
 #define DISP_PSC_VALUE 0x80
 // TIM3 ARR register value
 #define DISP_ARR_VALUE 0x816
-// TIM3 EGR register offsets and values
-#define DISP_UG_OFFSET 0x0
-#define DISP_UG_VALUE 0x1
 // TIM3 CCMR1 register offsets and values
 #define DISP_OC1M_OFFSET 0x4
 #define DISP_OC1M_VALUE 0x3

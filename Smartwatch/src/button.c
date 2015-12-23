@@ -47,8 +47,6 @@ static void button_peripheralInit(void){
     TIM2->ARR = BTN_ARR_VALUE;
     // Set DIER register
     TIM2->DIER |= BTN_UIE_VALUE << BTN_UIE_OFFSET;
-    // Set EGR register
-    TIM2->EGR |= BTN_UG_VALUE << BTN_UG_OFFSET;
 
 }
 

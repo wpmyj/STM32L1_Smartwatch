@@ -50,8 +50,6 @@ static void display_peripheralInit(void){
     TIM3->PSC = DISP_PSC_VALUE;
     // Set ARR register
     TIM3->ARR = DISP_ARR_VALUE;
-    // Set EGR register
-    TIM3->EGR |= DISP_UG_VALUE << DISP_UG_OFFSET;
     // Set CCMR1 register
     TIM3->CCMR1 |= DISP_OC1M_VALUE << DISP_OC1M_OFFSET;
     // Set CCER register
