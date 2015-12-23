@@ -3,7 +3,7 @@
 static void display_peripheralInit(void);
 static void display_enable(void);
 static void display_disable(void);
-static void display_setPicture(Picture picture);
+static void display_setPicture(Picture* picture);
 static void display_clearPicture(void);
 static uint8_t display_reverseByte(uint8_t byte);
 static void SPI1_CSEnable(void);
@@ -85,7 +85,7 @@ static void display_disable(void){
 
 }
 
-static void display_setPicture(Picture picture){
+static void display_setPicture(Picture* picture){
 
     short lineNum;
     uint8_t byteNum;
@@ -93,12 +93,12 @@ static void display_setPicture(Picture picture){
     // Enable CS
     SPI1_CSEnable();
     SPI1_sendByte(SET_PICTURE);
-    for(lineNum = 1; lineNum <= picture.rows; lineNum++){
+    for(lineNum = 1; lineNum <= picture->rows; lineNum++){
         while(!(SPI1->SR & SPI_SR_TXE));
         SPI1_sendByte(display_reverseByte(lineNum));
-        for(byteNum = 0; byteNum < picture.cols; byteNum++){
+        for(byteNum = 0; byteNum < picture->cols; byteNum++){
             while(!(SPI1->SR & SPI_SR_TXE));
-            SPI1_sendByte(~picture.pixels[(lineNum - 1) * picture.cols + byteNum]);
+            SPI1_sendByte(~picture->pixels[(lineNum - 1) * picture->cols + byteNum]);
         }
         // Send dummy byte
         while(!(SPI1->SR & SPI_SR_TXE));

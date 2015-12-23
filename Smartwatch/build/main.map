@@ -94,7 +94,7 @@ LOAD /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
                 0x0000000008000000                g_pfnVectors
                 0x000000000800013c                . = ALIGN (0x4)
 
-.text           0x0000000008000140     0x3df8
+.text           0x0000000008000140     0x3dc8
                 0x0000000008000140                . = ALIGN (0x4)
  *(.text)
  .text          0x0000000008000140        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
@@ -115,332 +115,331 @@ LOAD /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
  .text          0x0000000008000708      0x23c build/src/bluetooth.o
                 0x0000000008000708                bluetooth_t
                 0x0000000008000924                USART1_IRQHandler
- .text          0x0000000008000944      0x34c build/src/display.o
+ .text          0x0000000008000944      0x368 build/src/display.o
                 0x0000000008000944                display_t
- .text          0x0000000008000c90     0x1110 build/src/picture.o
-                0x0000000008000c90                getPicture
-                0x0000000008000cc8                addLogoFrame
-                0x0000000008000d08                addBatteryFrame
-                0x0000000008000dd8                addCallFrame
-                0x0000000008000e18                removeCallFrame
-                0x0000000008000e58                addSmsFrame
-                0x0000000008000e98                removeSmsFrame
-                0x0000000008000ed8                addMailFrame
-                0x0000000008000f18                removeMailFrame
-                0x0000000008000f58                addHumidityFrame
-                0x000000000800124c                addTemperatureFrame
+ .text          0x0000000008000cac     0x10d4 build/src/picture.o
+                0x0000000008000cac                getPicture
+                0x0000000008000cd4                addLogoFrame
+                0x0000000008000d14                addBatteryFrame
+                0x0000000008000de0                addCallFrame
+                0x0000000008000e20                removeCallFrame
+                0x0000000008000e60                addSmsFrame
+                0x0000000008000ea0                removeSmsFrame
+                0x0000000008000ee0                addMailFrame
+                0x0000000008000f20                removeMailFrame
+                0x0000000008000f60                addHumidityFrame
+                0x0000000008001250                addTemperatureFrame
                 0x0000000008001540                addDateFrame
-                0x00000000080018b8                addTimeFrame
- .text          0x0000000008001da0      0x9a0 build/src/icons.o
-                0x0000000008001da0                getLogoIcon
-                0x0000000008001dd8                getBatteryIcon0
-                0x0000000008001e10                getBatteryIcon25
-                0x0000000008001e48                getBatteryIcon50
-                0x0000000008001e80                getBatteryIcon75
-                0x0000000008001eb8                getBatteryIcon100
-                0x0000000008001ef0                getMissedCallIcon
-                0x0000000008001f28                getNewSmsIcon
-                0x0000000008001f60                getNewMailIcon
-                0x0000000008001f98                removeNotificationIcon
-                0x0000000008001fd0                getSmallZeroNumberIcon
-                0x0000000008002008                getSmallOneNumberIcon
-                0x0000000008002040                getSmallTwoNumberIcon
-                0x0000000008002078                getSmallThreeNumberIcon
-                0x00000000080020b0                getSmallFourNumberIcon
-                0x00000000080020e8                getSmallFiveNumberIcon
-                0x0000000008002120                getSmallSixNumberIcon
-                0x0000000008002158                getSmallSevenNumberIcon
-                0x0000000008002190                getSmallEightNumberIcon
-                0x00000000080021c8                getSmallNineNumberIcon
-                0x0000000008002200                getMediumZeroNumberIcon
-                0x0000000008002238                getSmallPercentIcon
-                0x0000000008002270                getMediumOneNumberIcon
-                0x00000000080022a8                getSmallCelsiusIcon
-                0x00000000080022e0                getMediumTwoNumberIcon
-                0x0000000008002318                getMediumThreeNumberIcon
-                0x0000000008002350                getMediumFourNumberIcon
-                0x0000000008002388                getMediumFiveNumberIcon
-                0x00000000080023c0                getMediumSixNumberIcon
-                0x00000000080023f8                getMediumSevenNumberIcon
-                0x0000000008002430                getMediumEightNumberIcon
-                0x0000000008002468                getMediumNineNumberIcon
-                0x00000000080024a0                getMediumDotIcon
-                0x00000000080024d8                getBigZeroNumberIcon
-                0x0000000008002510                getBigOneNumberIcon
-                0x0000000008002548                getBigTwoNumberIcon
-                0x0000000008002580                getBigThreeNumberIcon
-                0x00000000080025b8                getBigFourNumberIcon
-                0x00000000080025f0                getBigFiveNumberIcon
-                0x0000000008002628                getBigSixNumberIcon
-                0x0000000008002660                getBigSevenNumberIcon
-                0x0000000008002698                getBigEightNumberIcon
-                0x00000000080026d0                getBigNineNumberIcon
-                0x0000000008002708                getBigColonIcon
- .text          0x0000000008002740      0x2cc build/src/sensors.o
-                0x0000000008002740                sensors_t
- .text          0x0000000008002a0c      0x3fc build/src/clock.o
-                0x0000000008002a0c                clock_t
-                0x0000000008002ddc                RTC_Alarm_IRQHandler
- .text          0x0000000008002e08       0xc8 build/src/button.o
-                0x0000000008002e08                button_t
-                0x0000000008002ea4                EXTI3_IRQHandler
- .text          0x0000000008002ed0      0x370 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/libgcc.a(_arm_addsubdf3.o)
-                0x0000000008002ed0                __aeabi_drsub
-                0x0000000008002ed8                __aeabi_dsub
-                0x0000000008002ed8                __subdf3
-                0x0000000008002edc                __adddf3
-                0x0000000008002edc                __aeabi_dadd
-                0x0000000008003154                __aeabi_ui2d
-                0x0000000008003154                __floatunsidf
-                0x0000000008003174                __floatsidf
-                0x0000000008003174                __aeabi_i2d
-                0x0000000008003198                __extendsfdf2
-                0x0000000008003198                __aeabi_f2d
-                0x00000000080031d4                __aeabi_ul2d
-                0x00000000080031d4                __floatundidf
-                0x00000000080031e4                __floatdidf
-                0x00000000080031e4                __aeabi_l2d
- .text          0x0000000008003240      0x424 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/libgcc.a(_arm_muldivdf3.o)
-                0x0000000008003240                __aeabi_dmul
-                0x0000000008003240                __muldf3
-                0x0000000008003494                __aeabi_ddiv
-                0x0000000008003494                __divdf3
- .text          0x0000000008003664      0x110 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/libgcc.a(_arm_cmpdf2.o)
-                0x0000000008003664                __gtdf2
-                0x0000000008003664                __gedf2
-                0x000000000800366c                __ltdf2
-                0x000000000800366c                __ledf2
-                0x0000000008003674                __cmpdf2
-                0x0000000008003674                __eqdf2
-                0x0000000008003674                __nedf2
-                0x00000000080036f0                __aeabi_cdrcmple
-                0x0000000008003700                __aeabi_cdcmple
-                0x0000000008003700                __aeabi_cdcmpeq
-                0x0000000008003710                __aeabi_dcmpeq
-                0x0000000008003724                __aeabi_dcmplt
-                0x0000000008003738                __aeabi_dcmple
-                0x000000000800374c                __aeabi_dcmpge
-                0x0000000008003760                __aeabi_dcmpgt
- .text          0x0000000008003774       0x40 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/libgcc.a(_arm_fixunsdfsi.o)
-                0x0000000008003774                __fixunsdfsi
-                0x0000000008003774                __aeabi_d2uiz
- .text          0x00000000080037b4       0xa0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/libgcc.a(_arm_truncdfsf2.o)
-                0x00000000080037b4                __aeabi_d2f
-                0x00000000080037b4                __truncdfsf2
- .text          0x0000000008003854      0x21c /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/libgcc.a(_arm_addsubsf3.o)
-                0x0000000008003854                __aeabi_frsub
-                0x000000000800385c                __subsf3
-                0x000000000800385c                __aeabi_fsub
-                0x0000000008003860                __aeabi_fadd
-                0x0000000008003860                __addsf3
-                0x00000000080039c0                __aeabi_ui2f
-                0x00000000080039c0                __floatunsisf
-                0x00000000080039c8                __aeabi_i2f
-                0x00000000080039c8                __floatsisf
-                0x00000000080039e4                __floatundisf
-                0x00000000080039e4                __aeabi_ul2f
-                0x00000000080039f4                __floatdisf
-                0x00000000080039f4                __aeabi_l2f
- .text          0x0000000008003a70       0xec /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/libgcc.a(_arm_cmpsf2.o)
-                0x0000000008003a70                __gtsf2
-                0x0000000008003a70                __gesf2
-                0x0000000008003a78                __lesf2
-                0x0000000008003a78                __ltsf2
-                0x0000000008003a80                __nesf2
-                0x0000000008003a80                __eqsf2
-                0x0000000008003a80                __cmpsf2
-                0x0000000008003ae0                __aeabi_cfrcmple
-                0x0000000008003ae8                __aeabi_cfcmple
-                0x0000000008003ae8                __aeabi_cfcmpeq
-                0x0000000008003af8                __aeabi_fcmpeq
-                0x0000000008003b0c                __aeabi_fcmplt
-                0x0000000008003b20                __aeabi_fcmple
-                0x0000000008003b34                __aeabi_fcmpge
-                0x0000000008003b48                __aeabi_fcmpgt
- .text          0x0000000008003b5c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-exit.o)
- .text          0x0000000008003b5c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-impure.o)
- .text          0x0000000008003b5c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-init.o)
- .text          0x0000000008003b5c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-memset.o)
- .text          0x0000000008003b5c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__call_atexit.o)
- .text          0x0000000008003b5c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-atexit.o)
- .text          0x0000000008003b5c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-fini.o)
- .text          0x0000000008003b5c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__atexit.o)
- .text          0x0000000008003b5c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libnosys.a(_exit.o)
- .text          0x0000000008003b5c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
- .text          0x0000000008003b5c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
- .text          0x0000000008003b5c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libm.a(lib_a-s_round.o)
+                0x00000000080018b4                addTimeFrame
+ .text          0x0000000008001d80      0x9a0 build/src/icons.o
+                0x0000000008001d80                getLogoIcon
+                0x0000000008001db8                getBatteryIcon0
+                0x0000000008001df0                getBatteryIcon25
+                0x0000000008001e28                getBatteryIcon50
+                0x0000000008001e60                getBatteryIcon75
+                0x0000000008001e98                getBatteryIcon100
+                0x0000000008001ed0                getMissedCallIcon
+                0x0000000008001f08                getNewSmsIcon
+                0x0000000008001f40                getNewMailIcon
+                0x0000000008001f78                removeNotificationIcon
+                0x0000000008001fb0                getSmallZeroNumberIcon
+                0x0000000008001fe8                getSmallOneNumberIcon
+                0x0000000008002020                getSmallTwoNumberIcon
+                0x0000000008002058                getSmallThreeNumberIcon
+                0x0000000008002090                getSmallFourNumberIcon
+                0x00000000080020c8                getSmallFiveNumberIcon
+                0x0000000008002100                getSmallSixNumberIcon
+                0x0000000008002138                getSmallSevenNumberIcon
+                0x0000000008002170                getSmallEightNumberIcon
+                0x00000000080021a8                getSmallNineNumberIcon
+                0x00000000080021e0                getMediumZeroNumberIcon
+                0x0000000008002218                getSmallPercentIcon
+                0x0000000008002250                getMediumOneNumberIcon
+                0x0000000008002288                getSmallCelsiusIcon
+                0x00000000080022c0                getMediumTwoNumberIcon
+                0x00000000080022f8                getMediumThreeNumberIcon
+                0x0000000008002330                getMediumFourNumberIcon
+                0x0000000008002368                getMediumFiveNumberIcon
+                0x00000000080023a0                getMediumSixNumberIcon
+                0x00000000080023d8                getMediumSevenNumberIcon
+                0x0000000008002410                getMediumEightNumberIcon
+                0x0000000008002448                getMediumNineNumberIcon
+                0x0000000008002480                getMediumDotIcon
+                0x00000000080024b8                getBigZeroNumberIcon
+                0x00000000080024f0                getBigOneNumberIcon
+                0x0000000008002528                getBigTwoNumberIcon
+                0x0000000008002560                getBigThreeNumberIcon
+                0x0000000008002598                getBigFourNumberIcon
+                0x00000000080025d0                getBigFiveNumberIcon
+                0x0000000008002608                getBigSixNumberIcon
+                0x0000000008002640                getBigSevenNumberIcon
+                0x0000000008002678                getBigEightNumberIcon
+                0x00000000080026b0                getBigNineNumberIcon
+                0x00000000080026e8                getBigColonIcon
+ .text          0x0000000008002720      0x2cc build/src/sensors.o
+                0x0000000008002720                sensors_t
+ .text          0x00000000080029ec      0x3fc build/src/clock.o
+                0x00000000080029ec                clock_t
+                0x0000000008002dbc                RTC_Alarm_IRQHandler
+ .text          0x0000000008002de8       0xb8 build/src/button.o
+                0x0000000008002de8                button_t
+                0x0000000008002e74                EXTI3_IRQHandler
+ .text          0x0000000008002ea0      0x370 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/libgcc.a(_arm_addsubdf3.o)
+                0x0000000008002ea0                __aeabi_drsub
+                0x0000000008002ea8                __aeabi_dsub
+                0x0000000008002ea8                __subdf3
+                0x0000000008002eac                __adddf3
+                0x0000000008002eac                __aeabi_dadd
+                0x0000000008003124                __aeabi_ui2d
+                0x0000000008003124                __floatunsidf
+                0x0000000008003144                __floatsidf
+                0x0000000008003144                __aeabi_i2d
+                0x0000000008003168                __extendsfdf2
+                0x0000000008003168                __aeabi_f2d
+                0x00000000080031a4                __aeabi_ul2d
+                0x00000000080031a4                __floatundidf
+                0x00000000080031b4                __floatdidf
+                0x00000000080031b4                __aeabi_l2d
+ .text          0x0000000008003210      0x424 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/libgcc.a(_arm_muldivdf3.o)
+                0x0000000008003210                __aeabi_dmul
+                0x0000000008003210                __muldf3
+                0x0000000008003464                __aeabi_ddiv
+                0x0000000008003464                __divdf3
+ .text          0x0000000008003634      0x110 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/libgcc.a(_arm_cmpdf2.o)
+                0x0000000008003634                __gtdf2
+                0x0000000008003634                __gedf2
+                0x000000000800363c                __ltdf2
+                0x000000000800363c                __ledf2
+                0x0000000008003644                __cmpdf2
+                0x0000000008003644                __eqdf2
+                0x0000000008003644                __nedf2
+                0x00000000080036c0                __aeabi_cdrcmple
+                0x00000000080036d0                __aeabi_cdcmple
+                0x00000000080036d0                __aeabi_cdcmpeq
+                0x00000000080036e0                __aeabi_dcmpeq
+                0x00000000080036f4                __aeabi_dcmplt
+                0x0000000008003708                __aeabi_dcmple
+                0x000000000800371c                __aeabi_dcmpge
+                0x0000000008003730                __aeabi_dcmpgt
+ .text          0x0000000008003744       0x40 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/libgcc.a(_arm_fixunsdfsi.o)
+                0x0000000008003744                __fixunsdfsi
+                0x0000000008003744                __aeabi_d2uiz
+ .text          0x0000000008003784       0xa0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/libgcc.a(_arm_truncdfsf2.o)
+                0x0000000008003784                __aeabi_d2f
+                0x0000000008003784                __truncdfsf2
+ .text          0x0000000008003824      0x21c /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/libgcc.a(_arm_addsubsf3.o)
+                0x0000000008003824                __aeabi_frsub
+                0x000000000800382c                __subsf3
+                0x000000000800382c                __aeabi_fsub
+                0x0000000008003830                __aeabi_fadd
+                0x0000000008003830                __addsf3
+                0x0000000008003990                __aeabi_ui2f
+                0x0000000008003990                __floatunsisf
+                0x0000000008003998                __aeabi_i2f
+                0x0000000008003998                __floatsisf
+                0x00000000080039b4                __floatundisf
+                0x00000000080039b4                __aeabi_ul2f
+                0x00000000080039c4                __floatdisf
+                0x00000000080039c4                __aeabi_l2f
+ .text          0x0000000008003a40       0xec /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/libgcc.a(_arm_cmpsf2.o)
+                0x0000000008003a40                __gtsf2
+                0x0000000008003a40                __gesf2
+                0x0000000008003a48                __lesf2
+                0x0000000008003a48                __ltsf2
+                0x0000000008003a50                __nesf2
+                0x0000000008003a50                __eqsf2
+                0x0000000008003a50                __cmpsf2
+                0x0000000008003ab0                __aeabi_cfrcmple
+                0x0000000008003ab8                __aeabi_cfcmple
+                0x0000000008003ab8                __aeabi_cfcmpeq
+                0x0000000008003ac8                __aeabi_fcmpeq
+                0x0000000008003adc                __aeabi_fcmplt
+                0x0000000008003af0                __aeabi_fcmple
+                0x0000000008003b04                __aeabi_fcmpge
+                0x0000000008003b18                __aeabi_fcmpgt
+ .text          0x0000000008003b2c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-exit.o)
+ .text          0x0000000008003b2c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-impure.o)
+ .text          0x0000000008003b2c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-init.o)
+ .text          0x0000000008003b2c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-memset.o)
+ .text          0x0000000008003b2c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__call_atexit.o)
+ .text          0x0000000008003b2c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-atexit.o)
+ .text          0x0000000008003b2c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-fini.o)
+ .text          0x0000000008003b2c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__atexit.o)
+ .text          0x0000000008003b2c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libnosys.a(_exit.o)
+ .text          0x0000000008003b2c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
+ .text          0x0000000008003b2c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
+ .text          0x0000000008003b2c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libm.a(lib_a-s_round.o)
  *(.text*)
  .text.Reset_Handler
-                0x0000000008003b5c       0x48 build/src/startup_stm32l1xx_xl.o
-                0x0000000008003b5c                Reset_Handler
+                0x0000000008003b2c       0x48 build/src/startup_stm32l1xx_xl.o
+                0x0000000008003b2c                Reset_Handler
  .text.Default_Handler
-                0x0000000008003ba4        0x2 build/src/startup_stm32l1xx_xl.o
-                0x0000000008003ba4                EXTI2_IRQHandler
-                0x0000000008003ba4                COMP_ACQ_IRQHandler
-                0x0000000008003ba4                DebugMon_Handler
-                0x0000000008003ba4                HardFault_Handler
-                0x0000000008003ba4                TIM10_IRQHandler
-                0x0000000008003ba4                USB_HP_IRQHandler
-                0x0000000008003ba4                TIM6_IRQHandler
-                0x0000000008003ba4                SysTick_Handler
-                0x0000000008003ba4                PVD_IRQHandler
-                0x0000000008003ba4                PendSV_Handler
-                0x0000000008003ba4                NMI_Handler
-                0x0000000008003ba4                EXTI0_IRQHandler
-                0x0000000008003ba4                I2C2_EV_IRQHandler
-                0x0000000008003ba4                UsageFault_Handler
-                0x0000000008003ba4                SPI1_IRQHandler
-                0x0000000008003ba4                USB_FS_WKUP_IRQHandler
-                0x0000000008003ba4                DMA2_Channel2_IRQHandler
-                0x0000000008003ba4                DMA1_Channel4_IRQHandler
-                0x0000000008003ba4                USART3_IRQHandler
-                0x0000000008003ba4                DMA1_Channel7_IRQHandler
-                0x0000000008003ba4                LCD_IRQHandler
-                0x0000000008003ba4                UART5_IRQHandler
-                0x0000000008003ba4                TIM4_IRQHandler
-                0x0000000008003ba4                DMA2_Channel1_IRQHandler
-                0x0000000008003ba4                I2C1_EV_IRQHandler
-                0x0000000008003ba4                DMA1_Channel6_IRQHandler
-                0x0000000008003ba4                UART4_IRQHandler
-                0x0000000008003ba4                DMA2_Channel4_IRQHandler
-                0x0000000008003ba4                TIM3_IRQHandler
-                0x0000000008003ba4                RCC_IRQHandler
-                0x0000000008003ba4                DMA1_Channel1_IRQHandler
-                0x0000000008003ba4                Default_Handler
-                0x0000000008003ba4                EXTI15_10_IRQHandler
-                0x0000000008003ba4                TIM7_IRQHandler
-                0x0000000008003ba4                TIM5_IRQHandler
-                0x0000000008003ba4                EXTI9_5_IRQHandler
-                0x0000000008003ba4                TIM9_IRQHandler
-                0x0000000008003ba4                TAMPER_STAMP_IRQHandler
-                0x0000000008003ba4                RTC_WKUP_IRQHandler
-                0x0000000008003ba4                SPI2_IRQHandler
-                0x0000000008003ba4                MemManage_Handler
-                0x0000000008003ba4                SVC_Handler
-                0x0000000008003ba4                DMA2_Channel5_IRQHandler
-                0x0000000008003ba4                DMA1_Channel5_IRQHandler
-                0x0000000008003ba4                USB_LP_IRQHandler
-                0x0000000008003ba4                EXTI4_IRQHandler
-                0x0000000008003ba4                DMA1_Channel3_IRQHandler
-                0x0000000008003ba4                COMP_IRQHandler
-                0x0000000008003ba4                WWDG_IRQHandler
-                0x0000000008003ba4                TIM2_IRQHandler
-                0x0000000008003ba4                DAC_IRQHandler
-                0x0000000008003ba4                EXTI1_IRQHandler
-                0x0000000008003ba4                AES_IRQHandler
-                0x0000000008003ba4                TIM11_IRQHandler
-                0x0000000008003ba4                USART2_IRQHandler
-                0x0000000008003ba4                I2C2_ER_IRQHandler
-                0x0000000008003ba4                DMA1_Channel2_IRQHandler
-                0x0000000008003ba4                FLASH_IRQHandler
-                0x0000000008003ba4                BusFault_Handler
-                0x0000000008003ba4                SPI3_IRQHandler
-                0x0000000008003ba4                I2C1_ER_IRQHandler
-                0x0000000008003ba4                DMA2_Channel3_IRQHandler
- *fill*         0x0000000008003ba6        0x2 
- .text.exit     0x0000000008003ba8       0x20 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-exit.o)
-                0x0000000008003ba8                exit
+                0x0000000008003b74        0x2 build/src/startup_stm32l1xx_xl.o
+                0x0000000008003b74                EXTI2_IRQHandler
+                0x0000000008003b74                COMP_ACQ_IRQHandler
+                0x0000000008003b74                DebugMon_Handler
+                0x0000000008003b74                HardFault_Handler
+                0x0000000008003b74                TIM10_IRQHandler
+                0x0000000008003b74                USB_HP_IRQHandler
+                0x0000000008003b74                TIM6_IRQHandler
+                0x0000000008003b74                SysTick_Handler
+                0x0000000008003b74                PVD_IRQHandler
+                0x0000000008003b74                PendSV_Handler
+                0x0000000008003b74                NMI_Handler
+                0x0000000008003b74                EXTI0_IRQHandler
+                0x0000000008003b74                I2C2_EV_IRQHandler
+                0x0000000008003b74                UsageFault_Handler
+                0x0000000008003b74                SPI1_IRQHandler
+                0x0000000008003b74                USB_FS_WKUP_IRQHandler
+                0x0000000008003b74                DMA2_Channel2_IRQHandler
+                0x0000000008003b74                DMA1_Channel4_IRQHandler
+                0x0000000008003b74                USART3_IRQHandler
+                0x0000000008003b74                DMA1_Channel7_IRQHandler
+                0x0000000008003b74                LCD_IRQHandler
+                0x0000000008003b74                UART5_IRQHandler
+                0x0000000008003b74                TIM4_IRQHandler
+                0x0000000008003b74                DMA2_Channel1_IRQHandler
+                0x0000000008003b74                I2C1_EV_IRQHandler
+                0x0000000008003b74                DMA1_Channel6_IRQHandler
+                0x0000000008003b74                UART4_IRQHandler
+                0x0000000008003b74                DMA2_Channel4_IRQHandler
+                0x0000000008003b74                TIM3_IRQHandler
+                0x0000000008003b74                RCC_IRQHandler
+                0x0000000008003b74                DMA1_Channel1_IRQHandler
+                0x0000000008003b74                Default_Handler
+                0x0000000008003b74                EXTI15_10_IRQHandler
+                0x0000000008003b74                TIM7_IRQHandler
+                0x0000000008003b74                TIM5_IRQHandler
+                0x0000000008003b74                EXTI9_5_IRQHandler
+                0x0000000008003b74                TIM9_IRQHandler
+                0x0000000008003b74                TAMPER_STAMP_IRQHandler
+                0x0000000008003b74                RTC_WKUP_IRQHandler
+                0x0000000008003b74                SPI2_IRQHandler
+                0x0000000008003b74                MemManage_Handler
+                0x0000000008003b74                SVC_Handler
+                0x0000000008003b74                DMA2_Channel5_IRQHandler
+                0x0000000008003b74                DMA1_Channel5_IRQHandler
+                0x0000000008003b74                USB_LP_IRQHandler
+                0x0000000008003b74                EXTI4_IRQHandler
+                0x0000000008003b74                DMA1_Channel3_IRQHandler
+                0x0000000008003b74                COMP_IRQHandler
+                0x0000000008003b74                WWDG_IRQHandler
+                0x0000000008003b74                TIM2_IRQHandler
+                0x0000000008003b74                DAC_IRQHandler
+                0x0000000008003b74                EXTI1_IRQHandler
+                0x0000000008003b74                AES_IRQHandler
+                0x0000000008003b74                TIM11_IRQHandler
+                0x0000000008003b74                USART2_IRQHandler
+                0x0000000008003b74                I2C2_ER_IRQHandler
+                0x0000000008003b74                DMA1_Channel2_IRQHandler
+                0x0000000008003b74                FLASH_IRQHandler
+                0x0000000008003b74                BusFault_Handler
+                0x0000000008003b74                SPI3_IRQHandler
+                0x0000000008003b74                I2C1_ER_IRQHandler
+                0x0000000008003b74                DMA2_Channel3_IRQHandler
+ *fill*         0x0000000008003b76        0x2 
+ .text.exit     0x0000000008003b78       0x20 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-exit.o)
+                0x0000000008003b78                exit
  .text.__libc_init_array
-                0x0000000008003bc8       0x50 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-init.o)
-                0x0000000008003bc8                __libc_init_array
- .text.memset   0x0000000008003c18       0x9c /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-memset.o)
-                0x0000000008003c18                memset
+                0x0000000008003b98       0x50 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-init.o)
+                0x0000000008003b98                __libc_init_array
+ .text.memset   0x0000000008003be8       0x9c /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-memset.o)
+                0x0000000008003be8                memset
  .text.startup.register_fini
-                0x0000000008003cb4       0x14 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__call_atexit.o)
+                0x0000000008003c84       0x14 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__call_atexit.o)
  .text.__call_exitprocs
-                0x0000000008003cc8       0xd4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__call_atexit.o)
-                0x0000000008003cc8                __call_exitprocs
- .text.atexit   0x0000000008003d9c        0xc /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-atexit.o)
-                0x0000000008003d9c                atexit
+                0x0000000008003c98       0xd4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__call_atexit.o)
+                0x0000000008003c98                __call_exitprocs
+ .text.atexit   0x0000000008003d6c        0xc /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-atexit.o)
+                0x0000000008003d6c                atexit
  .text.__libc_fini_array
-                0x0000000008003da8       0x2c /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-fini.o)
-                0x0000000008003da8                __libc_fini_array
+                0x0000000008003d78       0x2c /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-fini.o)
+                0x0000000008003d78                __libc_fini_array
  .text.__register_exitproc
-                0x0000000008003dd4       0xa4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__atexit.o)
-                0x0000000008003dd4                __register_exitproc
- .text._exit    0x0000000008003e78        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libnosys.a(_exit.o)
-                0x0000000008003e78                _exit
- .text.round    0x0000000008003e7c       0xa0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libm.a(lib_a-s_round.o)
-                0x0000000008003e7c                round
+                0x0000000008003da4       0xa4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__atexit.o)
+                0x0000000008003da4                __register_exitproc
+ .text._exit    0x0000000008003e48        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libnosys.a(_exit.o)
+                0x0000000008003e48                _exit
+ .text.round    0x0000000008003e4c       0xa0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libm.a(lib_a-s_round.o)
+                0x0000000008003e4c                round
  *(.glue_7)
  .glue_7        0x0000000000000000        0x0 linker stubs
  *(.glue_7t)
  .glue_7t       0x0000000000000000        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x0000000008003f1c        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
- .eh_frame      0x0000000008003f1c        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
+ .eh_frame      0x0000000008003eec        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+ .eh_frame      0x0000000008003eec        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
  *(.init)
- .init          0x0000000008003f20        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
-                0x0000000008003f20                _init
- .init          0x0000000008003f24        0x8 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
+ .init          0x0000000008003ef0        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
+                0x0000000008003ef0                _init
+ .init          0x0000000008003ef4        0x8 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
  *(.fini)
- .fini          0x0000000008003f2c        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
-                0x0000000008003f2c                _fini
- .fini          0x0000000008003f30        0x8 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
-                0x0000000008003f38                . = ALIGN (0x4)
-                0x0000000008003f38                _etext = .
+ .fini          0x0000000008003efc        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
+                0x0000000008003efc                _fini
+ .fini          0x0000000008003f00        0x8 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
+                0x0000000008003f08                . = ALIGN (0x4)
+                0x0000000008003f08                _etext = .
 
-.vfp11_veneer   0x0000000008003f38        0x0
+.vfp11_veneer   0x0000000008003f08        0x0
  .vfp11_veneer  0x0000000000000000        0x0 linker stubs
 
-.v4_bx          0x0000000008003f38        0x0
+.v4_bx          0x0000000008003f08        0x0
  .v4_bx         0x0000000000000000        0x0 linker stubs
 
-.iplt           0x0000000008003f38        0x0
+.iplt           0x0000000008003f08        0x0
  .iplt          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
 
-.rodata         0x0000000008003f38     0x1148
-                0x0000000008003f38                . = ALIGN (0x4)
+.rodata         0x0000000008003f08     0x1140
+                0x0000000008003f08                . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x0000000008003f38       0x2a build/src/bluetooth.o
- *fill*         0x0000000008003f62        0x2 
- .rodata        0x0000000008003f64        0x8 build/src/picture.o
- .rodata        0x0000000008003f6c     0x110c build/src/icons.o
+ .rodata        0x0000000008003f08       0x2a build/src/bluetooth.o
+ *fill*         0x0000000008003f32        0x2 
+ .rodata        0x0000000008003f34     0x110c build/src/icons.o
  *(.rodata*)
  .rodata.str1.4
-                0x0000000008005078        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-impure.o)
+                0x0000000008005040        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-impure.o)
                                           0x2 (size before relaxing)
  .rodata._global_impure_ptr
-                0x000000000800507c        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-impure.o)
-                0x000000000800507c                _global_impure_ptr
-                0x0000000008005080                . = ALIGN (0x4)
+                0x0000000008005044        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-impure.o)
+                0x0000000008005044                _global_impure_ptr
+                0x0000000008005048                . = ALIGN (0x4)
 
-.ARM.extab      0x0000000008005080        0x0
+.ARM.extab      0x0000000008005048        0x0
  *(.ARM.extab* .gnu.linkonce.armextab.*)
- .ARM.extab     0x0000000008005080        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o
+ .ARM.extab     0x0000000008005048        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o
 
-.ARM            0x0000000008005080        0x8
-                0x0000000008005080                __exidx_start = .
+.ARM            0x0000000008005048        0x8
+                0x0000000008005048                __exidx_start = .
  *(.ARM.exidx*)
- .ARM.exidx     0x0000000008005080        0x8 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o
-                0x0000000008005088                __exidx_end = .
+ .ARM.exidx     0x0000000008005048        0x8 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o
+                0x0000000008005050                __exidx_end = .
 
-.rel.dyn        0x0000000008005088        0x0
+.rel.dyn        0x0000000008005050        0x0
  .rel.iplt      0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
 
-.preinit_array  0x0000000008005088        0x0
-                0x0000000008005088                PROVIDE (__preinit_array_start, .)
+.preinit_array  0x0000000008005050        0x0
+                0x0000000008005050                PROVIDE (__preinit_array_start, .)
  *(.preinit_array*)
-                0x0000000008005088                PROVIDE (__preinit_array_end, .)
+                0x0000000008005050                PROVIDE (__preinit_array_end, .)
 
-.init_array     0x0000000008005088        0x8
-                0x0000000008005088                PROVIDE (__init_array_start, .)
+.init_array     0x0000000008005050        0x8
+                0x0000000008005050                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*))
  .init_array.00000
-                0x0000000008005088        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__call_atexit.o)
+                0x0000000008005050        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__call_atexit.o)
  *(.init_array*)
- .init_array    0x000000000800508c        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
-                0x0000000008005090                PROVIDE (__init_array_end, .)
+ .init_array    0x0000000008005054        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+                0x0000000008005058                PROVIDE (__init_array_end, .)
 
-.fini_array     0x0000000008005090        0x4
-                0x0000000008005090                PROVIDE (__fini_array_start, .)
+.fini_array     0x0000000008005058        0x4
+                0x0000000008005058                PROVIDE (__fini_array_start, .)
  *(SORT(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x0000000008005090        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
-                0x0000000008005094                PROVIDE (__fini_array_end, .)
-                0x0000000008005094                _sidata = LOADADDR (.data)
+ .fini_array    0x0000000008005058        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+                0x000000000800505c                PROVIDE (__fini_array_end, .)
+                0x000000000800505c                _sidata = LOADADDR (.data)
 
-.data           0x0000000020000000      0x454 load address 0x0000000008005094
+.data           0x0000000020000000      0x454 load address 0x000000000800505c
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                _sdata = .
  *(.data)
@@ -492,15 +491,15 @@ LOAD /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
                 0x0000000020000454                . = ALIGN (0x4)
                 0x0000000020000454                _edata = .
 
-.jcr            0x0000000020000454        0x4 load address 0x00000000080054e8
+.jcr            0x0000000020000454        0x4 load address 0x00000000080054b0
  .jcr           0x0000000020000454        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
  .jcr           0x0000000020000454        0x4 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
 
-.igot.plt       0x0000000020000458        0x0 load address 0x00000000080054ec
+.igot.plt       0x0000000020000458        0x0 load address 0x00000000080054b4
  .igot.plt      0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
                 0x0000000020000458                . = ALIGN (0x4)
 
-.bss            0x0000000020000458      0x824 load address 0x00000000080054ec
+.bss            0x0000000020000458      0x824 load address 0x00000000080054b4
                 0x0000000020000458                _sbss = .
                 0x0000000020000458                __bss_start__ = _sbss
  *(.bss)
@@ -549,7 +548,7 @@ LOAD /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
                 0x0000000020000c7c                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x0000000020000c7c      0x600 load address 0x00000000080054ec
+                0x0000000020000c7c      0x600 load address 0x00000000080054b4
                 0x0000000020000c7c                . = ALIGN (0x4)
                 0x0000000020000c7c                PROVIDE (end, .)
                 0x0000000020000c7c                PROVIDE (_end, .)
@@ -639,31 +638,31 @@ LOAD /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
                 0x0000000000000511       0x1d /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
 OUTPUT(build/main.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000     0x41dd
+.debug_info     0x0000000000000000     0x41fc
  .debug_info    0x0000000000000000       0xc7 build/src/main.o
  .debug_info    0x00000000000000c7      0x54a build/src/system_stm32l1xx.o
  .debug_info    0x0000000000000611       0x7b build/src/startup_stm32l1xx_xl.o
  .debug_info    0x000000000000068c      0x75a build/src/battery.o
  .debug_info    0x0000000000000de6      0x718 build/src/bluetooth.o
- .debug_info    0x00000000000014fe      0x6b5 build/src/display.o
- .debug_info    0x0000000000001bb3      0x6a6 build/src/picture.o
- .debug_info    0x0000000000002259      0xc58 build/src/icons.o
- .debug_info    0x0000000000002eb1      0x492 build/src/sensors.o
- .debug_info    0x0000000000003343      0x890 build/src/clock.o
- .debug_info    0x0000000000003bd3      0x60a build/src/button.o
+ .debug_info    0x00000000000014fe      0x6db build/src/display.o
+ .debug_info    0x0000000000001bd9      0x69f build/src/picture.o
+ .debug_info    0x0000000000002278      0xc58 build/src/icons.o
+ .debug_info    0x0000000000002ed0      0x492 build/src/sensors.o
+ .debug_info    0x0000000000003362      0x890 build/src/clock.o
+ .debug_info    0x0000000000003bf2      0x60a build/src/button.o
 
-.debug_abbrev   0x0000000000000000      0xcbc
+.debug_abbrev   0x0000000000000000      0xce1
  .debug_abbrev  0x0000000000000000       0x65 build/src/main.o
  .debug_abbrev  0x0000000000000065      0x147 build/src/system_stm32l1xx.o
  .debug_abbrev  0x00000000000001ac       0x12 build/src/startup_stm32l1xx_xl.o
  .debug_abbrev  0x00000000000001be      0x15c build/src/battery.o
  .debug_abbrev  0x000000000000031a      0x191 build/src/bluetooth.o
- .debug_abbrev  0x00000000000004ab      0x173 build/src/display.o
- .debug_abbrev  0x000000000000061e      0x19b build/src/picture.o
- .debug_abbrev  0x00000000000007b9       0xd2 build/src/icons.o
- .debug_abbrev  0x000000000000088b      0x13e build/src/sensors.o
- .debug_abbrev  0x00000000000009c9      0x1b7 build/src/clock.o
- .debug_abbrev  0x0000000000000b80      0x13c build/src/button.o
+ .debug_abbrev  0x00000000000004ab      0x19a build/src/display.o
+ .debug_abbrev  0x0000000000000645      0x199 build/src/picture.o
+ .debug_abbrev  0x00000000000007de       0xd2 build/src/icons.o
+ .debug_abbrev  0x00000000000008b0      0x13e build/src/sensors.o
+ .debug_abbrev  0x00000000000009ee      0x1b7 build/src/clock.o
+ .debug_abbrev  0x0000000000000ba5      0x13c build/src/button.o
 
 .debug_aranges  0x0000000000000000      0x168
  .debug_aranges
@@ -689,20 +688,20 @@ OUTPUT(build/main.elf elf32-littlearm)
  .debug_aranges
                 0x0000000000000148       0x20 build/src/button.o
 
-.debug_line     0x0000000000000000      0xfe9
+.debug_line     0x0000000000000000      0xfec
  .debug_line    0x0000000000000000       0xcd build/src/main.o
  .debug_line    0x00000000000000cd      0x181 build/src/system_stm32l1xx.o
  .debug_line    0x000000000000024e       0x77 build/src/startup_stm32l1xx_xl.o
  .debug_line    0x00000000000002c5      0x13c build/src/battery.o
  .debug_line    0x0000000000000401      0x140 build/src/bluetooth.o
- .debug_line    0x0000000000000541      0x1ca build/src/display.o
- .debug_line    0x000000000000070b      0x305 build/src/picture.o
- .debug_line    0x0000000000000a10      0x18b build/src/icons.o
- .debug_line    0x0000000000000b9b      0x1ab build/src/sensors.o
- .debug_line    0x0000000000000d46      0x184 build/src/clock.o
- .debug_line    0x0000000000000eca      0x11f build/src/button.o
+ .debug_line    0x0000000000000541      0x1ce build/src/display.o
+ .debug_line    0x000000000000070f      0x305 build/src/picture.o
+ .debug_line    0x0000000000000a14      0x18b build/src/icons.o
+ .debug_line    0x0000000000000b9f      0x1ab build/src/sensors.o
+ .debug_line    0x0000000000000d4a      0x184 build/src/clock.o
+ .debug_line    0x0000000000000ece      0x11e build/src/button.o
 
-.debug_str      0x0000000000000000     0x15e3
+.debug_str      0x0000000000000000     0x15f1
  .debug_str     0x0000000000000000      0x14c build/src/main.o
                                         0x194 (size before relaxing)
  .debug_str     0x000000000000014c      0x1e3 build/src/system_stm32l1xx.o
@@ -711,17 +710,17 @@ OUTPUT(build/main.elf elf32-littlearm)
                                         0x713 (size before relaxing)
  .debug_str     0x0000000000000810       0xbf build/src/bluetooth.o
                                         0x6e4 (size before relaxing)
- .debug_str     0x00000000000008cf      0x1a2 build/src/display.o
-                                        0x433 (size before relaxing)
- .debug_str     0x0000000000000a71      0x20c build/src/picture.o
-                                        0x3b5 (size before relaxing)
- .debug_str     0x0000000000000c7d      0x6bc build/src/icons.o
+ .debug_str     0x00000000000008cf      0x1af build/src/display.o
+                                        0x440 (size before relaxing)
+ .debug_str     0x0000000000000a7e      0x20d build/src/picture.o
+                                        0x3c3 (size before relaxing)
+ .debug_str     0x0000000000000c8b      0x6bc build/src/icons.o
                                         0x852 (size before relaxing)
- .debug_str     0x0000000000001339       0xb4 build/src/sensors.o
+ .debug_str     0x0000000000001347       0xb4 build/src/sensors.o
                                         0x359 (size before relaxing)
- .debug_str     0x00000000000013ed      0x1b9 build/src/clock.o
+ .debug_str     0x00000000000013fb      0x1b9 build/src/clock.o
                                         0x79d (size before relaxing)
- .debug_str     0x00000000000015a6       0x3d build/src/button.o
+ .debug_str     0x00000000000015b4       0x3d build/src/button.o
                                         0x661 (size before relaxing)
 
 .comment        0x0000000000000000       0x70
@@ -737,25 +736,25 @@ OUTPUT(build/main.elf elf32-littlearm)
  .comment       0x0000000000000000       0x71 build/src/clock.o
  .comment       0x0000000000000000       0x71 build/src/button.o
 
-.debug_frame    0x0000000000000000     0x10bc
+.debug_frame    0x0000000000000000     0x10c4
  .debug_frame   0x0000000000000000       0x2c build/src/main.o
  .debug_frame   0x000000000000002c       0x7c build/src/system_stm32l1xx.o
  .debug_frame   0x00000000000000a8       0xac build/src/battery.o
  .debug_frame   0x0000000000000154       0xdc build/src/bluetooth.o
- .debug_frame   0x0000000000000230      0x15c build/src/display.o
- .debug_frame   0x000000000000038c      0x270 build/src/picture.o
- .debug_frame   0x00000000000005fc      0x6f0 build/src/icons.o
- .debug_frame   0x0000000000000cec      0x124 build/src/sensors.o
- .debug_frame   0x0000000000000e10       0xc0 build/src/clock.o
- .debug_frame   0x0000000000000ed0       0x6c build/src/button.o
- .debug_frame   0x0000000000000f3c       0x28 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-exit.o)
- .debug_frame   0x0000000000000f64       0x2c /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-init.o)
- .debug_frame   0x0000000000000f90       0x34 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-memset.o)
- .debug_frame   0x0000000000000fc4       0x50 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__call_atexit.o)
- .debug_frame   0x0000000000001014       0x20 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-atexit.o)
- .debug_frame   0x0000000000001034       0x34 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-fini.o)
- .debug_frame   0x0000000000001068       0x34 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__atexit.o)
- .debug_frame   0x000000000000109c       0x20 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libnosys.a(_exit.o)
+ .debug_frame   0x0000000000000230      0x164 build/src/display.o
+ .debug_frame   0x0000000000000394      0x270 build/src/picture.o
+ .debug_frame   0x0000000000000604      0x6f0 build/src/icons.o
+ .debug_frame   0x0000000000000cf4      0x124 build/src/sensors.o
+ .debug_frame   0x0000000000000e18       0xc0 build/src/clock.o
+ .debug_frame   0x0000000000000ed8       0x6c build/src/button.o
+ .debug_frame   0x0000000000000f44       0x28 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-exit.o)
+ .debug_frame   0x0000000000000f6c       0x2c /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-init.o)
+ .debug_frame   0x0000000000000f98       0x34 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-memset.o)
+ .debug_frame   0x0000000000000fcc       0x50 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__call_atexit.o)
+ .debug_frame   0x000000000000101c       0x20 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-atexit.o)
+ .debug_frame   0x000000000000103c       0x34 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-fini.o)
+ .debug_frame   0x0000000000001070       0x34 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libg.a(lib_a-__atexit.o)
+ .debug_frame   0x00000000000010a4       0x20 /usr/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/libnosys.a(_exit.o)
 
 .debug_ranges   0x0000000000000000       0x20
  .debug_ranges  0x0000000000000000       0x20 build/src/startup_stm32l1xx_xl.o

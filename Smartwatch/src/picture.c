@@ -1,16 +1,16 @@
 #include "picture.h"
 
-static void appendFramesToPicture(PictureFrames pictureFrames);
+static void appendFramesToPicture(PictureFrames* pictureFrames);
 static uint8_t getBitAt(uint8_t byte, uint8_t pos);
 static void changeBitAt(uint8_t* byte, uint8_t pos, uint8_t val);
 
-static uint8_t picture[(WIDTH / WIDTH_DIV) * HEIGHT];
+static uint8_t screenPicture[(WIDTH / WIDTH_DIV) * HEIGHT];
 
-Picture getPicture(void){
+void getPicture(Picture* picture){
 
-    Picture pic = {WIDTH / WIDTH_DIV, HEIGHT, picture};
-
-    return pic;
+    picture->cols = WIDTH / WIDTH_DIV;
+    picture->rows = HEIGHT;
+    picture->pixels = screenPicture;
 
 }
 
@@ -25,7 +25,7 @@ void addLogoFrame(void){
     frames.numOfFrames = 1;
     frames.frames = &logoFrame;
 
-    appendFramesToPicture(frames);
+    appendFramesToPicture(&frames);
 
 }
 
@@ -51,7 +51,7 @@ void addBatteryFrame(uint8_t batPercentage){
     frames.numOfFrames = 1;
     frames.frames = &batteryFrame;
 
-    appendFramesToPicture(frames);
+    appendFramesToPicture(&frames);
 
 }
 
@@ -68,7 +68,7 @@ void addCallFrame(void){
     frames.numOfFrames = 1;
     frames.frames = &missedCallFrame;
 
-    appendFramesToPicture(frames);
+    appendFramesToPicture(&frames);
 
 }
 
@@ -85,7 +85,7 @@ void removeCallFrame(void){
     frames.numOfFrames = 1;
     frames.frames = &removeCallFrame;
 
-    appendFramesToPicture(frames);
+    appendFramesToPicture(&frames);
 
 }
 
@@ -102,7 +102,7 @@ void addSmsFrame(void){
     frames.numOfFrames = 1;
     frames.frames = &newSmsFrame;
 
-    appendFramesToPicture(frames);
+    appendFramesToPicture(&frames);
 
 }
 
@@ -119,7 +119,7 @@ void removeSmsFrame(void){
     frames.numOfFrames = 1;
     frames.frames = &removeSmsFrame;
 
-    appendFramesToPicture(frames);
+    appendFramesToPicture(&frames);
 
 }
 
@@ -136,7 +136,7 @@ void addMailFrame(void){
     frames.numOfFrames = 1;
     frames.frames = &newMailFrame;
 
-    appendFramesToPicture(frames);
+    appendFramesToPicture(&frames);
 
 
 }
@@ -154,7 +154,7 @@ void removeMailFrame(void){
     frames.numOfFrames = 1;
     frames.frames = &removeMailFrame;
 
-    appendFramesToPicture(frames);
+    appendFramesToPicture(&frames);
 
 }
 
@@ -201,7 +201,7 @@ void addHumidityFrame(uint8_t humidity){
     frames.numOfFrames = 3;
     frames.frames = framesArray;
 
-    appendFramesToPicture(frames);
+    appendFramesToPicture(&frames);
     
 
 }
@@ -249,7 +249,7 @@ void addTemperatureFrame(uint8_t temp){
     frames.numOfFrames = 3;
     frames.frames = framesArray;
 
-    appendFramesToPicture(frames);
+    appendFramesToPicture(&frames);
     
 
 }
@@ -297,7 +297,7 @@ void addDateFrame(uint8_t day, uint8_t month, uint8_t year){
     frames.numOfFrames = 8;
     frames.frames = framesArray;
 
-    appendFramesToPicture(frames);
+    appendFramesToPicture(&frames);
         
 }
 
@@ -342,35 +342,33 @@ void addTimeFrame(uint8_t hours, uint8_t minutes){
     frames.numOfFrames = 5;
     frames.frames = framesArray;
 
-    appendFramesToPicture(frames);
+    appendFramesToPicture(&frames);
 
 }
 
-static void appendFramesToPicture(PictureFrames pictureFrames){
+static void appendFramesToPicture(PictureFrames* pictureFrames){
 
     uint8_t frameIndex;
     short iconIndex, pictureX, pictureY;
     Frame currentFrame;
-    Icon icon;
 
     // Iterate through frames
-    for(frameIndex = 0; frameIndex < pictureFrames.numOfFrames; frameIndex++){
+    for(frameIndex = 0; frameIndex < pictureFrames->numOfFrames; frameIndex++){
         
-        // Extract current frame and icon in the frame
-        currentFrame = pictureFrames.frames[frameIndex];
-        icon = currentFrame.icon;
+        // Extract current frame
+        currentFrame = pictureFrames->frames[frameIndex];
         
         // X and Y initialization
         pictureY = currentFrame.locationY;
         pictureX = currentFrame.locationX;
 
         // Iterate through the picture and apply changes
-        for(iconIndex = 0; iconIndex < icon.width * icon.height; iconIndex++){
+        for(iconIndex = 0; iconIndex < currentFrame.icon.width * currentFrame.icon.height; iconIndex++){
 
             // Change bit at position X,Y
-            changeBitAt(&picture[(pictureY * WIDTH + pictureX) / WIDTH_DIV], 7 - (pictureX % WIDTH_DIV), getBitAt(icon.pixels[iconIndex / WIDTH_DIV], 7 - (iconIndex % WIDTH_DIV)));
+            changeBitAt(&screenPicture[(pictureY * WIDTH + pictureX) / WIDTH_DIV], 7 - (pictureX % WIDTH_DIV), getBitAt(currentFrame.icon.pixels[iconIndex / WIDTH_DIV], 7 - (iconIndex % WIDTH_DIV)));
 
-            if(pictureX == currentFrame.locationX + icon.width - 1){
+            if(pictureX == currentFrame.locationX + currentFrame.icon.width - 1){
                 pictureY++;
                 pictureX = currentFrame.locationX;
             }
