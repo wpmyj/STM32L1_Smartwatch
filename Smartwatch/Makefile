@@ -11,6 +11,14 @@ SRCS = src/main.c \
        src/sensors.c \
 	   src/clock.c \
        src/button.c \
+       FreeRTOS/Source/list.c \
+	   FreeRTOS/Source/queue.c \
+	   FreeRTOS/Source/tasks.c \
+	   FreeRTOS/Source/timers.c \
+	   FreeRTOS/Source/portable/GCC/ARM_CM3/port.c \
+	   FreeRTOS/Source/portable/MemMang/heap_1.c \
+       ../../Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_tim.c \
+       ../../Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_rcc.c \
 
 
 CC=arm-none-eabi-gcc
@@ -25,7 +33,7 @@ CFLAGS += -specs=nosys.specs
 # TODO: hard float was causing an exception; see what's up.
 LDFLAGS = -Wl,-Map,$(OBJDIR)/$(PROJ_NAME).map -g -T./src/STM32L152RE_FLASH.ld
 
-CFLAGS += -I./inc -I../../Libraries/CMSIS/Device/ST/STM32L1xx/Include -I../../Libraries/CMSIS/Include -I../../Libraries/STM32L1xx_StdPeriph_Driver/inc/ -DSTM32L1XX_XL -DUSE_STDPERIPH_DRIVER
+CFLAGS += -I./inc -I../../Libraries/CMSIS/Device/ST/STM32L1xx/Include -I../../Libraries/CMSIS/Include -I../../Libraries/STM32L1xx_StdPeriph_Driver/inc/ -I./FreeRTOS/Source/include -I./FreeRTOS/Source/portable/GCC/ARM_CM3 -DSTM32L1XX_XL -DUSE_STDPERIPH_DRIVER
 
 OBJS := $(SRCS:.c=.o)
 OBJS := $(OBJS:.s=.o)
