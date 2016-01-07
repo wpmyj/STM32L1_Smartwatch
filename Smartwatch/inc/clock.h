@@ -58,12 +58,18 @@
 #define CLK_RTSR17_OFFSET 0x11
 #define CLK_RTSR17_VALUE 0x1
 
+// SCB AIRCR register offsets and values
+#define CLK_PRIGROUP_OFFSET 0x8
+#define CLK_PRIGROUP_VALUE 0x3
+#define CLK_VECTKEY_OFFSET 0x10
+#define CLK_VECTKEY_VALUE 0x5FA
+
 // NVIC ISER1 register offsets and values
 #define CLK_RS8_OFFSET (RTC_Alarm_IRQn % 32)
 #define CLK_RS8_VALUE 0x1
 // NVIC IP register offsets and values
 #define CLK_IP8_OFFSET RTC_Alarm_IRQn // Priority
-#define CLK_IP8_VALUE 0x0 // Priority
+#define CLK_IP8_VALUE 0x2 // Priority
 
 typedef struct Time{
 

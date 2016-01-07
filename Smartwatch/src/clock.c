@@ -57,11 +57,15 @@ static void clock_peripheralInit(void){
     // RTSR register configuration
     EXTI->RTSR |= CLK_RTSR17_VALUE << CLK_RTSR17_OFFSET;
 
+    // Set AIRCR register
+    SCB->AIRCR |= CLK_VECTKEY_VALUE << CLK_VECTKEY_OFFSET;
+    SCB->AIRCR |= CLK_PRIGROUP_VALUE << CLK_PRIGROUP_OFFSET;
+
     /* NVIC configuration */
 
     // ISER1 register configuration
     NVIC->ISER[1] |= CLK_RS8_VALUE << CLK_RS8_OFFSET;
-    NVIC->IP[CLK_IP8_OFFSET] |= CLK_IP8_VALUE;
+    NVIC->IP[CLK_IP8_OFFSET] |= CLK_IP8_VALUE << 4;
 
 }
 

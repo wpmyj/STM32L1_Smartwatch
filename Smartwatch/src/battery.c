@@ -27,12 +27,18 @@ static void battery_peripheralInit(void){
     // OSPEEDR register configuration
     GPIOA->OSPEEDR |= BAT_OSPEEDR2_VALUE << BAT_OSPEEDR2_OFFSET;
 
+    /* SCB configuration */
+
+    // Set AIRCR register
+    SCB->AIRCR |= BAT_VECTKEY_VALUE << BAT_VECTKEY_OFFSET;
+    SCB->AIRCR |= BAT_PRIGROUP_VALUE << BAT_PRIGROUP_OFFSET;
+
     /* NVIC configuration */
 
     // ISER0 register configuration
     NVIC->ISER[0] |= BAT_RS18_VALUE << BAT_RS18_OFFSET;
     // IPR register configuration
-    NVIC->IP[BAT_IP18_OFFSET] |= BAT_IP18_VALUE;
+    NVIC->IP[BAT_IP18_OFFSET] |= BAT_IP18_VALUE << 4;
 
     /* ADC1 configuration */
 

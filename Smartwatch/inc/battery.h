@@ -15,12 +15,18 @@
 #define BAT_OSPEEDR2_OFFSET 0x4
 #define BAT_OSPEEDR2_VALUE 0x3
 
+// SCB AIRCR register offsets and values
+#define BAT_PRIGROUP_OFFSET 0x8
+#define BAT_PRIGROUP_VALUE 0x3
+#define BAT_VECTKEY_OFFSET 0x10
+#define BAT_VECTKEY_VALUE 0x5FA
+
 // NVIC ISER0 register offsets and values
 #define BAT_RS18_OFFSET ADC1_IRQn
 #define BAT_RS18_VALUE 0x1
 // NVIC IP register offsets and values
 #define BAT_IP18_OFFSET ADC1_IRQn // Priority
-#define BAT_IP18_VALUE 0x0 // Priority
+#define BAT_IP18_VALUE 0x4 // Priority
 
 // ADC1 CR1 register offsets and values
 #define BAT_PDI_OFFSET 11

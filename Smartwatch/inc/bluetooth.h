@@ -28,12 +28,18 @@
 #define BT_AFRH10_OFFSET 0x8
 #define BT_AFRH10_VALUE 0x7
 
+// SCB AIRCR register offsets and values
+#define BT_PRIGROUP_OFFSET 0x8
+#define BT_PRIGROUP_VALUE 0x3
+#define BT_VECTKEY_OFFSET 0x10
+#define BT_VECTKEY_VALUE 0x5FA
+
 // NVIC ISER1 register offsets and values
 #define BT_RS4_OFFSET (USART1_IRQn % 32)
 #define BT_RS4_VALUE 0x1
 // NVIC IP register offsets and values
 #define BT_IP4_OFFSET USART1_IRQn // Priority
-#define BT_IP4_VALUE 0x0 // Priority
+#define BT_IP4_VALUE 0x1 // Priority
 
 // USART CR1 register offsets and values
 #define BT_OVER8_OFFSET 0xF
@@ -53,9 +59,7 @@
 #define BT_URS_OFFSET 0x2
 #define BT_URS_VALUE 0x1
 // TIM4 PSC register value
-#define BT_PSC_VALUE 0x80
-// TIM4 ARR register value
-#define BT_ARR_VALUE 0x3D090
+#define BT_PSC_VALUE 0x7D00
 // TIM4 EGR register offsets and values
 #define BT_UG_OFFSET 0x0
 #define BT_UG_VALUE 0x1

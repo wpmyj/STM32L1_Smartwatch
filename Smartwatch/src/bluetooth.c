@@ -2,44 +2,57 @@
 
 static void bluetooth_peripheralInit(uint32_t baudrate);
 static void bluetooth_sendData(char* str);
-static void bluetooth_readResponse(char* buffer, uint8_t len);
+static void bluetooth_readResponse(char* buffer, uint8_t len, uint16_t timeout);
+static void bluetooth_delay(uint16_t ms);
 static void USART1_irqEnable(void);
 static void USART1_sendByte(uint8_t byte);
 static uint8_t USART1_receiveByte(void);
-static void TIM4_enableTimer(void);
+static void TIM4_enableTimer(uint16_t ms);
 static void TIM4_disableTimer(void);
-char response[30];
+
 void bluetooth_t(void){
 
+    char response[30];
     
-
     // Init bluetooth peripherals
-    bluetooth_peripheralInit(115200);
+    bluetooth_peripheralInit(9600);
+    // Delay
+    bluetooth_delay(1000);
     // Set name to Smartwatch(Check first if the name has already been set)
     bluetooth_sendData("AT+NAME?");
-    bluetooth_readResponse(response, sizeof(response));
+    bluetooth_readResponse(response, sizeof(response), 100);
     if(!strstr(response, "Smartwatch")){
+        // Delay
+        bluetooth_delay(500);
         // Name has not been set. Set it!
         bluetooth_sendData("AT+NAMESmartwatch");
-        bluetooth_readResponse(response, sizeof(response));
+        bluetooth_readResponse(response, sizeof(response), 100);
         if(!strstr(response, "OK"))
             for(;;); // BT returned error!
     }
+    // Delay
+    bluetooth_delay(500);
     // Set pass to 123456(Check first if the pass has already been set)
     bluetooth_sendData("AT+PASS?");
-    bluetooth_readResponse(response, sizeof(response));
+    bluetooth_readResponse(response, sizeof(response), 100);
     if(!strstr(response, "123456")){
+        // Delay
+        bluetooth_delay(500);
         // Name has not been set. Set it!
         bluetooth_sendData("AT+PASS123456");
-        bluetooth_readResponse(response, sizeof(response));
+        bluetooth_readResponse(response, sizeof(response), 100);
         if(!strstr(response, "OK"))
             for(;;); // BT returned error!
     }
+    // Delay
+    bluetooth_delay(500);
     // Reset BT
     bluetooth_sendData("AT+RESET");
-    bluetooth_readResponse(response, sizeof(response));
+    bluetooth_readResponse(response, sizeof(response), 100);
     if(!strstr(response, "OK"))
             for(;;); // BT returned error!
+    // Delay
+    bluetooth_delay(500);
     // Enable interrupts
     USART1_irqEnable();
 
@@ -69,12 +82,18 @@ static void bluetooth_peripheralInit(uint32_t baudrate){
     // Set AF function
     GPIOA->AFR[1] |= (BT_AFRH9_VALUE << BT_AFRH9_OFFSET) | (BT_AFRH10_VALUE << BT_AFRH10_OFFSET);
 
+    /* SCB configuration */
+
+    // Set AIRCR register
+    SCB->AIRCR |= BT_VECTKEY_VALUE << BT_VECTKEY_OFFSET;
+    SCB->AIRCR |= BT_PRIGROUP_VALUE << BT_PRIGROUP_OFFSET;
+
     /* NVIC configuration */
 
     // ISER1 register configuration
     NVIC->ISER[1] |= BT_RS4_VALUE << BT_RS4_OFFSET;
     // IPR register configuration
-    NVIC->IP[BT_IP4_OFFSET] |= BT_IP4_VALUE;
+    NVIC->IP[BT_IP4_OFFSET] |= BT_IP4_VALUE << 4;
 
     /* USART configuration */
 
@@ -93,8 +112,6 @@ static void bluetooth_peripheralInit(uint32_t baudrate){
     TIM4->CR1 |= BT_URS_VALUE << BT_URS_OFFSET;
     // Set PSC register
     TIM4->PSC = BT_PSC_VALUE;
-    // Set ARR register
-    TIM4->ARR = BT_ARR_VALUE;
 
 }
 
@@ -107,16 +124,12 @@ static void bluetooth_sendData(char* str){
 
 }
 
-static void bluetooth_readResponse(char* buffer, uint8_t len){
+static void bluetooth_readResponse(char* buffer, uint8_t len, uint16_t timeout){
 
     uint8_t i = 0;
 
     // Enable timer
-    TIM4_enableTimer();
-    // Clear update event flag
-    TIM4->SR &= ~TIM_SR_UIF;
-    // Reset counter
-    TIM4->EGR |= BT_UG_VALUE << BT_UG_OFFSET;
+    TIM4_enableTimer(timeout);
     while(!(TIM4->SR & TIM_SR_UIF) && i < len - 1){
         // Check for new byte
         if((USART1->SR & USART_SR_RXNE)){
@@ -128,6 +141,16 @@ static void bluetooth_readResponse(char* buffer, uint8_t len){
     }
     // Add string termination character
     buffer[i] = '\0';
+    // Disable timer
+    TIM4_disableTimer();
+
+}
+
+static void bluetooth_delay(uint16_t ms){
+
+    // Enable timer
+    TIM4_enableTimer(ms);
+    while(!(TIM4->SR & TIM_SR_UIF));
     // Disable timer
     TIM4_disableTimer();
 
@@ -152,8 +175,15 @@ static uint8_t USART1_receiveByte(void){
 
 }
 
-static void TIM4_enableTimer(void){
+static void TIM4_enableTimer(uint16_t ms){
 
+    // Set ARR register
+    TIM4->ARR = ms;
+    // Reset counter
+    TIM4->EGR |= BT_UG_VALUE << BT_UG_OFFSET;
+    // Clear update event flag
+    TIM4->SR &= ~TIM_SR_UIF;
+    // Enable timer
     TIM4->CR1 |= BT_CEN_VALUE << BT_CEN_OFFSET;
 
 }

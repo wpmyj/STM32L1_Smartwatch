@@ -2,13 +2,17 @@
 
 void main(){
 
-    //clock_t();
-    //battery_t();
-    //sensors_t();
-    //display_t();
-    //button_t();
+    /*clock_t();
+    battery_t();
+    sensors_t();
+    display_t();
+    button_t();*/
     bluetooth_t();
 
+    // Create queues for communication between tasks
+
+    // Start scheduler
+    //vTaskStartScheduler();
     for(;;);
 
 }

@@ -9,6 +9,9 @@
 #include "battery.h"
 #include "button.h"
 #include "bluetooth.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
 
 void main();
 

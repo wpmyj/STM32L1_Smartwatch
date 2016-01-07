@@ -138,9 +138,9 @@ void PendSV_Handler(void)
   * @param  None
   * @retval None
   */
-void SysTick_Handler(void)
+/*void SysTick_Handler(void)
 {
-}
+}*/
 
 /******************************************************************************/
 /*                 STM32L1xx Peripherals Interrupt Handlers                   */
@@ -153,9 +153,9 @@ void SysTick_Handler(void)
   * @param  None
   * @retval None
   */
-/*void PPP_IRQHandler(void)
+void PPP_IRQHandler(void)
 {
-}*/
+}
 
 /**
   * @}

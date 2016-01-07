@@ -32,12 +32,18 @@ static void button_peripheralInit(void){
     // Set FTSR register
     EXTI->FTSR |= CLK_FTSR3_VALUE << CLK_FTSR3_OFFSET;
 
+    /* SCB configuration */
+
+    // Set AIRCR register
+    SCB->AIRCR |= BTN_VECTKEY_VALUE << BTN_VECTKEY_OFFSET;
+    SCB->AIRCR |= BTN_PRIGROUP_VALUE << BTN_PRIGROUP_OFFSET;
+
     /* NVIC configuration */
 
     // Set ISER0 register 
     NVIC->ISER[0] |= (BTN_RS9_VALUE << BTN_RS9_OFFSET) | (BTN_RS28_VALUE << BTN_RS28_OFFSET);
-    NVIC->IP[BTN_IP9_OFFSET] |= BTN_IP9_VALUE;
-    NVIC->IP[BTN_IP28_OFFSET] |= BTN_IP28_VALUE;
+    NVIC->IP[BTN_IP9_OFFSET] |= BTN_IP9_VALUE << 4;
+    NVIC->IP[BTN_IP28_OFFSET] |= BTN_IP28_VALUE << 4;
 
     /* TIM2 configuration */
 
