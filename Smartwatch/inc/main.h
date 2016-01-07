@@ -8,6 +8,7 @@
 #include "clock.h"
 #include "battery.h"
 #include "button.h"
+#include "bluetooth.h"
 
 void main();
 

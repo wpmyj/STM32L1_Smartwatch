@@ -112,7 +112,7 @@ void TIM2_IRQHandler(void){
     // Save a button state
     lastButtonState = currentButtonState;    
     
-    // Clear interrupt flag
+    // Clear update event flag
     TIM2->SR &= ~TIM_SR_UIF;
 
 }

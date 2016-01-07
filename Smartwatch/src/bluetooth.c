@@ -1,22 +1,45 @@
 #include "bluetooth.h"
 
 static void bluetooth_peripheralInit(uint32_t baudrate);
+static void bluetooth_sendData(char* str);
+static void bluetooth_readResponse(char* buffer, uint8_t len);
 static void USART1_irqEnable(void);
-static void USART1_sendData(char* str);
 static void USART1_sendByte(uint8_t byte);
-
+static uint8_t USART1_receiveByte(void);
+static void TIM4_enableTimer(void);
+static void TIM4_disableTimer(void);
+char response[30];
 void bluetooth_t(void){
 
+    
+
     // Init bluetooth peripherals
-    bluetooth_peripheralInit(9600);
-    // Set baudrate to 115200
-    USART1_sendData("AT+BAUD8");
-    // // Init bluetooth peripherals with higher baudrate
     bluetooth_peripheralInit(115200);
-    // Set MODE2
-    USART1_sendData("AT+MODE2");
-    // Set name to SmartWatch
-    USART1_sendData("AT+NAMESmartwatch");
+    // Set name to Smartwatch(Check first if the name has already been set)
+    bluetooth_sendData("AT+NAME?");
+    bluetooth_readResponse(response, sizeof(response));
+    if(!strstr(response, "Smartwatch")){
+        // Name has not been set. Set it!
+        bluetooth_sendData("AT+NAMESmartwatch");
+        bluetooth_readResponse(response, sizeof(response));
+        if(!strstr(response, "OK"))
+            for(;;); // BT returned error!
+    }
+    // Set pass to 123456(Check first if the pass has already been set)
+    bluetooth_sendData("AT+PASS?");
+    bluetooth_readResponse(response, sizeof(response));
+    if(!strstr(response, "123456")){
+        // Name has not been set. Set it!
+        bluetooth_sendData("AT+PASS123456");
+        bluetooth_readResponse(response, sizeof(response));
+        if(!strstr(response, "OK"))
+            for(;;); // BT returned error!
+    }
+    // Reset BT
+    bluetooth_sendData("AT+RESET");
+    bluetooth_readResponse(response, sizeof(response));
+    if(!strstr(response, "OK"))
+            for(;;); // BT returned error!
     // Enable interrupts
     USART1_irqEnable();
 
@@ -32,6 +55,8 @@ static void bluetooth_peripheralInit(uint32_t baudrate){
     RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
     // Enable USART1 peripheral clock
     RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
+    // Enable TIM4 peripheral clock
+    RCC->APB1ENR |= RCC_APB1ENR_TIM4EN;
 
     /* GPIO configuration */
 
@@ -62,6 +87,50 @@ static void bluetooth_peripheralInit(uint32_t baudrate){
     mantissa = usart_div + (fraction / 8);
     USART1->BRR = mantissa << 4 | (fraction & 0b111);
 
+    /* TIM4 configuration */
+
+    // Set CR1 register
+    TIM4->CR1 |= BT_URS_VALUE << BT_URS_OFFSET;
+    // Set PSC register
+    TIM4->PSC = BT_PSC_VALUE;
+    // Set ARR register
+    TIM4->ARR = BT_ARR_VALUE;
+
+}
+
+static void bluetooth_sendData(char* str){
+
+    while(*str){
+        while(!(USART1->SR & USART_SR_TXE));
+        USART1_sendByte(*str++);
+    }
+
+}
+
+static void bluetooth_readResponse(char* buffer, uint8_t len){
+
+    uint8_t i = 0;
+
+    // Enable timer
+    TIM4_enableTimer();
+    // Clear update event flag
+    TIM4->SR &= ~TIM_SR_UIF;
+    // Reset counter
+    TIM4->EGR |= BT_UG_VALUE << BT_UG_OFFSET;
+    while(!(TIM4->SR & TIM_SR_UIF) && i < len - 1){
+        // Check for new byte
+        if((USART1->SR & USART_SR_RXNE)){
+            // Reset counter
+            TIM4->EGR |= BT_UG_VALUE << BT_UG_OFFSET;
+            // Read byte
+            buffer[i++] = USART1_receiveByte();
+        }
+    }
+    // Add string termination character
+    buffer[i] = '\0';
+    // Disable timer
+    TIM4_disableTimer();
+
 }
 
 static void USART1_irqEnable(void){
@@ -76,12 +145,22 @@ static void USART1_sendByte(uint8_t byte){
     USART1->DR = byte;
 }
 
-static void USART1_sendData(char* str){
+static uint8_t USART1_receiveByte(void){
 
-    while(*str){
-        while(!(USART1->SR & USART_SR_TXE));
-        USART1_sendByte(*str++);
-    }
+    // Return byte
+    return USART1->DR;
+
+}
+
+static void TIM4_enableTimer(void){
+
+    TIM4->CR1 |= BT_CEN_VALUE << BT_CEN_OFFSET;
+
+}
+
+static void TIM4_disableTimer(void){
+
+    TIM4->CR1 &= ~(BT_CEN_VALUE << BT_CEN_OFFSET);
 
 }
 

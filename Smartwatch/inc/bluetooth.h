@@ -3,6 +3,7 @@
 
 #include "math.h"
 #include "stm32l1xx.h"
+#include "string.h"
 
 #define APB2_FREQ 32000000.0
 
@@ -45,6 +46,19 @@
 #define BT_UE_VALUE 0x1
 #define BT_RXNEIE_OFFSET 0x5
 #define BT_RXNEIE_VALUE 0x1
+
+// TIM4 CR1 register offsets and values
+#define BT_CEN_OFFSET 0x0
+#define BT_CEN_VALUE 0x1
+#define BT_URS_OFFSET 0x2
+#define BT_URS_VALUE 0x1
+// TIM4 PSC register value
+#define BT_PSC_VALUE 0x80
+// TIM4 ARR register value
+#define BT_ARR_VALUE 0x3D090
+// TIM4 EGR register offsets and values
+#define BT_UG_OFFSET 0x0
+#define BT_UG_VALUE 0x1
 
 void bluetooth_t(void);
 void USART1_IRQHandler(void);
