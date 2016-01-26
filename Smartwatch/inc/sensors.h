@@ -2,7 +2,12 @@
 #define SENSORS_H
 
 #include "stm32l1xx.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "structures.h"
 
+extern QueueHandle_t sensor_displayQ;
 
 // I2C1 speed in Hz
 #define I2C1_SPEED 100000

@@ -28,18 +28,12 @@
 #define BT_AFRH10_OFFSET 0x8
 #define BT_AFRH10_VALUE 0x7
 
-// SCB AIRCR register offsets and values
-#define BT_PRIGROUP_OFFSET 0x8
-#define BT_PRIGROUP_VALUE 0x3
-#define BT_VECTKEY_OFFSET 0x10
-#define BT_VECTKEY_VALUE 0x5FA
-
 // NVIC ISER1 register offsets and values
 #define BT_RS4_OFFSET (USART1_IRQn % 32)
 #define BT_RS4_VALUE 0x1
 // NVIC IP register offsets and values
 #define BT_IP4_OFFSET USART1_IRQn // Priority
-#define BT_IP4_VALUE 0x1 // Priority
+#define BT_IP4_VALUE 0x2 // Priority
 
 // USART CR1 register offsets and values
 #define BT_OVER8_OFFSET 0xF

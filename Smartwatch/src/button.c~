@@ -8,16 +8,13 @@ static void TIM2_disableTimer(void);
 
 void button_t(void *pvParameters){
 
-    uint8_t buttonStatus;
-
     button_peripheralInit();
-    // Enable button interrupts
-    button_enableBtnInterrupt();
 
     for(;;){
-        if(xQueueReceive(ISR_buttonQ, &buttonStatus, 0)){
+        
+        if(xQueueReceive(ISR_buttonQ, NULL, 0)){
             // Send notification to display thread
-            xQueueSend(button_displayQ, &buttonStatus, 0);
+            xQueueSend(button_displayQ, 0, 0);
         }
         // Sleep
         vTaskDelay(1000);
@@ -102,7 +99,6 @@ void TIM2_IRQHandler(void){
 
     static uint16_t counter;
     static uint8_t lastButtonState, currentButtonState;
-    uint8_t buttonStatus = BUTTON_PRESSED;
     
     // Read current button state
     currentButtonState = (GPIOA->IDR & 0b1000) >> 3;
@@ -120,7 +116,7 @@ void TIM2_IRQHandler(void){
         // Disable timer
         TIM2_disableTimer();
         // Send notification to the display task
-        xQueueSendFromISR(ISR_buttonQ, &buttonStatus, NULL);
+        xQueueSendFromISR(ISR_buttonQ, 0, NULL);
         // Enable button interrupts
         button_enableBtnInterrupt();
     }

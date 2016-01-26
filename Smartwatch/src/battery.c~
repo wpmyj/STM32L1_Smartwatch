@@ -20,7 +20,7 @@ void battery_t(void *pvParameters){
             xQueueSend(battery_displayQ, &ADCValue, 0);
         }
         // Sleep
-        vTaskDelay(10000);
+        vTaskDelay(1000);
     }
 
 }

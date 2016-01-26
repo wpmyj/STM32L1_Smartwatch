@@ -3,6 +3,12 @@
 
 #include "math.h"
 #include "stm32l1xx.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+
+extern QueueHandle_t ISR_batteryQ;
+extern QueueHandle_t battery_displayQ;
 
 #define VDDA 3.3
 #define MAX_V 3.0
@@ -15,18 +21,12 @@
 #define BAT_OSPEEDR2_OFFSET 0x4
 #define BAT_OSPEEDR2_VALUE 0x3
 
-// SCB AIRCR register offsets and values
-#define BAT_PRIGROUP_OFFSET 0x8
-#define BAT_PRIGROUP_VALUE 0x3
-#define BAT_VECTKEY_OFFSET 0x10
-#define BAT_VECTKEY_VALUE 0x5FA
-
 // NVIC ISER0 register offsets and values
 #define BAT_RS18_OFFSET ADC1_IRQn
 #define BAT_RS18_VALUE 0x1
 // NVIC IP register offsets and values
 #define BAT_IP18_OFFSET ADC1_IRQn // Priority
-#define BAT_IP18_VALUE 0x4 // Priority
+#define BAT_IP18_VALUE 0x5 // Priority
 
 // ADC1 CR1 register offsets and values
 #define BAT_PDI_OFFSET 11
@@ -46,7 +46,7 @@
 #define BAT_SQ1_VALUE 0x2
 
 
-void battery_t(void);
+void battery_t(void *pvParameters);
 void ADC1_IRQHandler(void);
 
 #endif

@@ -2,14 +2,7 @@
 #define ICONS_H
 
 #include "stm32l1xx.h"
-
-typedef struct Icon{
-
-    short width;
-    short height;
-    const uint8_t *pixels;
-
-} Icon;
+#include "structures.h"
 
 #define LOGO_ICON_WIDTH 128
 #define LOGO_ICON_HEIGHT 128

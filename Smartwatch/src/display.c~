@@ -9,11 +9,10 @@ static uint8_t display_reverseByte(uint8_t byte);
 static void SPI1_CSEnable(void);
 static void SPI1_CSDisable(void);
 static void SPI1_sendByte(uint8_t byte);
-
+int a;
 void display_t(void *pvParameters){
 
-    uint8_t battPercents, buttonStatus;
-    Sensor sensor;
+    uint8_t battPercents;
 
     // Init display peripheral
     display_peripheralInit();
@@ -38,7 +37,7 @@ void display_t(void *pvParameters){
             taskEXIT_CRITICAL();
         }
         // Check if button was pressed
-        if(xQueueReceive(button_displayQ, &buttonStatus, 0)){
+        else if(xQueueReceive(button_displayQ, NULL, 0)){
             Picture pic;      
             // Remove call frame
             removeCallFrame();
@@ -52,18 +51,7 @@ void display_t(void *pvParameters){
             taskENTER_CRITICAL();
             display_setPicture(&pic);
             taskEXIT_CRITICAL();
-        }
-        // Check if sensor values are available in the queue
-        if(xQueueReceive(sensor_displayQ, &sensor, 0)){
-            Picture pic;
-            addHumidityFrame(sensor.humidity);
-            addTemperatureFrame(sensor.temperature);
-            // Get picture
-            getPicture(&pic);
-            // Show picture
-            taskENTER_CRITICAL();
-            display_setPicture(&pic);
-            taskEXIT_CRITICAL();
+            a++;
         }
     }
 

@@ -1,0 +1,30 @@
+#include "main.h"
+
+void main(void){
+
+    QueueHandle_t battery_tQ[2];
+    QueueHandle_t display_tQ[1];
+
+    /* SCB configuration */
+
+    // Set AIRCR register(
+    SCB->AIRCR = (VECTKEY_VALUE << VECTKEY_OFFSET) | (PRIGROUP_VALUE << PRIGROUP_OFFSET);
+
+    // Create queues for communication between tasks
+    QueueHandle_t ISR_ThreadQ = xQueueCreate(10, sizeof(short));
+    QueueHandle_t battery_DisplayQ = xQueueCreate(10, sizeof(uint8_t));
+
+    // Create battery_t task
+    battery_tQ[0] = ISR_ThreadQ;
+    battery_tQ[1] = battery_DisplayQ;
+    xTaskCreate(battery_t, "Battery task", 1000, battery_tQ, tskIDLE_PRIORITY + 3, NULL);
+
+    // Create display_t task
+    display_tQ[0] = battery_DisplayQ;
+    xTaskCreate(display_t, "displ task", 1000, display_tQ, tskIDLE_PRIORITY + 3, NULL);
+
+    // Start scheduler
+    vTaskStartScheduler();
+    for(;;);
+
+}

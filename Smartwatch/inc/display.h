@@ -3,6 +3,14 @@
 
 #include "stm32l1xx.h"
 #include "picture.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+
+extern QueueHandle_t battery_displayQ;
+extern QueueHandle_t sensors_displayQ;
+extern QueueHandle_t button_displayQ;
+extern QueueHandle_t sensor_displayQ;
 
 // Commands
 #define CLEAR_DISPLAY 0b00100000
@@ -76,6 +84,6 @@
 #define DISP_MSTR_OFFSET 0x2
 #define DISP_MSTR_VALUE 0x1
 
-void display_t(void);
+void display_t(void *pvParameters);
 
 #endif

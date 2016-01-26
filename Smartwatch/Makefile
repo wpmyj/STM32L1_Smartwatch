@@ -3,6 +3,7 @@ PROJ_NAME=main
 SRCS = src/main.c \
        src/system_stm32l1xx.c \
        src/startup_stm32l1xx_xl.s \
+       src/stm32l1xx_it.c \
 	   src/battery.c \
 	   src/bluetooth.c \
 	   src/display.c \
@@ -16,7 +17,7 @@ SRCS = src/main.c \
 	   FreeRTOS/Source/tasks.c \
 	   FreeRTOS/Source/timers.c \
 	   FreeRTOS/Source/portable/GCC/ARM_CM3/port.c \
-	   FreeRTOS/Source/portable/MemMang/heap_1.c \
+	   FreeRTOS/Source/portable/MemMang/heap_2.c \
        ../../Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_tim.c \
        ../../Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_rcc.c \
 

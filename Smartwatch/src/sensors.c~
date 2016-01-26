@@ -10,31 +10,7 @@ static void I2C1_sendByte(uint8_t byte);
 
 void sensors_t(void){
 
-    Sensor sensor;
-
     sensors_peripheralInit();
-
-    for(;;){
-        // Read temperature
-        taskENTER_CRITICAL();
-        sensors_startSHT21(CMD_TEMPERATURE);
-        taskEXIT_CRITICAL();
-        vTaskDelay(100);
-        taskENTER_CRITICAL();
-        sensor.temperature = sensors_getSHT21Value() / 1000;
-        taskEXIT_CRITICAL();
-        // Read humidity
-        taskENTER_CRITICAL();
-        sensors_startSHT21(CMD_HUMIDITY);
-        taskEXIT_CRITICAL();
-        vTaskDelay(100);
-        taskENTER_CRITICAL();
-        sensor.humidity = sensors_getSHT21Value() / 1000;
-        taskEXIT_CRITICAL();
-        // Send structure to display task
-        xQueueSend(sensor_displayQ, &sensor, 0);
-        vTaskDelay(10000);
-    }
 
 }
 

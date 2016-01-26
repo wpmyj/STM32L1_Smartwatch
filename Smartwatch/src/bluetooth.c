@@ -82,12 +82,6 @@ static void bluetooth_peripheralInit(uint32_t baudrate){
     // Set AF function
     GPIOA->AFR[1] |= (BT_AFRH9_VALUE << BT_AFRH9_OFFSET) | (BT_AFRH10_VALUE << BT_AFRH10_OFFSET);
 
-    /* SCB configuration */
-
-    // Set AIRCR register
-    SCB->AIRCR |= BT_VECTKEY_VALUE << BT_VECTKEY_OFFSET;
-    SCB->AIRCR |= BT_PRIGROUP_VALUE << BT_PRIGROUP_OFFSET;
-
     /* NVIC configuration */
 
     // ISER1 register configuration
