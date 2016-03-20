@@ -1,6 +1,5 @@
 #include "sensors.h"
 
-static void sensors_peripheralInit(void);
 static void sensors_startSHT21(uint8_t cmd);
 static uint16_t sensors_getSHT21Value(void);
 static void I2C1_startBit(void);
@@ -11,8 +10,6 @@ static void I2C1_sendByte(uint8_t byte);
 void sensors_t(void){
 
     Sensor sensor;
-
-    sensors_peripheralInit();
 
     for(;;){
         // Read temperature
@@ -38,7 +35,7 @@ void sensors_t(void){
 
 }
 
-static void sensors_peripheralInit(void){
+void sensors_peripheralInit(void){
 
     // Enable GPIOB peripheral clock
     RCC->AHBENR |= RCC_AHBENR_GPIOBEN;

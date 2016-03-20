@@ -14,7 +14,6 @@ void display_t(void *pvParameters){
     uint8_t battPercents, buttonStatus;
     Sensor sensor;
     Time time;
-    Message msg;
 
     // Enable display
     display_enableDisplay();
@@ -31,25 +30,6 @@ void display_t(void *pvParameters){
             addTimeFrame(time.hours, time.minutes);
             // Append date frame
             addDateFrame(time.day, time.month, time.year);
-            // Get picture
-            getPicture(&pic);
-            // Show picture
-            taskENTER_CRITICAL();
-            display_setPicture(&pic);
-            taskEXIT_CRITICAL();
-        }
-        // Check if notification is available in the queue
-        if(xQueueReceive(bluetooth_displayQ, &msg, 0)){
-            Picture pic;
-            if(msg.msgType == NEW_MISSED_CALL)
-                // Append missed call frame
-                addCallFrame();
-            else if(msg.msgType == NEW_SMS)
-                // Append new sms frame
-                addSmsFrame();
-            else
-                // Append new email frame
-                addMailFrame();
             // Get picture
             getPicture(&pic);
             // Show picture

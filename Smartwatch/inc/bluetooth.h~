@@ -7,17 +7,9 @@
 #include "task.h"
 #include "queue.h"
 #include "string.h"
-#include "structures.h"
 
-extern QueueHandle_t bluetooth_clockQ;
-extern QueueHandle_t bluetooth_displayQ;
+extern QueueHandle_t bluetooth_display;
 extern QueueHandle_t ISR_bluetoothQ;
-
-// Notification message defines
-#define NEW_SMS_STR "N_SMS"
-#define NEW_MISSED_CALL_STR "N_M_CALL"
-#define NEW_EMAIL_STR "N_EMAIL"
-#define CURRENT_TIME_STR "T"
 
 #define APB2_FREQ 32000000.0
 

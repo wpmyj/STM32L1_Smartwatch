@@ -1,10 +1,6 @@
 #ifndef STRUCTURES_H
 #define STRUCTURES_H
 
-// Enums
-
-typedef enum {NEW_SMS, NEW_MISSED_CALL, NEW_EMAIL} MessageType;
-
 // Icon structures
 
 typedef struct Icon{
@@ -64,14 +60,5 @@ typedef struct Sensor{
     uint8_t humidity;
 
 } Sensor;
-
-// Message structure
-
-typedef struct Message{
-
-    // Type of message
-    MessageType msgType;
-
-} Message;
 
 #endif

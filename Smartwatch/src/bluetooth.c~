@@ -9,45 +9,44 @@ static uint8_t USART1_receiveByte(void);
 static void TIM4_enableTimer(uint16_t ms);
 static void TIM4_disableTimer(void);
 
+int a;
+
 void bluetooth_t(void){
 
-    char recvBuffer[30];
-    char recvChr;
-    uint8_t strIndex = 0;
-
+    char response[30];
     taskENTER_CRITICAL();
     // Set name to Smartwatch(Check first if the name has already been set)
     bluetooth_sendData("AT+NAME?");
-    bluetooth_readResponse(recvBuffer, sizeof(recvBuffer), 100);
-    if(!strstr(recvBuffer, "Smartwatch")){
+    bluetooth_readResponse(response, sizeof(response), 100);
+    if(!strstr(response, "Smartwatch")){
         // Delay
         bluetooth_delay(500);
         // Name has not been set. Set it!
         bluetooth_sendData("AT+NAMESmartwatch");
-        bluetooth_readResponse(recvBuffer, sizeof(recvBuffer), 100);
-        if(!strstr(recvBuffer, "OK"))
+        bluetooth_readResponse(response, sizeof(response), 100);
+        if(!strstr(response, "OK"))
             for(;;); // BT returned error!
     }
     // Delay
     bluetooth_delay(500);
     // Set pass to 123456(Check first if the pass has already been set)
     bluetooth_sendData("AT+PASS?");
-    bluetooth_readResponse(recvBuffer, sizeof(recvBuffer), 100);
-    if(!strstr(recvBuffer, "123456")){
+    bluetooth_readResponse(response, sizeof(response), 100);
+    if(!strstr(response, "123456")){
         // Delay
         bluetooth_delay(500);
         // Name has not been set. Set it!
         bluetooth_sendData("AT+PASS123456");
-        bluetooth_readResponse(recvBuffer, sizeof(recvBuffer), 100);
-        if(!strstr(recvBuffer, "OK"))
+        bluetooth_readResponse(response, sizeof(response), 100);
+        if(!strstr(response, "OK"))
             for(;;); // BT returned error!
     }
     // Delay
     bluetooth_delay(500);
     // Reset BT
     bluetooth_sendData("AT+RESET");
-    bluetooth_readResponse(recvBuffer, sizeof(recvBuffer), 100);
-    if(!strstr(recvBuffer, "OK"))
+    bluetooth_readResponse(response, sizeof(response), 100);
+    if(!strstr(response, "OK"))
             for(;;); // BT returned error!
     // Delay
     bluetooth_delay(500);
@@ -56,75 +55,7 @@ void bluetooth_t(void){
     USART1_irqEnable();
 
     for(;;){
-        if(xQueueReceive(ISR_bluetoothQ, &recvChr, portMAX_DELAY)){
-            if(recvChr != '\n')
-                // Save received character into array
-                recvBuffer[strIndex++] = recvChr;
-            else{
-                // Add string termination character
-                recvBuffer[strIndex] = '\0';
-                // Reset strIndex
-                strIndex = 0;
-
-                Message msg;
-                if(strstr(recvBuffer, NEW_MISSED_CALL_STR)){
-                    msg.msgType = NEW_MISSED_CALL;                
-                }
-                else if(strstr(recvBuffer, NEW_SMS_STR)){
-                    msg.msgType = NEW_SMS;    
-                }
-                else if(strstr(recvBuffer, NEW_EMAIL_STR)){
-                    msg.msgType = NEW_EMAIL;  
-                }
-                else if(strstr(recvBuffer, CURRENT_TIME_STR)){
-                    Time time;
-                    uint8_t numberBuffer = 0;
-                    uint8_t numberIndex = 0;
-                    uint8_t timeStrIndex = 0;
-
-                    // Get time and date from the message
-                    while(recvBuffer[timeStrIndex] != '\0'){
-                        // Check if there is a digit present at current index
-                        if(recvBuffer[timeStrIndex] >= '0' && recvBuffer[timeStrIndex] <= '9'){
-                            // Save current digit
-                            numberBuffer = (numberBuffer - '0') * 10 + (recvBuffer[timeStrIndex] - '0');
-                            // Populate time structure                        
-                            if(recvBuffer[timeStrIndex + 1] < '0' || recvBuffer[timeStrIndex + 1] > '9'){
-                                switch(numberIndex++){
-                                    case 0:
-                                        time.hours = numberBuffer;
-                                        break;
-                                    case 1:
-                                        time.minutes = numberBuffer;
-                                        break; 
-                                    case 2:
-                                        time.seconds = numberBuffer;
-                                        break;
-                                    case 3:
-                                        time.day = numberBuffer;
-                                        break; 
-                                    case 4:
-                                        time.month = numberBuffer;
-                                        break; 
-                                    case 5:
-                                        time.year = numberBuffer;
-                                        break;                                
-                                }
-                                // Reset numberBuffer
-                                numberBuffer = 0;
-                            }                      
-                        }
-                        // Increase timeStrIndex
-                        timeStrIndex++;                     
-                    }
-
-                    // Send current time and date to the clock_t thread
-                    xQueueSend(bluetooth_clockQ, &time, 0);
-                }
-                // Send msg data to the bluetooth_t thread
-                xQueueSend(bluetooth_displayQ, &msg, 0);
-            }
-        }
+        vTaskDelay(100);
     }
 
 }
@@ -261,10 +192,11 @@ static void TIM4_disableTimer(void){
 
 void USART1_IRQHandler(void){   
 
-    char recvChr = USART1_receiveByte();
+    uint8_t recvByte = USART1_receiveByte();
+    a = recvByte; 
 
     // Send data into a queue
-    xQueueSendFromISR(ISR_bluetoothQ, &recvChr, pdFALSE);
+    xQueueSendFromISR(ISR_bluetoothQ, &recvByte, pdFALSE);
     USART1->SR &= ~USART_SR_RXNE;
 
 }

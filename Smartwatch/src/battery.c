@@ -1,31 +1,20 @@
 #include "battery.h"
 
-static void battery_peripheralInit(void);
 static uint8_t battery_getCapacity(short dr);
 static void ADC1_StartConversion(void);
 
 void battery_t(void *pvParameters){
 
-    short ADCValue;
-
-    // Init battery peripherals
-    battery_peripheralInit();
-
     for(;;){
         // Start ADC conversion
         ADC1_StartConversion();
-        if(xQueueReceive(ISR_batteryQ, &ADCValue, 100)){
-            // Send battery value to display task
-            ADCValue = battery_getCapacity(ADCValue);
-            xQueueSend(battery_displayQ, &ADCValue, 0);
-        }
         // Sleep
         vTaskDelay(10000);
     }
 
 }
 
-static void battery_peripheralInit(void){
+void battery_peripheralInit(void){
     
     // Enable GPIOA peripheral clock
     RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
@@ -85,7 +74,10 @@ static void ADC1_StartConversion(void){
 
 void ADC1_IRQHandler(void){   
 
-    xQueueSendFromISR(ISR_batteryQ, &ADC1->DR, NULL);
+    short ADCValue = battery_getCapacity(ADC1->DR);
+
+    // Send battery status to display task
+    xQueueSendFromISR(battery_displayQ, &ADCValue, 0);
     ADC1->SR &= ~ADC_SR_EOC;
 
 }

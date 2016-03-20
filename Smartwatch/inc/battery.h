@@ -7,7 +7,6 @@
 #include "task.h"
 #include "queue.h"
 
-extern QueueHandle_t ISR_batteryQ;
 extern QueueHandle_t battery_displayQ;
 
 #define VDDA 3.3
@@ -47,6 +46,7 @@ extern QueueHandle_t battery_displayQ;
 
 
 void battery_t(void *pvParameters);
+void battery_peripheralInit(void);
 void ADC1_IRQHandler(void);
 
 #endif

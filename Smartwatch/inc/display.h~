@@ -12,7 +12,6 @@ extern QueueHandle_t sensors_displayQ;
 extern QueueHandle_t button_displayQ;
 extern QueueHandle_t sensor_displayQ;
 extern QueueHandle_t clock_displayQ;
-extern QueueHandle_t bluetooth_displayQ;
 
 // Commands
 #define CLEAR_DISPLAY 0b00100000

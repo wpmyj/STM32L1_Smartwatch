@@ -70,3 +70,4 @@ extern QueueHandle_t sensor_displayQ;
 #endif
 
 void sensors_t(void);
+void sensors_peripheralInit(void);

@@ -7,7 +7,6 @@
 #include "queue.h"
 #include "structures.h"
 
-extern QueueHandle_t bluetooth_clockQ;
 extern QueueHandle_t clock_displayQ;
 
 // PWR CR register offsets and values

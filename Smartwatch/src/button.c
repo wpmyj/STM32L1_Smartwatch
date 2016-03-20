@@ -1,31 +1,11 @@
 #include "button.h"
 
-static void button_peripheralInit(void);
 static void button_enableBtnInterrupt(void);
 static void button_disableBtnInterrupt(void);
 static void TIM2_enableTimer(void);
 static void TIM2_disableTimer(void);
 
-void button_t(void *pvParameters){
-
-    uint8_t buttonStatus;
-
-    button_peripheralInit();
-    // Enable button interrupts
-    button_enableBtnInterrupt();
-
-    for(;;){
-        if(xQueueReceive(ISR_buttonQ, &buttonStatus, 0)){
-            // Send notification to display thread
-            xQueueSend(button_displayQ, &buttonStatus, 0);
-        }
-        // Sleep
-        vTaskDelay(1000);
-    }
-
-}
-
-static void button_peripheralInit(void){
+void button_peripheralInit(void){
 
     // Enable SYSCFG peripheral clock
     RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
@@ -60,6 +40,9 @@ static void button_peripheralInit(void){
     TIM2->ARR = BTN_ARR_VALUE;
     // Set DIER register
     TIM2->DIER |= BTN_UIE_VALUE << BTN_UIE_OFFSET;
+
+    // Enable button interrupts
+    button_enableBtnInterrupt();
 
 }
 
@@ -119,8 +102,8 @@ void TIM2_IRQHandler(void){
         counter = 0;
         // Disable timer
         TIM2_disableTimer();
-        // Send notification to the display task
-        xQueueSendFromISR(ISR_buttonQ, &buttonStatus, NULL);
+        // Send notification to display task
+        xQueueSendFromISR(button_displayQ, &buttonStatus, NULL);
         // Enable button interrupts
         button_enableBtnInterrupt();
     }

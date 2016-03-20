@@ -7,7 +7,6 @@
 #include "queue.h"
 #include "messages.h"
 
-extern QueueHandle_t ISR_buttonQ;
 extern QueueHandle_t button_displayQ;
 
 // GPIO PUPDR register offsets and values
@@ -44,7 +43,7 @@ extern QueueHandle_t button_displayQ;
 #define BTN_UIE_VALUE 0x1
 
 
-void button_t(void *pvParameters);
+void button_peripheralInit(void);
 void EXTI3_IRQHandler(void);
 
 #endif

@@ -7,12 +7,19 @@ void clock_t(void *pvParameters){
 
     Time time;
 
+    time.hours = 12;
+    time.minutes = 50;
+    time.seconds = 1;
+    time.year = 15;
+    time.month = 12;
+    time.day = 11;
+
+    clock_setTime(time);
+    xQueueSend(clock_displayQ, &time, 0);
+
     for(;;){
-        if(xQueueReceive(bluetooth_clockQ, &time, portMAX_DELAY)){
-            // Set time and send time to the display_t thread
-            clock_setTime(time);
-            xQueueSend(clock_displayQ, &time, 0);
-        }
+        // Temporary sleep... I should place code for reading queue, which is going to be used to get time from a mobile phone
+        vTaskDelay(10000);
     }
 
 }
